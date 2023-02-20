@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('leaves', function (Blueprint $table) {
+        Schema::create('claims', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id'); //foreign key
-            $table->unsignedBigInteger('leave_type_id'); //foreign key
-            $table->date('leave_start');
-            $table->date('leave_end');
-            $table->integer('leave_taken');
+            $table->unsignedBigInteger('claim_type_id'); //foreign key
+            $table->string('subject');
+            $table->date('date');
+            $table->decimal('amount');
             $table->string('attachment');
             $table->integer('status');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');//foreign key
-            // $table->foreign('leave_type_id')->references('id')->on('leave_types');//foreign key
+            $table->foreign('claim_type_id')->references('id')->on('claim_types');//foreign key
         });
     }
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('leaves');
+        Schema::dropIfExists('claims');
     }
 };
