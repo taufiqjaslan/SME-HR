@@ -25,4 +25,7 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+    Route::get('/employee', function () {
+        return view('ManageEmployee.AddEmployee');
+    })->name('employee');
 });
