@@ -19,7 +19,7 @@
                                 </div>
                                 <div class="card-content collpase show">
                                     <div class="card-body">
-                                        <form class="form form-horizontal" action="{{route('store')}}" method="POST">
+                                        <form class="form form-horizontal" action="{{route('RegisterEmployee')}}" method="POST">
                                             @csrf
                                             <div class="form-body">
                                                 <h4 class="form-section"><i class="fas fa-file-alt">&nbsp;&nbsp;&nbsp;</i>Employee Details</h4>

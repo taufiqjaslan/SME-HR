@@ -1,73 +1,83 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+        <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+        @isset($meta)
+            {{ $meta }}
+        @endisset
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <!-- Styles -->
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@400;600;700&family=Open+Sans&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('vendor/bootstrap.min.css') }}">
+        {{-- <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}"> --}}
+        <link rel="stylesheet" href="{{ asset('stisla/css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('stisla/css/components.css') }}">
+        <link rel="stylesheet" href="{{ asset('vendor/notyf/notyf.min.css') }}">
+        {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
+        @vite(['resources/js/app.js'])
 
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-shims.min.css" media="all">
+        <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-font-face.min.css" media="all">
+        <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
 
-    <!-- Styles -->
-    @livewireStyles
+        <livewire:styles />
 
+        <!-- Scripts -->
+        <script defer src="{{ asset('vendor/alpine.js') }}"></script>
+    </head>
+    <body class="antialiased">
+        <div id="app">
+            <div class="main-wrapper">
+                @include('components.navbar')
+                @include('components.sidebar')
 
-    <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('build/assets/images/favicon.ico') }}">
+                <!-- Main Content -->
+                <div class="main-content">
+                    <section class="section">
+                      <div class="section-header">
+                        @isset($header_content)
+                            {{ $header_content }}
+                        @else
+                            {{ __('Halaman') }}
+                        @endisset
+                      </div>
 
-    <!-- App css -->
-    <link href="{{ asset('build/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('build/assets/css/icons.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('build/assets/css/metisMenu.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('build/assets/css/style.css') }}" rel="stylesheet" type="text/css" />
-
-
-</head>
-
-<body class="font-sans antialiased">
-    <x-banner />
-
-    <div class="min-h-screen bg-gray-100">
-        @livewire('navigation-menu')
-
-        <!-- Page Heading -->
-        @if (isset($header))
-        <header class="bg-white shadow">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                {{ $header }}
+                      <div class="section-body">
+                        {{ $slot }}
+                      </div>
+                    </section>
+                  </div>
             </div>
-        </header>
-        @endif
+        </div>
 
-        <!-- Page Content -->
-        <main>
-            {{ $slot }}
-        </main>
-    </div>
+        @stack('modals')
 
-    @stack('modals')
+        <!-- General JS Scripts -->
+        <script src="{{ asset('stisla/js/modules/jquery.min.js') }}"></script>
+        <script defer async src="{{ asset('stisla/js/modules/popper.js') }}"></script>
+        <script defer async src="{{ asset('stisla/js/modules/tooltip.js') }}"></script>
+        <script src="{{ asset('stisla/js/modules/bootstrap.min.js') }}"></script>
+        <script defer src="{{ asset('stisla/js/modules/jquery.nicescroll.min.js') }}"></script>
+        <script defer src="{{ asset('stisla/js/modules/moment.min.js') }}"></script>
+        <script defer src="{{ asset('stisla/js/modules/marked.min.js') }}"></script>
+        <script defer src="{{ asset('vendor/notyf/notyf.min.js') }}"></script>
+        <script defer src="{{ asset('vendor/sweetalert/sweetalert.min.js') }}"></script>
+        <script defer src="{{ asset('stisla/js/modules/chart.min.js') }}"></script>
+        <script defer src="{{ asset('vendor/select2/select2.min.js') }}"></script>
 
-    @livewireScripts
+        <script src="{{ asset('stisla/js/stisla.js') }}"></script>
+        <script src="{{ asset('stisla/js/scripts.js') }}"></script>
 
+        <livewire:scripts />
+        {{-- <script src="{{ mix('js/app.js') }}" defer></script> --}}
 
-    <!-- jQuery  -->
-    <script src="{{ asset('build/assets/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('build/assets/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('build/assets/js/metisMenu.min.js') }}"></script>
-    <script src="{{ asset('build/assets/js/waves.min.js') }}"></script>
-    <script src="{{ asset('build/assets/js/jquery.slimscroll.min.js') }}"></script>
-
-    <!-- App js -->
-    <script src="{{ asset('build/assets/js/app.js') }}"></script>
-
-
-</body>
-
+        @isset($script)
+            {{ $script }}
+        @endisset
+    </body>
 </html>

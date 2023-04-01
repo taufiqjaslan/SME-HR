@@ -9,9 +9,9 @@ trait PasswordValidationRules
     /**
      * Get the validation rules used to validate passwords.
      *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array|string>
+     * @return array
      */
-    protected function passwordRules(): array
+    protected function passwordRules()
     {
         return ['required', 'string', new Password, 'confirmed'];
     }

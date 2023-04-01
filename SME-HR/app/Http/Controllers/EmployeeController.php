@@ -16,9 +16,11 @@ class EmployeeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function ListEmployee()
     {
-        //
+        //display list of employee
+        $list = EmployeeRecord::all();
+        return view('ManageEmployee.EmployeeList', ["lists" => $list]);
     }
 
     /**
@@ -32,7 +34,7 @@ class EmployeeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function RegisterEmployee(Request $request)
     {
         //store a new user (staff)
         $newUser = EmployeeRecord::create([
