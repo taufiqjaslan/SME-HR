@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmployeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +30,11 @@ Route::middleware([
         return view('ManageEmployee.AddEmployee');
     })->name('employee');
 });
+
+Route::controller(App\Http\Controllers\EmployeeController::class)->group(function () {
+
+    Route::post('/store', 'store')->name('store');//link to store the data to the database
+    Route::get('/ListEmployee', '')->name('store');//link to store the data to the database
+
+}); 
 

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('address')->nullable();;
             $table->string('gender')->nullable();;
             $table->date('start_date')->nullable();;
+            $table->date('end_date')->nullable();;
             $table->unsignedBigInteger('position_id')->nullable();; //foreign key
             $table->unsignedBigInteger('user_type_id')->nullable();; //foreign key
             $table->string('profile_photo_path', 2048)->nullable();

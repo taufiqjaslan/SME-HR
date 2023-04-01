@@ -11,15 +11,30 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                <div class="hidden sm:flex sm:items-center sm:ml-6">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ route('employee') }}" :active="request()->routeIs('employee')">
-                        {{ __('Employee') }}
-                    </x-nav-link>
-                </div>
 
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <button class="flex items-center text-md font-medium text-gray-700 hover:text-gray-900 hover:border-gray-300 focus:outline-none focus:text-gray-900 focus:border-gray-300 transition duration-150 ease-in-out ml-4 {{ request()->routeIs('employee') ? 'active' : '' }}">
+                                {{ __('Employee') }}
+                            </button>
+
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <x-dropdown-link :href="route('employee')">
+                                {{ __('List Employee') }}
+                            </x-dropdown-link>
+
+                            <x-dropdown-link :href="route('employee')">
+                                {{ __('View Employees') }}
+                            </x-dropdown-link>
+                        </x-slot>
+                    </x-dropdown>
+                </div>
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -143,6 +158,23 @@
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            <x-dropdown align="right" width="48">
+                <x-slot name="trigger">
+                    <x-responsive-nav-link :active="request()->routeIs('employee')">
+                        {{ __('Employee') }}
+                    </x-responsive-nav-link>
+                </x-slot>
+
+                <x-slot name="content">
+                    <x-dropdown-link :href="route('employee')">
+                        {{ __('List Employees') }}
+                    </x-dropdown-link>
+                    <x-dropdown-link :href="route('employee')">
+                        {{ __('View Employees') }}
+                    </x-dropdown-link>
+                </x-slot>
+            </x-dropdown>
         </div>
 
         <!-- Responsive Settings Options -->

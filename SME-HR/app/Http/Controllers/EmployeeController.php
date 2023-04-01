@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use App\Models\EmployeeRecord;
+
 
 class EmployeeController extends Controller
 {
@@ -22,7 +26,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+       
     }
 
     /**
@@ -30,7 +34,22 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //store a new user (staff)
+        $newUser = EmployeeRecord::create([
+            'name' => $request['name'],
+            'username' => $request['username'],
+            'phone_number' => $request['phone_number'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+            'address' => $request['address'],
+            'gender' => $request['gender'],
+            'start_date' => $request['start_date'],
+            'end_date' => $request['end_date'],
+            'position_id' => $request['position_id'],
+            'user_type_id' => $request['user_type_id'],
+        ]);
+
+        return redirect()->route('employee');
     }
 
     /**

@@ -19,7 +19,7 @@
                                 </div>
                                 <div class="card-content collpase show">
                                     <div class="card-body">
-                                        <form class="form form-horizontal" action="" method="POST" enctype="multipart/form-data" id="form">
+                                        <form class="form form-horizontal" action="{{route('store')}}" method="POST">
                                             @csrf
                                             <div class="form-body">
                                                 <h4 class="form-section"><i class="fas fa-file-alt">&nbsp;&nbsp;&nbsp;</i>Employee Details</h4>
@@ -96,7 +96,7 @@
                                                         <div class="col-md-9 mx-auto">
                                                             <select name="position_id" class="form-control border-primary" id="position_id">
                                                                 <option disabled value="" selected hidden>Select</option>
-
+                                                                <option value="1">Female</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -105,9 +105,9 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">User Type</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <select name="user_type" class="form-control" id="user_type">
+                                                            <select name="user_type" class="form-control border-primary" id="user_type">
                                                                 <option disabled value="" selected hidden>Select</option>
-                                                                
+                                                                <option value="1">Female</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -131,9 +131,31 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 label-control">Gender</label>
+                                                        <div class="col-md-9 mx-auto">
+                                                            <select name="user_type" class="form-control border-primary" id="user_type">
+                                                                <option disabled value="" selected hidden>Select</option>
+                                                                <option value="1">Female</option>
+                                                                <option value="2">Male</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 label-control">Address</label>
+                                                        <div class="col-md-9 mx-auto">
+                                                            <textarea rows="6" class="form-control border-primary" name="address" placeholder="Address" id="address"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <hr>
                                             <div class="form-actions text-center">
-                                                <button class="btn btn-primary float-md-right" type="submit" id="sa-params">
+                                                <button class="btn btn-primary float-md-right" type="submit">
                                                     <i class="fa fa-dot-circle-o"></i>Save</button>&nbsp;&nbsp;
                                             </div>
                                         </form>
