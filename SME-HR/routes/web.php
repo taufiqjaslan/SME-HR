@@ -21,15 +21,12 @@ Route::get('/', function () {
 
 Route::group([ "middleware" => ['auth:sanctum', config('jetstream.auth_session'), 'verified'] ], function() {
     Route::view('/dashboard', "dashboard")->name('dashboard');
-
-    Route::get('/user', [ UserController::class, "index_view" ])->name('user');
-    Route::view('/user/new', "pages.user.user-new")->name('user.new');
-    Route::view('/user/edit/{userId}', "pages.user.user-edit")->name('user.edit');
 });
 
 Route::controller(App\Http\Controllers\EmployeeController::class)->group(function () {
 
-    Route::post('/RegisterEmployee', 'RegisterEmployee')->name('RegisterEmployee');//link to store the data to the database
-    Route::get('/ListEmployee', 'ListEmployee')->name('ListEmployee');//link to view list of employee
+    Route::get('/Register_Employee', 'CreateEmployee')->name('CreateEmployee');//link to go to reporthomepage
+    Route::post('/storeEmployee', 'RegisterEmployee')->name('RegisterEmployee');//link to store the data to the database
+    Route::get('/List_Employee', 'ListEmployee')->name('ListEmployee');//link to view list of employee
 
 }); 

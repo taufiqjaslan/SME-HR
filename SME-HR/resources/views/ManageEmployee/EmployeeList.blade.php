@@ -5,7 +5,7 @@
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
             <div class="breadcrumb-item"><a href="#">Employee</a></div>
-            <div class="breadcrumb-item"><a href="{{ route('user') }}">List Employee</a></div>
+            <div class="breadcrumb-item"><a href="{{ route('ListEmployee') }}">List Employee</a></div>
         </div>
     </x-slot>
 
@@ -23,14 +23,48 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Name</th>
-                                        <th>Identification ID</th>
+                                        <th>Email</th>
                                         <th>Position</th>
                                         <th>Status</th>
-                                    </tr><!--end tr-->
+                                        <th>Action</th>
+                                    </tr>
                                 </thead>
 
                                 <tbody>
-
+                                    <?php
+                                    $no = 1;
+                                    ?>
+                                    @foreach($lists as $list)
+                                    <tr>
+                                        <td>{{ $no++ }}</td>
+                                        <td>{{$list->name}}</td>
+                                        <td>{{$list->email}}</td>
+                                        <td>{{$list->position_id}}</td>
+                                        @if($list->status == 0)
+                                        <?php
+                                        $labelstatus = "Inactive";
+                                        $labelcolor = "badge badge-danger";
+                                        ?>
+                                        @elseif ($list->status == 1)
+                                        <?php
+                                        $labelstatus = "Active";
+                                        $labelcolor = "badge badge-success";
+                                        ?>
+                                        @endif
+                                        <td><span class="{{ $labelcolor }}">{{ $labelstatus }}</span></td>
+                                        <td>
+                                            <form action="" method="POST" id="delete-form">
+                                                @method('DELETE')
+                                                @csrf
+                                                <a href="" class="mr-2"><i class="fas fa-eye text-primary font-16"></i></a>
+                                                <!-- @if(Auth::user()->user_type != "Dean" && Auth::user()->user_type != "Coordinator" && Auth::user()->user_type != "Head of Program") -->
+                                                <a href="" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>
+                                                <button id="delbutton" type="submit"><i class="fas fa-trash-alt text-danger font-16"></i></button>
+                                                @endif
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

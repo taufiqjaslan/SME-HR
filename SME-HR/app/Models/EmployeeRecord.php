@@ -23,5 +23,6 @@ class EmployeeRecord extends Model
         'end_date',
         'position_id',
         'user_type_id',
+        'status',
     ];
 }

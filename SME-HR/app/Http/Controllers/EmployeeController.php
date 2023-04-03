@@ -26,9 +26,9 @@ class EmployeeController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function CreateEmployee()
     {
-       
+        return view('ManageEmployee.AddEmployee');//link to go to addEmployee page
     }
 
     /**
@@ -49,9 +49,10 @@ class EmployeeController extends Controller
             'end_date' => $request['end_date'],
             'position_id' => $request['position_id'],
             'user_type_id' => $request['user_type_id'],
+            'status' => 1,
         ]);
 
-        return redirect()->route('employee');
+        return redirect()->route('ListEmployee');
     }
 
     /**

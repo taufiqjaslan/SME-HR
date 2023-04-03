@@ -12,7 +12,7 @@ $links = [
                 "section_text" => "Employee",
                 "section_list" => [
                     ["href" => "ListEmployee", "text" => "List Employee"],
-                    ["href" => "user", "text" => "Add Employee"]
+                    ["href" => "CreateEmployee", "text" => "Add Employee"]
                 ]
             ]
         ],
