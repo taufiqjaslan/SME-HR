@@ -11,13 +11,78 @@ $links = [
             [
                 "section_text" => "Employee",
                 "section_list" => [
-                    ["href" => "RegisterEmployee", "text" => "List Employee"],
-                    ["href" => "user.new", "text" => "Add Employee"]
+                    ["href" => "ListEmployee", "text" => "List Employee"],
+                    ["href" => "user", "text" => "Add Employee"]
                 ]
             ]
         ],
         "text" => "Employee",
         "is_multi" => true,
+        "icon" => "fas fa-user-tie",
+    ],
+
+    [
+        "href" => [
+            [
+                "section_text" => "Payroll",
+                "section_list" => [
+                    ["href" => "RegisterEmployee", "text" => "Payslip Setting"],
+                    ["href" => "RegisterEmployee", "text" => "Generate Payslip"],
+                    ["href" => "RegisterEmployee", "text" => "View Payslip"]
+                ]
+            ]
+        ],
+        "text" => "Payroll",
+        "is_multi" => true,
+        "icon" => "fas fa-money-bill-wave",
+    ],
+
+    [
+        "href" => [
+            [
+                "section_text" => "Claim",
+                "section_list" => [
+                    ["href" => "RegisterEmployee", "text" => "Apply Claim"],
+                    ["href" => "RegisterEmployee", "text" => "View Claim"]
+                ]
+            ]
+        ],
+        "text" => "Claim",
+        "is_multi" => true,
+        "icon" => "far fa-file-alt",
+    ],
+
+    [
+        "href" => [
+            [
+                "section_text" => "EA Form",
+                "section_list" => [
+                    ["href" => "RegisterEmployee", "text" => "Apply Claim"],
+                    ["href" => "RegisterEmployee", "text" => "View Claim"]
+                ]
+            ]
+        ],
+        "text" => "EA Form",
+        "is_multi" => true,
+        "icon" => "fas fa-clipboard-list",
+    ],
+
+    [
+        "href" => [
+            [
+                "section_text" => "Leave",
+                "section_list" => [
+                    ["href" => "RegisterEmployee", "text" => "Entitlements"],
+                    ["href" => "RegisterEmployee", "text" => "Apply Leave"],
+                    ["href" => "RegisterEmployee", "text" => "Leave List"],
+                    ["href" => "RegisterEmployee", "text" => "Holidays"],
+                    ["href" => "RegisterEmployee", "text" => "Report"]
+                ]
+            ]
+        ],
+        "text" => "Leave",
+        "is_multi" => true,
+        "icon" => "fas fa-notes-medical",
     ],
 ];
 $navigation_links = array_to_object($links);
@@ -39,7 +104,7 @@ $navigation_links = array_to_object($links);
             <li class="menu-header">{{ $link->text }}</li>
             @if (!$link->is_multi)
             <li class="{{ Request::routeIs($link->href) ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route($link->href) }}"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+                <a class="nav-link" href="{{ route($link->href) }}"><i class="fas fa-chart-bar"></i><span>Dashboard</span></a>
             </li>
             @else
                 @foreach ($link->href as $section)
@@ -49,10 +114,11 @@ $navigation_links = array_to_object($links);
                     })->toArray();
 
                     $is_active = in_array(true, $routes);
+                    $icon = isset($link->icon) ? $link->icon : 'fas fa-chart-bar';
                     @endphp
 
                     <li class="dropdown {{ ($is_active) ? 'active' : '' }}">
-                        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-chart-bar"></i> <span>{{ $section->section_text }}</span></a>
+                        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="{{ $icon }}"></i> <span>{{ $section->section_text }}</span></a>
                         <ul class="dropdown-menu">
                             @foreach ($section->section_list as $child)
                                 <li class="{{ Request::routeIs($child->href) ? 'active' : '' }}"><a class="nav-link" href="{{ route($child->href) }}">{{ $child->text }}</a></li>
@@ -61,6 +127,7 @@ $navigation_links = array_to_object($links);
                     </li>
                 @endforeach
             @endif
+            
         </ul>
         @endforeach
     </aside>

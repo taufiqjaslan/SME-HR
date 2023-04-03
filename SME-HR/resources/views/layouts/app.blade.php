@@ -43,7 +43,7 @@
                         @isset($header_content)
                             {{ $header_content }}
                         @else
-                            {{ __('Halaman') }}
+                            {{ __('Page') }}
                         @endisset
                       </div>
 
