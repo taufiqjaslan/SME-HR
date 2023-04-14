@@ -28,5 +28,9 @@ Route::controller(App\Http\Controllers\EmployeeController::class)->group(functio
     Route::get('/Register_Employee', 'CreateEmployee')->name('CreateEmployee');//link to go to reporthomepage
     Route::post('/storeEmployee', 'RegisterEmployee')->name('RegisterEmployee');//link to store the data to the database
     Route::get('/List_Employee', 'ListEmployee')->name('ListEmployee');//link to view list of employee
-
+    Route::get('/employees/total', 'getTotalEmployees')->name('getTotalEmployees');;//to get total employee
+    Route::delete('deleteEmployee/{list}', 'deleteEmployee')->name('deleteEmployee');//link to delete the data from the database
+    Route::get('editEmployee/{id}', 'editEmployee')->name('editEmployee');//link to go to edit page
+    Route::put('updateEmployee/{id}', 'updateEmployee')->name('updateEmployee');//link to update the data in the database
+    Route::get('viewEmployee/{id}', 'viewEmployee')->name('viewEmployee');//link to go to edit page
 }); 

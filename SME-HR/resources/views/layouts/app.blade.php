@@ -65,6 +65,7 @@
     </div>
 
     @stack('modals')
+    
 
     <!-- Metrica template -->
 

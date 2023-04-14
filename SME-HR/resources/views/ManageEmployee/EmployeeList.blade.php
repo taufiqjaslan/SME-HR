@@ -14,9 +14,6 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <!-- @if(Auth::user()->user_type == "Petakom Committee") -->
-                        <button class="btn btn-gradient-primary px-4 float-right mt-0 mb-3"><i class="mdi mdi-plus-circle-outline mr-2" class="card hidden"></i><a href="{{route('report.AddProposal')}}">Add Proposal</a></button>
-                        <!-- @endif -->
                         <div class="table-responsive dash-social">
                             <table id="datatable" class="table">
                                 <thead class="thead-light">
@@ -53,14 +50,12 @@
                                         @endif
                                         <td><span class="{{ $labelcolor }}">{{ $labelstatus }}</span></td>
                                         <td>
-                                            <form action="" method="POST" id="delete-form">
+                                            <form action="{{ route('deleteEmployee', $list->id) }}" method="POST" >
                                                 @method('DELETE')
                                                 @csrf
-                                                <a href="" class="mr-2"><i class="fas fa-eye text-primary font-16"></i></a>
-                                                <!-- @if(Auth::user()->user_type != "Dean" && Auth::user()->user_type != "Coordinator" && Auth::user()->user_type != "Head of Program") -->
-                                                <a href="" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>
-                                                <button id="delbutton" type="submit"><i class="fas fa-trash-alt text-danger font-16"></i></button>
-                                                @endif
+                                                <a href="{{route('viewEmployee', ['id' => $list->id])}}" class="mr-2"><i class="fas fa-eye font-16"></i></a>
+                                                <a href="{{route('editEmployee', ['id' => $list->id])}}" class="mr-2"><i class="fas fa-edit text-primary font-16"></i></a>
+                                                <button type="submit" name="deleteEmployee"><i class="fas fa-trash-alt text-danger font-16"></i></button>
                                             </form>
                                         </td>
                                     </tr>

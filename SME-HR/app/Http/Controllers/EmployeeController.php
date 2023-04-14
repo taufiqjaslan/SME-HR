@@ -28,7 +28,7 @@ class EmployeeController extends Controller
      */
     public function CreateEmployee()
     {
-        return view('ManageEmployee.AddEmployee');//link to go to addEmployee page
+        return view('ManageEmployee.AddEmployee'); //link to go to addEmployee page
     }
 
     /**
@@ -55,6 +55,15 @@ class EmployeeController extends Controller
         return redirect()->route('ListEmployee');
     }
 
+    public function viewEmployee(string $id)
+    {
+        $employeeInfo = EmployeeRecord::find($id);
+
+        return view('ManageEmployee.ViewEmployee', [
+            'employeeInfo' => $employeeInfo,
+        ]); //returns the employee information
+    }
+
     /**
      * Display the specified resource.
      */
@@ -66,24 +75,59 @@ class EmployeeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function editEmployee(string $id)
     {
-        //
+        $employeeInfo = EmployeeRecord::find($id);
+
+        return view('ManageEmployee.EditEmployee', [
+            'employeeInfo' => $employeeInfo,
+        ]); //returns the edit view with the employee information
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function updateEmployee(Request $request, string $id)
     {
-        //
+        //update employee info from database
+        $updateInfo = EmployeeRecord::findOrFail($id);
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'username' => 'required',
+            'phone_number' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'address' => 'required',
+            'gender' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'position_id' => 'required',
+            'user_type_id' => 'required',
+
+        ]);
+
+        $updateInfo->update($validatedData);
+        return redirect()->route('ListEmployee')->with('success', 'Employee Info updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function deleteEmployee(EmployeeRecord $list)
     {
-        //
+        // check if user is authorized to delete the report
+        if ($list->id != auth()->user()->id) {
+            return redirect()->back()->with('error', 'You are not authorized to delete this report.');
+        }
+
+        // check if the correct ID is being passed
+        dd($list->id);
+
+        // delete data
+        $list->delete();
+        session()->flash('success', 'Employee record deleted successfully.');
+
+        // redirect to previous page
+        return redirect()->back();
     }
 }
