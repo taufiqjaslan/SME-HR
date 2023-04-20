@@ -47,5 +47,7 @@ Route::controller(App\Http\Controllers\PayrollController::class)->group(function
 
 Route::controller(App\Http\Controllers\ClaimController::class)->group(function () {
 
+    Route::get('/Apply_claim', 'ApplyClaim')->name('ApplyClaim');//link to go to reporthomepage
+    Route::get('/List_Claim', 'ListClaim')->name('ListClaim');//link to go to claim list page
 
 });

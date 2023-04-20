@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\ClaimRecord;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -12,9 +13,38 @@ class ClaimController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function ApplyClaim()
     {
-        //
+        return view('ManageClaim.AddClaim'); //link to go to addEmployee page
+    }
+
+    public function StoreClaim(Request $request)
+    {
+        //store a new user (staff)
+        $newUser = ClaimRecord::create([
+            'name' => $request['name'],
+            'username' => $request['username'],
+            'phone_number' => $request['phone_number'],
+            'email' => $request['email'],
+            'address' => $request['address'],
+            'gender' => $request['gender'],
+            'start_date' => $request['start_date'],
+            'end_date' => $request['end_date'],
+            'position_id' => $request['position_id'],
+            'user_type_id' => $request['user_type_id'],
+            'status' => 1,
+        ]);
+
+        return redirect()->route('ListEmployee');
+    }
+
+    public function listClaim()
+    {
+        // Retrieve all payroll records and include the associated employee data and salary_type data
+        $claimRecords = ClaimRecord::with('employee', 'claimType')->get();
+
+        // Pass the data to the view
+        return view('ManageClaim.ClaimList', ["claimRecords" => $claimRecords]);
     }
 
     /**
