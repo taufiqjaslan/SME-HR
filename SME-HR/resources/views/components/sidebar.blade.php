@@ -26,9 +26,9 @@ $links = [
             [
                 "section_text" => "Payroll",
                 "section_list" => [
-                    ["href" => "RegisterEmployee", "text" => "Payslip Setting"],
-                    ["href" => "RegisterEmployee", "text" => "Generate Payslip"],
-                    ["href" => "RegisterEmployee", "text" => "View Payslip"]
+                    ["href" => "ListPayroll", "text" => "Payslip Setting"],
+                    ["href" => "GeneratePayslip", "text" => "Generate Payslip"],
+                    ["href" => "ViewPayslip", "text" => "View Payslip"]
                 ]
             ]
         ],

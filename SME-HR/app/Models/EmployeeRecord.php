@@ -25,4 +25,9 @@ class EmployeeRecord extends Model
         'user_type_id',
         'status',
     ];
+
+    public function payrollRecords()
+    {
+        return $this->hasMany(PayrollRecord::class, 'user_id');
+    }
 }

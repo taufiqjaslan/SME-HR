@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PayrollController;
+use App\Http\Controllers\ClaimController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,3 +36,16 @@ Route::controller(App\Http\Controllers\EmployeeController::class)->group(functio
     Route::put('updateEmployee/{id}', 'updateEmployee')->name('updateEmployee');//link to update the data in the database
     Route::get('viewEmployee/{id}', 'viewEmployee')->name('viewEmployee');//link to go to edit page
 }); 
+
+Route::controller(App\Http\Controllers\PayrollController::class)->group(function () {
+
+    Route::get('/List_Payroll', 'ListPayroll')->name('ListPayroll');//link to go to payroll list page
+    Route::get('/Generate_Payslip', 'GeneratePayslip')->name('GeneratePayslip');//link to go to generate payslip
+    Route::get('/View_Payslip', 'ViewPayslip')->name('ViewPayslip');//link to go to generate payslip
+
+});
+
+Route::controller(App\Http\Controllers\ClaimController::class)->group(function () {
+
+
+});

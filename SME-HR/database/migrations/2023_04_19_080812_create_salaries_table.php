@@ -22,7 +22,7 @@ return new class extends Migration
             $table->decimal('netpay');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');//foreign key
-            $table->foreign('salary_type_id')->references('id')->on('salaries');//foreign key
+            $table->foreign('salary_type_id')->references('id')->on('salary_types');//foreign key
         });
     }
 

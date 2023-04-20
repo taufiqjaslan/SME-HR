@@ -115,6 +115,7 @@
     
     <!-- Page Specific JS File -->
     <script src="{{ asset('stisla/js/page/index.js') }}"></script>
+    <script src="{{ asset('stisla/js/page/modules-datatables.js') }}"></script>
 
     <livewire:scripts />
     {{-- <script src="{{ mix('js/app.js') }}" defer></script> --}}
