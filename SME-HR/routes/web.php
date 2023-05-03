@@ -51,3 +51,9 @@ Route::controller(App\Http\Controllers\ClaimController::class)->group(function (
     Route::get('/List_Claim', 'ListClaim')->name('ListClaim');//link to go to claim list page
 
 });
+
+Route::controller(App\Http\Controllers\LeaveController::class)->group(function () {
+
+    Route::get('/Apply_Leave', 'ApplyLeave')->name('ApplyLeave');//link to go to apply leave page
+
+});

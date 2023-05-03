@@ -12,9 +12,9 @@ class LeaveController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function applyLeave()
     {
-        //
+        return view('ManageLeave.AddLeave'); //link to go to addLeave page
     }
 
     /**
