@@ -164,8 +164,7 @@
                                         <hr>
                                         <br>
                                         <div class="form-actions text-center">
-                                            <button class="btn btn-primary float-md-right" type="submit">
-                                                <i class="fa fa-dot-circle-o"></i>&nbsp;&nbsp;Update</button>
+                                            <button class="btn btn-primary float-md-right">Update</button>
                                         </div>
                                     </form>
                                 </div>

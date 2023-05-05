@@ -33,7 +33,7 @@ Route::controller(App\Http\Controllers\EmployeeController::class)->group(functio
     Route::get('/employees/total', 'getTotalEmployees')->name('getTotalEmployees');;//to get total employee
     Route::delete('deleteEmployee/{list}', 'deleteEmployee')->name('deleteEmployee');//link to delete the data from the database
     Route::get('editEmployee/{id}', 'editEmployee')->name('editEmployee');//link to go to edit page
-    Route::put('updateEmployee/{id}', 'updateEmployee')->name('updateEmployee');//link to update the data in the database
+    Route::put('updateEmployee/{id}', 'App\Http\Controllers\EmployeeController@updateEmployee')->name('updateEmployee');//link to update the data in the database
     Route::get('viewEmployee/{id}', 'viewEmployee')->name('viewEmployee');//link to go to edit page
 }); 
 

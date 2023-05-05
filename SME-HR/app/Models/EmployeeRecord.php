@@ -26,8 +26,14 @@ class EmployeeRecord extends Model
         'status',
     ];
 
-    public function payrollRecords()
+
+    public function userType()
     {
-        return $this->hasMany(PayrollRecord::class, 'user_id');
+        return $this->belongsTo(UserTypeRecord::class);
+    }
+
+    public function position()
+    {
+        return $this->belongsTo(PositionRecord::class, 'position_id');
     }
 }

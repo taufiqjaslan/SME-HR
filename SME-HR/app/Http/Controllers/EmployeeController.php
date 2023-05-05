@@ -18,6 +18,7 @@ class EmployeeController extends Controller
      */
     public function ListEmployee()
     {
+
         //display list of employee
         $list = EmployeeRecord::all();
         return view('ManageEmployee.EmployeeList', ["lists" => $list]);
@@ -28,7 +29,9 @@ class EmployeeController extends Controller
      */
     public function CreateEmployee()
     {
-        return view('ManageEmployee.AddEmployee'); //link to go to addEmployee page
+        // Retrieve all usertype and position records and include the associated employee data
+        $lists = EmployeeRecord::with('userType', 'position')->get();
+        return view('ManageEmployee.AddEmployee', ["lists" => $lists]); //link to go to addEmployee page
     }
 
     /**
@@ -87,7 +90,7 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function updateEmployee(Request $request, string $id)
+    public function updateEmployee(Request $request, $id)
     {
         //update employee info from database
         $updateInfo = EmployeeRecord::findOrFail($id);

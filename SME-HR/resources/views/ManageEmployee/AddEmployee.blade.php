@@ -114,7 +114,9 @@
                                                     <div class="col-md-9 mx-auto">
                                                         <select name="user_type" class="form-control border-primary" id="user_type">
                                                             <option disabled value="" selected hidden>Select</option>
-                                                            <option value="1">Female</option>
+                                                            @foreach($lists as $list)
+                                                            <option value="{{ $list->userType->id }}">{{ $list->userType->user_type_name }}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
