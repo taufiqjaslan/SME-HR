@@ -52,7 +52,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Identification Number</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input type="text" class="form-control border-primary" placeholder="Identification Number" name="ic" id="ic" disabled>
+                                                            <input type="text" class="form-control border-primary" placeholder="Identification Number" name="ic" id="ic" value="{{ old('ic', $employeeInfo->ic) }}" disabled>
                                                         </div>
                                                     </div>
                                                 </div>

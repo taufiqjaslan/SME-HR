@@ -36,7 +36,7 @@
                                         <td>{{ $no++ }}</td>
                                         <td>{{$list->name}}</td>
                                         <td>{{$list->email}}</td>
-                                        <td>{{$list->position_id}}</td>
+                                        <td>{{$list->position->position_name}}</td>
                                         @if($list->status == 0)
                                         <?php
                                         $labelstatus = "Inactive";
@@ -50,7 +50,7 @@
                                         @endif
                                         <td><span class="{{ $labelcolor }}">{{ $labelstatus }}</span></td>
                                         <td>
-                                            <form action="{{ route('deleteEmployee', $list->id) }}" method="POST" >
+                                            <form action="{{ route('deleteEmployee', $list->id) }}" method="POST">
                                                 @method('DELETE')
                                                 @csrf
                                                 <a href="{{route('viewEmployee', ['id' => $list->id])}}" class="mr-2"><i class="fas fa-eye font-16"></i></a>

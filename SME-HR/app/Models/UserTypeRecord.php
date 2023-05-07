@@ -11,4 +11,8 @@ class UserTypeRecord extends Model
 
     protected $table = 'user_types';
 
+    public function userType()
+    {
+        return $this->belongsTo(UserTypeRecord::class, 'user_type_id');
+    }
 }

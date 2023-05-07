@@ -9,6 +9,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\EmployeeRecord;
+use App\Models\UserTypeRecord;
+use App\Models\PositionRecord;
 
 
 class EmployeeController extends Controller
@@ -18,20 +20,28 @@ class EmployeeController extends Controller
      */
     public function ListEmployee()
     {
+        $lists = EmployeeRecord::with('position', 'userType')
+            ->join('positions', 'users.position_id', '=', 'positions.id')
+            ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
+            ->select('users.*', 'positions.position_name', 'user_types.user_type_name')
+            ->get();
 
-        //display list of employee
-        $list = EmployeeRecord::all();
-        return view('ManageEmployee.EmployeeList', ["lists" => $list]);
+        return view('ManageEmployee.EmployeeList', ["lists" => $lists]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function CreateEmployee()
+    public function createEmployee()
     {
         // Retrieve all usertype and position records and include the associated employee data
-        $lists = EmployeeRecord::with('userType', 'position')->get();
-        return view('ManageEmployee.AddEmployee', ["lists" => $lists]); //link to go to addEmployee page
+        $userTypes = UserTypeRecord::with('userType')->get();
+        $positions = PositionRecord::all();
+        $lists = [
+            'userTypes' => $userTypes,
+            'positions' => $positions,
+        ];
+        return view('ManageEmployee.AddEmployee', ["userTypesAndPositions" => $lists]); //link to go to addEmployee page
     }
 
     /**
@@ -48,6 +58,7 @@ class EmployeeController extends Controller
             'password' => Hash::make($request['password']),
             'address' => $request['address'],
             'gender' => $request['gender'],
+            'ic' => $request['ic'],
             'start_date' => $request['start_date'],
             'end_date' => $request['end_date'],
             'position_id' => $request['position_id'],

@@ -19,6 +19,7 @@ class EmployeeRecord extends Model
         'password',
         'address',
         'gender',
+        'ic',
         'start_date',
         'end_date',
         'position_id',

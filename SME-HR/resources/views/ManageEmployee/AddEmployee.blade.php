@@ -103,7 +103,9 @@
                                                     <div class="col-md-9 mx-auto">
                                                         <select name="position_id" class="form-control border-primary" id="position_id">
                                                             <option disabled value="" selected hidden>Select</option>
-                                                            <option value="1">Female</option>
+                                                            @foreach($userTypesAndPositions['positions'] as $position)
+                                                            <option value="{{ $position->id }}">{{ $position->position_name }}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
@@ -112,10 +114,10 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">User Type</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <select name="user_type" class="form-control border-primary" id="user_type">
+                                                        <select name="user_type_id" class="form-control border-primary" id="user_type_id">
                                                             <option disabled value="" selected hidden>Select</option>
-                                                            @foreach($lists as $list)
-                                                            <option value="{{ $list->userType->id }}">{{ $list->userType->user_type_name }}</option>
+                                                            @foreach($userTypesAndPositions['userTypes'] as $userType)
+                                                            <option value="{{ $userType->id }}">{{ $userType->user_type_name }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -145,7 +147,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">Gender</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <select name="user_type" class="form-control border-primary" id="user_type">
+                                                        <select name="gender" class="form-control border-primary" id="gender">
                                                             <option disabled value="" selected hidden>Select</option>
                                                             <option value="1">Female</option>
                                                             <option value="2">Male</option>
