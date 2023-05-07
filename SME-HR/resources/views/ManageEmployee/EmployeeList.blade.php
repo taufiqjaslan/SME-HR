@@ -50,12 +50,12 @@
                                         @endif
                                         <td><span class="{{ $labelcolor }}">{{ $labelstatus }}</span></td>
                                         <td>
-                                            <form action="{{ route('deleteEmployee', $list->id) }}" method="POST">
+                                            <form action="{{ route('deleteEmployee', $list->id)  }}" method="POST">
                                                 @method('DELETE')
                                                 @csrf
                                                 <a href="{{route('viewEmployee', ['id' => $list->id])}}" class="mr-2"><i class="fas fa-eye font-16"></i></a>
                                                 <a href="{{route('editEmployee', ['id' => $list->id])}}" class="mr-2"><i class="fas fa-edit text-primary font-16"></i></a>
-                                                <button type="submit" name="deleteEmployee"><i class="fas fa-trash-alt text-danger font-16"></i></button>
+                                                <button type="submit" name="submit"><i class="fas fa-trash-alt text-danger font-16"></i></button>
                                             </form>
                                         </td>
                                     </tr>

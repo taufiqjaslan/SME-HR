@@ -43,7 +43,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Username</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input type="text" class="form-control border-primary" placeholder="Username" name="username" id="username" value="{{ old('username', $employeeInfo->username) }}" >
+                                                            <input type="text" class="form-control border-primary" placeholder="Username" name="username" id="username" value="{{ old('username', $employeeInfo->username) }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -53,7 +53,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Identification Number</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input type="text" class="form-control border-primary" placeholder="Identification Number" name="ic" id="ic">
+                                                            <input type="text" class="form-control border-primary" placeholder="Identification Number" name="ic" id="ic" value="{{ old('ic', $employeeInfo->ic) }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -87,7 +87,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Confirmation Password</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input class="form-control border-primary" type="password" placeholder="Confirm Password" name="password" id="password" value="{{ old('password', $employeeInfo->password) }}">
+                                                            <input class="form-control border-primary" type="password" placeholder="Confirm Password" name="confirm_password" id="password" value="{{ old('password', $employeeInfo->password) }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -102,9 +102,9 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">Position</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <select name="position_id" class="form-control border-primary" id="position_id" value="{{ old('position_id', $employeeInfo->position_id) }}">
-                                                            <option disabled value="" selected hidden>Select</option>
-                                                            <option value="1">Female</option>
+                                                        <select name="position_id" class="form-control border-primary" id="position_id">
+                                                            <option value="1" {{ old('position_id', $employeeInfo->position_id) == '1' ? 'selected' : '' }}>Cashier</option>
+                                                            <option value="2" {{ old('position_id', $employeeInfo->position_id) == '2' ? 'selected' : '' }}>Cooker</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -113,9 +113,10 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">User Type</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <select name="user_type" class="form-control border-primary" id="user_type" value="{{ old('user_type', $employeeInfo->user_type) }}">
-                                                            <option disabled value="" selected hidden>Select</option>
-                                                            <option value="1">Female</option>
+                                                        <select name="user_type_id" class="form-control border-primary" id="user_type_id">
+                                                            <option value="1" {{ old('user_type_id', $employeeInfo->user_type_id) == '1' ? 'selected' : '' }}>Administrator</option>
+                                                            <option value="2" {{ old('user_type_id', $employeeInfo->user_type_id) == '2' ? 'selected' : '' }}>Manager</option>
+                                                            <option value="3" {{ old('user_type_id', $employeeInfo->user_type_id) == '3' ? 'selected' : '' }}>Staff</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -144,10 +145,9 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">Gender</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <select name="gender" class="form-control border-primary" id="gender" value="{{ old('gender', $employeeInfo->gender) }}">
-                                                            <option disabled value="" selected hidden>Select</option>
-                                                            <option value="1">Female</option>
-                                                            <option value="2">Male</option>
+                                                        <select name="gender" class="form-control border-primary" id="gender">
+                                                            <option value="1" {{ old('gender', $employeeInfo->gender) == '1' ? 'selected' : '' }}>Female</option>
+                                                            <option value="2" {{ old('gender', $employeeInfo->gender) == '2' ? 'selected' : '' }}>Male</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -156,7 +156,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">Address</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <textarea rows="6" class="form-control border-primary" name="address" placeholder="Address" id="address" value="{{ old('address', $employeeInfo->address) }}"></textarea>
+                                                        <textarea rows="6" class="form-control border-primary" name="address" placeholder="Address" id="address">{{ old('address', $employeeInfo->address) }}</textarea>
                                                     </div>
                                                 </div>
                                             </div>

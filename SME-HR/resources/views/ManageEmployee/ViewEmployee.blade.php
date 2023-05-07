@@ -23,7 +23,7 @@
                             </div>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form method="POST" class="form form-horizontal" action="{{route('updateEmployee' , ['id' => $employeeInfo->id])}}">
+                                    <form method="POST" class="form form-horizontal" action="">
                                         <div class="form-body">
                                             <h4 class="form-section"><i class="fas fa-file-alt">&nbsp;&nbsp;&nbsp;</i>Employee Details</h4>
                                             <br>
@@ -101,9 +101,9 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">Position</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <select name="position_id" class="form-control border-primary" id="position_id" value="{{ old('position_id', $employeeInfo->position_id) }}" disabled>
-                                                            <option disabled value="" selected hidden>Select</option>
-                                                            <option value="1">Female</option>
+                                                        <select name="position_id" class="form-control border-primary" id="position_id" disabled>
+                                                            <option value="1" {{ old('position_id', $employeeInfo->position_id) == '1' ? 'selected' : '' }}>Cashier</option>
+                                                            <option value="2" {{ old('position_id', $employeeInfo->position_id) == '2' ? 'selected' : '' }}>Cooker</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -112,9 +112,10 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">User Type</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <select name="user_type" class="form-control border-primary" id="user_type" value="{{ old('user_type', $employeeInfo->user_type) }}" disabled>
-                                                            <option disabled value="" selected hidden>Select</option>
-                                                            <option value="1">Female</option>
+                                                        <select name="user_type" class="form-control border-primary" id="user_type" disabled>
+                                                            <option value="1" {{ old('user_type_id', $employeeInfo->user_type_id) == '1' ? 'selected' : '' }}>Administrator</option>
+                                                            <option value="2" {{ old('user_type_id', $employeeInfo->user_type_id) == '2' ? 'selected' : '' }}>Manager</option>
+                                                            <option value="3" {{ old('user_type_id', $employeeInfo->user_type_id) == '3' ? 'selected' : '' }}>Staff</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -143,10 +144,9 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">Gender</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <select name="gender" class="form-control border-primary" id="gender" value="{{ old('gender', $employeeInfo->gender) }}" disabled>
-                                                            <option disabled value="" selected hidden>Select</option>
-                                                            <option value="1">Female</option>
-                                                            <option value="2">Male</option>
+                                                        <select name="gender" class="form-control border-primary" id="gender" disabled>
+                                                            <option value="1" {{ old('gender', $employeeInfo->gender) == '1' ? 'selected' : '' }}>Female</option>
+                                                            <option value="2" {{ old('gender', $employeeInfo->gender) == '2' ? 'selected' : '' }}>Male</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -155,7 +155,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">Address</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <textarea rows="6" class="form-control border-primary" name="address" placeholder="Address" id="address" value="{{ old('address', $employeeInfo->address) }}" disabled></textarea>
+                                                        <textarea rows="6" class="form-control border-primary" name="address" placeholder="Address" id="address" disabled>{{ old('address', $employeeInfo->address) }}</textarea>
                                                     </div>
                                                 </div>
                                             </div>

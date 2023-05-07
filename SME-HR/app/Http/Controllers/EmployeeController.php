@@ -113,6 +113,7 @@ class EmployeeController extends Controller
             'password' => 'required',
             'address' => 'required',
             'gender' => 'required',
+            'ic' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
             'position_id' => 'required',
@@ -127,20 +128,18 @@ class EmployeeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function deleteEmployee(EmployeeRecord $list)
+    public function deleteEmployee($id)
     {
-        // check if user is authorized to delete the report
-        if ($list->id != auth()->user()->id) {
-            return redirect()->back()->with('error', 'You are not authorized to delete this report.');
+        $employeeRecord = EmployeeRecord::find($id);
+
+        if (!$employeeRecord) {
+            return redirect()->back()->with('error', 'Employee record not found.');
         }
-
-        // check if the correct ID is being passed
-        dd($list->id);
-
-        // delete data
-        $list->delete();
+    
+        // delete record
+        $employeeRecord->delete();
         session()->flash('success', 'Employee record deleted successfully.');
-
+    
         // redirect to previous page
         return redirect()->back();
     }
