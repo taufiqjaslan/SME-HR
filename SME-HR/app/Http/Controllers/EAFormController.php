@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\EAFormRecord;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -12,9 +13,13 @@ class EAFormController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function listEA()
     {
-        //
+        // Retrieve all payroll records and include the associated employee data and salary_type data
+        $EAFormRecords = EAFormRecord::with('employee')->get();
+
+        // Pass the data to the view
+        return view('ManagePayroll.PayrollList', ["EAFormRecords" => $EAFormRecords]);
     }
 
     /**
