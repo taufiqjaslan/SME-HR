@@ -84,7 +84,7 @@
                                     <div class="col-md-9 mx-auto">
                                         @php
                                         $currentYear = date('Y');
-                                        $years = range($currentYear - 3, $currentYear);
+                                        $years = range($currentYear - 2, $currentYear);
                                         $years = array_reverse($years);
                                         @endphp
                                         <select name="position_id" class="form-control border-primary" id="position_id">
