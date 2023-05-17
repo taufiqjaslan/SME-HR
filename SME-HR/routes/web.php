@@ -57,3 +57,11 @@ Route::controller(App\Http\Controllers\LeaveController::class)->group(function (
     Route::get('/Apply_Leave', 'ApplyLeave')->name('ApplyLeave');//link to go to apply leave page
 
 });
+
+Route::controller(App\Http\Controllers\EAFormController::class)->group(function () {
+
+    Route::get('/EAForm', 'EAForm')->name('EAForm');//link to view list of employee 
+    Route::get('viewEAForm/{id}', 'ListEAForm')->name('ListEAForm');//link to go to view ea form
+    Route::get('/Add_EAForm', 'addEAForm')->name('addEAForm');//link to go to add ea form
+
+});

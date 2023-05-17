@@ -16,4 +16,8 @@ class EAFormRecord extends Model
         return $this->belongsTo(EmployeeRecord::class, 'user_id');
     }
 
+    public function position()
+    {
+        return $this->employee->belongsTo(PositionRecord::class, 'position_id');
+    }
 }

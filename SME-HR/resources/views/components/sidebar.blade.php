@@ -57,8 +57,7 @@ $links = [
             [
                 "section_text" => "EA Form",
                 "section_list" => [
-                    ["href" => "RegisterEmployee", "text" => "Apply Claim"],
-                    ["href" => "RegisterEmployee", "text" => "View Claim"]
+                    ["href" => "EAForm", "text" => "EA Form List"],
                 ]
             ]
         ],

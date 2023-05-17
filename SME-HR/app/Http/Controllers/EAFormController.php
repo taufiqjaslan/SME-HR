@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\EAFormRecord;
+use App\Models\EmployeeRecord;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -13,21 +14,35 @@ class EAFormController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function listEA()
+    public function EAForm()
     {
-        // Retrieve all payroll records and include the associated employee data and salary_type data
-        $EAFormRecords = EAFormRecord::with('employee')->get();
+        // Retrieve all eaform records and include the associated employee and position data
+        $EAFormRecords = EAFormRecord::with('employee.position')->get();
 
+        $EAFormRecords = EmployeeRecord::with('position')
+            ->join('positions', 'users.position_id', '=', 'positions.id')
+            ->select('users.*', 'positions.position_name')
+            ->get();
         // Pass the data to the view
-        return view('ManagePayroll.PayrollList', ["EAFormRecords" => $EAFormRecords]);
+        return view('ManageEAForm.EAFormHome', ["EAFormRecords" => $EAFormRecords]);
     }
+
+    public function listEAForm($id)
+    {
+        $eaFormInfo = EAFormRecord::with('employee.position')->where('user_id', $id)->get();
+
+        return view('ManageEAForm.EAFormList', [
+            'eaFormInfo' => $eaFormInfo,
+        ]);
+    }
+
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function addEAForm()
     {
-        //
+        return view('ManageEAForm.AddEAForm'); //link to go to addeaform page
     }
 
     /**

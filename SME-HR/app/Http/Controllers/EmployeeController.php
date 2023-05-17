@@ -135,11 +135,11 @@ class EmployeeController extends Controller
         if (!$employeeRecord) {
             return redirect()->back()->with('error', 'Employee record not found.');
         }
-    
+
         // delete record
         $employeeRecord->delete();
         session()->flash('success', 'Employee record deleted successfully.');
-    
+
         // redirect to previous page
         return redirect()->back();
     }
