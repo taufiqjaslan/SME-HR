@@ -12,9 +12,10 @@
     <div class="row">
         <div class="col-md-12">
             <div class="text-md-right">
-                <a href="{{route('addEAForm')}}" class="btn btn-primary">Add EA Form</a>
+                <a href="{{ route('addEAForm', ['id' => $id]) }}" class="btn btn-primary">Add EA Form</a>
             </div>
         </div>
+    </div>
     </div>
     <br>
 

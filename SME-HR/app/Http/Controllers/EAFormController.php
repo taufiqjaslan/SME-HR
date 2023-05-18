@@ -33,6 +33,7 @@ class EAFormController extends Controller
 
         return view('ManageEAForm.EAFormList', [
             'eaFormInfo' => $eaFormInfo,
+            'id' => $id,
         ]);
     }
 
@@ -40,9 +41,15 @@ class EAFormController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function addEAForm()
+    public function addEAForm(Request $request, $id)
     {
-        return view('ManageEAForm.AddEAForm'); //link to go to addeaform page
+        // Your code to handle the add EA form functionality
+        $eaFormData = EAFormRecord::with('employee.position')->where('user_id', $id)->get();
+        
+        return view('ManageEAForm.AddEAForm', [
+            'eaFormData' => $eaFormData,
+            'id' => $id,
+        ]);
     }
 
     /**
