@@ -10,4 +10,8 @@ class PositionRecord extends Model
     use HasFactory;
 
     protected $table = 'positions';
+
+    protected $fillable = [
+        'position_name',
+    ];
 }

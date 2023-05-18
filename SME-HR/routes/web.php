@@ -4,6 +4,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\ClaimController;
+use App\Http\Controllers\PositionController;
+use App\Http\Controllers\SalaryTypeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -63,5 +65,15 @@ Route::controller(App\Http\Controllers\EAFormController::class)->group(function 
     Route::get('/EAForm', 'EAForm')->name('EAForm');//link to view list of employee 
     Route::get('viewEAForm/{id}', 'ListEAForm')->name('ListEAForm');//link to go to view ea form
     Route::get('Add_EAForm/{id}', 'addEAForm')->name('addEAForm');//link to go to add ea form
+});
+
+Route::controller(App\Http\Controllers\PositionController::class)->group(function () {
+
+    Route::get('/List_Position', 'ListPosition')->name('ListPosition');//link to list of position page
+    Route::get('Add_Position', 'addPosition')->name('addPosition');//link to go to add position page
+    Route::post('/Store_Position', 'StorePosition')->name('StorePosition');//link to go to store the postion data into db
+});
+
+Route::controller(App\Http\Controllers\SalaryTypeController::class)->group(function () {
 
 });
