@@ -12,7 +12,8 @@ $links = [
                 "section_text" => "Employee",
                 "section_list" => [
                     ["href" => "ListEmployee", "text" => "List Employee"],
-                    ["href" => "CreateEmployee", "text" => "Add Employee"]
+                    ["href" => "CreateEmployee", "text" => "Add Employee"],
+                    ["href" => "ListPosition", "text" => "Job Setting"]
                 ]
             ]
         ],
@@ -26,9 +27,10 @@ $links = [
             [
                 "section_text" => "Payroll",
                 "section_list" => [
-                    ["href" => "ListPayroll", "text" => "Payslip Setting"],
+                    ["href" => "ListPayroll", "text" => "List Payslip"],
                     ["href" => "GeneratePayslip", "text" => "Generate Payslip"],
-                    ["href" => "ViewPayslip", "text" => "View Payslip"]
+                    ["href" => "ViewPayslip", "text" => "View Payslip"],
+                    ["href" => "ListClaim", "text" => "Payslip item Setting"],
                 ]
             ]
         ],
