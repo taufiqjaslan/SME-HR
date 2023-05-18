@@ -17,8 +17,6 @@ class EAFormController extends Controller
     public function EAForm()
     {
         // Retrieve all eaform records and include the associated employee and position data
-        $EAFormRecords = EAFormRecord::with('employee.position')->get();
-
         $EAFormRecords = EmployeeRecord::with('position')
             ->join('positions', 'users.position_id', '=', 'positions.id')
             ->select('users.*', 'positions.position_name')

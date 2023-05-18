@@ -34,7 +34,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">Serial Number</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <input type="text" class="form-control border-primary" placeholder="Serial Number" id="serial_number" name="serial_number">
+                                                        <input type="text" class="form-control border-primary" id="serial_number" name="serial_number">
                                                     </div>
                                                 </div>
                                             </div>
@@ -42,7 +42,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">LHDN Branch</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <input type="text" class="form-control border-primary" placeholder="LHDN Branch" name="branch" id="branch">
+                                                        <input type="text" class="form-control border-primary name="branch" id="branch">
                                                     </div>
                                                 </div>
                                             </div>
@@ -52,7 +52,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">Employer Name</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <input type="text" class="form-control border-primary" placeholder="Employer Name" name="emp_name" id="emp_name">
+                                                        <input type="text" class="form-control border-primary" name="emp_name" id="emp_name">
                                                     </div>
                                                 </div>
                                             </div>
@@ -60,7 +60,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">Position</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <input type="text" class="form-control border-primary" placeholder="Position" name="position" id="position" value="{{$eaFormData->first()->employee->position->position_name}}">
+                                                        <input type="text" class="form-control border-primary" name="position" id="position" value="{{$eaFormData->first()->employee->position->position_name}}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -70,7 +70,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">Date</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <input class="form-control border-primary" type="date" placeholder="Date" name="date" id="date">
+                                                        <input class="form-control border-primary" type="date" name="date" id="date">
                                                     </div>
                                                 </div>
                                             </div>
@@ -103,7 +103,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Full Name</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" placeholder="Full Name" id="name" name="name" value="{{$eaFormData->first()->employee->name}}">
+                                                    <input type="text" class="form-control border-primary" id="name" name="name" value="{{$eaFormData->first()->employee->name}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -111,7 +111,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Position</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" placeholder="Position" name="position" id="position" value="{{$eaFormData->first()->employee->position->position_name}}">
+                                                    <input type="text" class="form-control border-primary" name="position" id="position" value="{{$eaFormData->first()->employee->position->position_name}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -121,7 +121,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">New IC Number</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" placeholder="IC Number" name="ic" id="ic" value="{{$eaFormData->first()->employee->ic}}">
+                                                    <input type="text" class="form-control border-primary" name="ic" id="ic" value="{{$eaFormData->first()->employee->ic}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -129,7 +129,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Staff / Payroll Number</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" placeholder="Staff/Payroll Number" name="payroll_num" id="payroll_num">
+                                                    <input type="text" class="form-control border-primary" name="payroll_num" id="payroll_num">
                                                 </div>
                                             </div>
                                         </div>
@@ -139,7 +139,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">EPF Number</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" placeholder="EPF Number" name="epf_num" id="epf_num">
+                                                    <input type="text" class="form-control border-primary" name="epf_num" id="epf_num">
                                                 </div>
                                             </div>
                                         </div>
@@ -147,7 +147,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">KWSP Number</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" placeholder="KWSP Number" name="kwsp_num" id="kwsp_num">
+                                                    <input type="text" class="form-control border-primary" name="kwsp_num" id="kwsp_num">
                                                 </div>
                                             </div>
                                         </div>
@@ -157,7 +157,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Start Date</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="date" class="form-control border-primary" placeholder="Start Date" name="start_date" id="start_date">
+                                                    <input type="date" class="form-control border-primary" name="start_date" id="start_date">
                                                 </div>
                                             </div>
                                         </div>
@@ -165,7 +165,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">End Date</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="date" class="form-control border-primary" placeholder="End Date" name="end_date" id="end_date">
+                                                    <input type="date" class="form-control border-primary" name="end_date" id="end_date">
                                                 </div>
                                             </div>
                                         </div>
@@ -175,7 +175,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Number of Children Qualified for Tax Relief</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="number" class="form-control border-primary" placeholder="Number of Children" name="children_num" id="children_num">
+                                                    <input type="number" class="form-control border-primary" name="children_num" id="children_num">
                                                 </div>
                                             </div>
                                         </div>
@@ -190,7 +190,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Gross Salary, Wages or Leave Pay (including overtime pay)</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" placeholder="Gross Salary, Wages or Leave Pay (including overtime pay)" id="gross_salary" name="gross_salary">
+                                                    <input type="text" class="form-control border-primary" id="gross_salary" name="gross_salary">
                                                 </div>
                                             </div>
                                         </div>
@@ -198,7 +198,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Fees (including director fess), commission or bonus</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" placeholder="Fees (including director fess), commission or bonus" id="fees" name="fees">
+                                                    <input type="text" class="form-control border-primary" id="fees" name="fees">
                                                 </div>
                                             </div>
                                         </div>
@@ -208,7 +208,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Gross Tips, Perquisites, Award / Rewards or Other Allowance</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" placeholder="Gross Tips, Perquisites, Award / Rewards or Other Allowance" id="gross_tip" name="gross_tip">
+                                                    <input type="text" class="form-control border-primary" id="gross_tip" name="gross_tip">
                                                 </div>
                                             </div>
                                         </div>
@@ -216,7 +216,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Income Tax Borne by the Employer in Respect of his Employee</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" placeholder="Income Tax Borne by the Employer in Respect of his Employee" id="income_tax" name="income_tax">
+                                                    <input type="text" class="form-control border-primary" id="income_tax" name="income_tax">
                                                 </div>
                                             </div>
                                         </div>
@@ -226,7 +226,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Refund from Unapproved Provident / Pension Fund</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" placeholder="Refund" name="refund" id="refund">
+                                                    <input type="text" class="form-control border-primary" name="refund" id="refund">
                                                 </div>
                                             </div>
                                         </div>
@@ -234,7 +234,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Compensation for Loss of Employment</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" placeholder="Compensation for Loss of Employment" name="compensation" id="compensation">
+                                                    <input type="text" class="form-control border-primary" name="compensation" id="compensation">
                                                 </div>
                                             </div>
                                         </div>
@@ -248,7 +248,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Pension</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" placeholder="Pension" id="pension" name="pension">
+                                                    <input type="text" class="form-control border-primary" id="pension" name="pension">
                                                 </div>
                                             </div>
                                         </div>
@@ -256,7 +256,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Annuities or Other Periodical Payments</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" placeholder="Annuities or Other Periodical Payments" id="annuities" name="annuities">
+                                                    <input type="text" class="form-control border-primary" id="annuities" name="annuities">
                                                 </div>
                                             </div>
                                         </div>
@@ -270,7 +270,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Monthly Tax Deduction (MTD) Remitted to LHDNM</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" placeholder="Tax Deduction" id="tax_deduction" name="tax_deduction">
+                                                    <input type="text" class="form-control border-primary" id="tax_deduction" name="tax_deduction">
                                                 </div>
                                             </div>
                                         </div>
@@ -278,7 +278,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">CP38 Deduction Remitted to LHDNM</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" placeholder="CP38 Deduction Remitted to LHDN" id="cp38_deduction" name="cp38_deduction">
+                                                    <input type="text" class="form-control border-primary" id="cp38_deduction" name="cp38_deduction">
                                                 </div>
                                             </div>
                                         </div>
@@ -288,7 +288,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Zakat Paid via Salary Deduction</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" placeholder="Zakat" id="zakat_deduction" name="zakat_deduction">
+                                                    <input type="text" class="form-control border-primary" id="zakat_deduction" name="zakat_deduction">
                                                 </div>
                                             </div>
                                         </div>
@@ -296,7 +296,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Zakat Other thab that paid via Monthly Salary Deduction</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" placeholder="Zakat" id="zakat" name="zakat">
+                                                    <input type="text" class="form-control border-primary" id="zakat" name="zakat">
                                                 </div>
                                             </div>
                                         </div>
@@ -306,7 +306,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Total Qualifying Child Relief</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" placeholder="Total Qualifying Child Relief" id="child_relief" name="child_relief">
+                                                    <input type="text" class="form-control border-primary" id="child_relief" name="child_relief">
                                                 </div>
                                             </div>
                                         </div>
@@ -320,7 +320,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Amount of Compulsory Cotribution Paid</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" placeholder="Amount of Compulsory Cotribution Paid" id="amount" name="amount">
+                                                    <input type="text" class="form-control border-primary" id="amount" name="amount">
                                                 </div>
                                             </div>
                                         </div>
@@ -328,7 +328,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">SOCSO Amount</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" placeholder="SOCSO Amount" id="socso" name="socso">
+                                                    <input type="text" class="form-control border-primary" id="socso" name="socso">
                                                 </div>
                                             </div>
                                         </div>
