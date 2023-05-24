@@ -38,7 +38,7 @@ class PositionController extends Controller
     public function StorePosition(Request $request)
     {
         //store a new user (staff)
-        $newUser = PositionRecord::create([
+        $newPosition = PositionRecord::create([
             'position_name' => $request['position_name'],
         ]);
 
