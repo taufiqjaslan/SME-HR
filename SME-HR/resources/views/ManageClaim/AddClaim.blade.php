@@ -30,8 +30,11 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Staff Name</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <select name="name" class="form-control border-primary" id="name">
-                                                                <option disabled value="" selected hidden>Select Staff Name</option>
+                                                            <select name="user_id" class="form-control border-primary" id="user_id">
+                                                                <option disabled value="" selected hidden>Select</option>
+                                                                @foreach($listData['employee'] as $employees)
+                                                                <option value="{{ $employees->id }}">{{ $employees->name }}</option>
+                                                                @endforeach
                                                             </select>
                                                         </div>
                                                     </div>
@@ -50,8 +53,11 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Claim Type</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <select name="name" class="form-control border-primary" id="name">
-                                                                <option disabled value="" selected hidden>Select Claim Type</option>
+                                                            <select name="claim_type_id" class="form-control border-primary" id="claim_type_id">
+                                                                <option disabled value="" selected hidden>Select</option>
+                                                                @foreach($listData['claimType'] as $claimTypes)
+                                                                <option value="{{ $claimTypes->id }}">{{ $claimTypes->name }}</option>
+                                                                @endforeach
                                                             </select>
                                                         </div>
                                                     </div>
@@ -60,7 +66,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Claim Details</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <textarea rows="6" class="form-control border-primary" name="address" placeholder="Claim Details" id="address"></textarea>
+                                                            <textarea rows="6" class="form-control border-primary" name="detail" placeholder="Claim Details" id="detail"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -78,7 +84,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Amount</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input class="form-control border-primary" type="text" placeholder="Amount" name="amount" id="amount" value="RM">
+                                                            <input class="form-control border-primary" type="text" placeholder="Amount" name="amount" id="amount">
                                                         </div>
                                                     </div>
                                                 </div>

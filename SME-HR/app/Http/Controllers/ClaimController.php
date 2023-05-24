@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\ClaimRecord;
+use App\Models\ClaimTypeRecord;
+use App\Models\EmployeeRecord;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -15,7 +17,15 @@ class ClaimController extends Controller
      */
     public function ApplyClaim()
     {
-        return view('ManageClaim.AddClaim'); //link to go to addEmployee page
+
+        // Retrieve all usertype and position records and include the associated employee data
+        $employee = EmployeeRecord::with('userType')->get();
+        $claimType = ClaimTypeRecord::all();
+        $lists = [
+            'employee' => $employee,
+            'claimType' => $claimType,
+        ];
+        return view('ManageClaim.AddClaim', ["listData" => $lists]); //link to go to addclaim page
     }
 
     public function StoreClaim(Request $request)

@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class ClaimTypeRecord extends Model
 {
     use HasFactory;
+
+    protected $table = 'claim_types';
+
+    protected $fillable = [
+        'name',
+    ];
+
 }

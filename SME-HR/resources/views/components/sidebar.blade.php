@@ -30,7 +30,7 @@ $links = [
                     ["href" => "ListPayroll", "text" => "List Payslip"],
                     ["href" => "GeneratePayslip", "text" => "Generate Payslip"],
                     ["href" => "ViewPayslip", "text" => "View Payslip"],
-                    ["href" => "ListClaim", "text" => "Payslip item Setting"],
+                    ["href" => "ListClaim", "text" => "Payslip Item Setting"],
                 ]
             ]
         ],
@@ -45,7 +45,8 @@ $links = [
                 "section_text" => "Claim",
                 "section_list" => [
                     ["href" => "ApplyClaim", "text" => "Apply Claim"],
-                    ["href" => "ListClaim", "text" => "View Claim"]
+                    ["href" => "ListClaim", "text" => "View Claim"],
+                    ["href" => "ListClaimType", "text" => "Claim Setting"]
                 ]
             ]
         ],
