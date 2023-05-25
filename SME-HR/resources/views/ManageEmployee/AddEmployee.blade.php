@@ -167,8 +167,7 @@
                                         <hr>
                                         <br>
                                         <div class="form-actions text-center">
-                                            <button class="btn btn-primary float-md-right" id="generate_button">
-                                                <i class="fa fa-dot-circle-o"></i>&nbsp;&nbsp;Save</button>
+                                            <button class="btn btn-primary float-md-right" id="generate_button">Save</button>
                                         </div>
                                     </form>
                                 </div>
