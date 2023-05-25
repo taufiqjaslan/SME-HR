@@ -93,8 +93,7 @@
                                         <hr>
                                         <br>
                                         <div class="form-actions text-center">
-                                            <button class="btn btn-primary float-md-right" id="generate_button">
-                                                <i class="fa fa-dot-circle-o"></i>&nbsp;&nbsp;Apply</button>
+                                            <button class="btn btn-primary float-md-right" id="generate_button">Apply</button>
                                         </div>
                                     </form>
                                 </div>
