@@ -45,8 +45,10 @@ Route::controller(App\Http\Controllers\PayrollController::class)->group(function
 });
 
 Route::controller(App\Http\Controllers\ClaimController::class)->group(function () {
-    Route::get('/Apply_claim', 'ApplyClaim')->name('ApplyClaim');//link to go to reporthomepage
+    Route::get('/Apply_claim', 'ApplyClaim')->name('ApplyClaim');//link to go to apply claim
     Route::get('/List_Claim', 'ListClaim')->name('ListClaim');//link to go to claim list page
+    Route::post('/storeClaim', 'StoreClaim')->name('StoreClaim');//link to store the data to the database
+    Route::get('viewClaim/{id}', 'viewClaim')->name('viewClaim');//link to go to view page
 });
 
 Route::controller(App\Http\Controllers\LeaveController::class)->group(function () {
