@@ -30,39 +30,55 @@ class ClaimController extends Controller
 
     public function StoreClaim(Request $request)
     {
-        //store a new user (staff)
-        $newUser = ClaimRecord::create([
-            'name' => $request['name'],
-            'username' => $request['username'],
-            'phone_number' => $request['phone_number'],
-            'email' => $request['email'],
-            'address' => $request['address'],
-            'gender' => $request['gender'],
-            'start_date' => $request['start_date'],
-            'end_date' => $request['end_date'],
-            'position_id' => $request['position_id'],
-            'user_type_id' => $request['user_type_id'],
+        $filename = null; // Initialize with a default value of null
+    
+        // Check if file is uploaded
+        if ($request->hasFile('attachment')) {
+            $file = $request->file('attachment');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $file->move('uploads/attachment/', $filename);
+        }
+    
+        // Store a new claim record
+        $newClaim = ClaimRecord::create([
+            'user_id' => $request->user_id,
+            'date' => $request->date,
+            'claim_type_id' => $request->claim_type_id,
+            'detail' => $request->detail,
+            'amount' => $request->amount,
+            'attachment' => $filename,
+            'start_time' => $request->start_time,
+            'end_time' => $request->end_time,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
             'status' => 1,
         ]);
-
-        return redirect()->route('ListEmployee');
+    
+        return redirect()->route('ListClaim');
     }
+    
 
     public function listClaim()
     {
         // Retrieve all payroll records and include the associated employee data and salary_type data
-        $claimRecords = ClaimRecord::with('employee', 'claimType')->get();
+        $claimRecords = ClaimRecord::with('claimType')
+            ->join('claim_types', 'claims.claim_type_id', '=', 'claim_types.id')
+            ->select('claims.*', 'claim_types.name')
+            ->get();
+
 
         // Pass the data to the view
         return view('ManageClaim.ClaimList', ["claimRecords" => $claimRecords]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function viewClaim(string $id)
     {
-        //
+        $claimInfo = ClaimRecord::find($id);
+
+        return view('ManageClaim.ViewClaim', [
+            'claimInfo' => $claimInfo,
+        ]); //returns the employee information
     }
 
     /**
