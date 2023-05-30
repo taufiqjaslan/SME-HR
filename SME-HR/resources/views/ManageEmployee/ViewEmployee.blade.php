@@ -9,12 +9,20 @@
         </div>
     </x-slot>
 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-md-right">
+                <a href="{{route('ListEmployee')}}"><button class="btn btn-primary float-md-right"><i class="fas fa-chevron-left"></i></button></a>
+            </div>
+        </div>
+    </div>
+    <br>
+
     <div>
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <a href="{{route('ListEmployee')}}"><button class="btn btn-primary float-md-right"><i class="fas fa-chevron-left"></i></button></a>
                         <!--begin::Tab-->
                         <div class="tab-pane show active px-7" id="kt_user_edit_tab_1" role="tabpanel">
                             <!--begin::Row-->
@@ -102,8 +110,11 @@
                                                     <label class="col-md-3 label-control">Position</label>
                                                     <div class="col-md-9 mx-auto">
                                                         <select name="position_id" class="form-control border-primary" id="position_id" disabled>
-                                                            <option value="1" {{ old('position_id', $employeeInfo->position_id) == '1' ? 'selected' : '' }}>Cashier</option>
-                                                            <option value="2" {{ old('position_id', $employeeInfo->position_id) == '2' ? 'selected' : '' }}>Cooker</option>
+                                                            @foreach ($positions as $position)
+                                                            <option value="{{ $position->id }}" {{ old('position_id', $employeeInfo->position_id) == $position->id ? 'selected' : '' }}>
+                                                                {{ $position->position_name }}
+                                                            </option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
