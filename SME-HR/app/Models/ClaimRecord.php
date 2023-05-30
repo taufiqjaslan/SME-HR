@@ -11,6 +11,21 @@ class ClaimRecord extends Model
 
     protected $table = 'claims';
 
+    protected $fillable = [
+        'user_id',
+        'claim_type_id',
+        'date',
+        'amount',
+        'detail',
+        'attachment',
+        'start_time',
+        'end_time',
+        'start_date',
+        'end_date',
+        'status',
+    ];
+
+
     public function employee()
     {
         return $this->belongsTo(EmployeeRecord::class, 'user_id');
@@ -18,8 +33,6 @@ class ClaimRecord extends Model
 
     public function claimType()
     {
-        return $this->hasOne(ClaimRecord::class, 'id', 'claim_type_id')
-            ->leftjoin('claim_types', 'claim_types.id', '=', 'claims.claim_type_id')
-            ->select('claim_types.name');
+        return $this->belongsTo(ClaimTypeRecord::class, 'claim_type_id');
     }
 }

@@ -22,7 +22,7 @@
                             </div>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form method="POST" class="form form-horizontal" action="">
+                                    <form method="POST" class="form form-horizontal" action="{{route('StoreClaim')}}" enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-body">
                                             <div class="row">
@@ -53,7 +53,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Claim Type</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <select name="claim_type_id" class="form-control border-primary" id="claim_type_id">
+                                                            <select name="claim_type_id" class="form-control border-primary" id="claim_type">
                                                                 <option disabled value="" selected hidden>Select</option>
                                                                 @foreach($listData['claimType'] as $claimTypes)
                                                                 <option value="{{ $claimTypes->id }}">{{ $claimTypes->name }}</option>
@@ -72,19 +72,56 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-6" id="amount" hidden>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 label-control">Amount</label>
+                                                        <div class="col-md-9 mx-auto">
+                                                            <input class="form-control border-primary" type="text" placeholder="Amount" name="amount" id="amount">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6" id="attachment" hidden>
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Attachement File</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input type="file" id="attachement" name="attachment" />
+                                                            <input type="file" id="attachment_file" name="attachment">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="overtime" hidden>
+                                                <div class="card-header">
+                                                    <h1 class="card-title"><i class="fas fa-clock">&nbsp;&nbsp;&nbsp;</i>Overtime Details</h1>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 label-control">Start Time</label>
+                                                        <div class="col-md-9 mx-auto">
+                                                            <input class="form-control border-primary" type="time" name="start_time" id="start_time">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group row">
-                                                        <label class="col-md-3 label-control">Amount</label>
+                                                        <label class="col-md-3 label-control">End Time</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input class="form-control border-primary" type="text" placeholder="Amount" name="amount" id="amount">
+                                                            <input class="form-control border-primary" type="time" name="end_time" id="end_time">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 label-control">From Date</label>
+                                                        <div class="col-md-9 mx-auto">
+                                                            <input class="form-control border-primary" type="date" name="start_date" id="start_date">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 label-control">To Date</label>
+                                                        <div class="col-md-9 mx-auto">
+                                                            <input class="form-control border-primary" type="date" name="end_date" id="end_date">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -106,3 +143,24 @@
     </div>
 
 </x-app-layout>
+
+<script>
+    //utk show date dgn time
+    $('document').ready(function() {
+        $('#claim_type').change(function() {
+            var select_status = $('#claim_type').val();
+
+            if (select_status == "3") {
+                $('#overtime').removeAttr('hidden');
+                $('#overtime input').attr('required', true);
+                document.getElementById("attachment").setAttribute("hidden", "");
+                document.getElementById("amount").setAttribute("hidden", "");
+            } else {
+                $('#overtime').attr('hidden', true);
+                $('#overtime input').removeAttr('required');
+                document.getElementById("attachment").removeAttribute("hidden");
+                document.getElementById("amount").removeAttribute("hidden");
+            }
+        })
+    })
+</script>

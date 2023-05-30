@@ -24,6 +24,7 @@
                                         <th>Claim Type</th>
                                         <th>Amount</th>
                                         <th>Status</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
 
@@ -36,8 +37,8 @@
                                         <td>{{ $no++ }}</td>
                                         <td>{{$list->employee->name}}</td>
                                         <td>{{$list->date}}</td>
-                                        <td>Transportation</td>
-                                        <td>{{$list->amount}}</td>
+                                        <td>{{$list->claimType->name}}</td>
+                                        <td>{{ $list->amount ?? '-' }}</td>
                                         @if($list->status == 1)
                                         <?php
                                         $labelstatus = "UNPAID";
@@ -50,6 +51,15 @@
                                         ?>
                                         @endif
                                         <td><span class="{{ $labelcolor }}">{{ $labelstatus }}</span></td>
+                                        <td>
+                                            <form action="" method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <a href="{{route('viewClaim', ['id' => $list->id])}}" class="mr-2"><i class="fas fa-eye font-16"></i></a>
+                                                <a href="" class="mr-2"><i class="fas fa-edit text-primary font-16"></i></a>
+                                                <button type="submit" name="submit"><i class="fas fa-trash-alt text-danger font-16"></i></button>
+                                            </form>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>

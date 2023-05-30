@@ -15,10 +15,14 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id'); //foreign key
             $table->unsignedBigInteger('claim_type_id'); //foreign key
-            $table->string('subject');
             $table->date('date');
-            $table->decimal('amount');
-            $table->string('attachment');
+            $table->decimal('amount')->nullable();
+            $table->string('attachment')->nullable();
+            $table->string('detail')->nullable();
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->integer('status');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');//foreign key
