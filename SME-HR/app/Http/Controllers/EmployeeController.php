@@ -72,10 +72,9 @@ class EmployeeController extends Controller
     public function viewEmployee(string $id)
     {
         $employeeInfo = EmployeeRecord::find($id);
+        $positions = PositionRecord::all(); // Fetch positions from the database
 
-        return view('ManageEmployee.ViewEmployee', [
-            'employeeInfo' => $employeeInfo,
-        ]); //returns the employee information
+        return view('ManageEmployee.ViewEmployee', compact('employeeInfo', 'positions'));
     }
 
     /**
