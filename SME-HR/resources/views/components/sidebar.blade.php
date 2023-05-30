@@ -30,7 +30,6 @@ $links = [
                     ["href" => "ListPayroll", "text" => "List Payslip"],
                     ["href" => "GeneratePayslip", "text" => "Generate Payslip"],
                     ["href" => "ViewPayslip", "text" => "View Payslip"],
-                    ["href" => "ListClaim", "text" => "Payslip Item Setting"],
                 ]
             ]
         ],
