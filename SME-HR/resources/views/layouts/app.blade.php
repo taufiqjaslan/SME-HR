@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="{{ asset('build/assets/plugins/datatables/buttons.bootstrap4.min.css') }}">
     <!-- Responsive datatable examples -->
     <link rel="stylesheet" href="{{ asset('build/assets/plugins/datatables/responsive.bootstrap4.min.css') }}">
+    
 
     <livewire:styles />
 
