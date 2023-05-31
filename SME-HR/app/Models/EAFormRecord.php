@@ -11,6 +11,35 @@ class EAFormRecord extends Model
 
     protected $table = 'ea_forms';
 
+    protected $fillable = [
+        'user_id',
+        'date',
+        'year',
+        'tax_num',
+        'payroll_num',
+        'epf_num',
+        'kwsp_num',
+        'start_date',
+        'end_date',
+        'children_num',
+        'gross_salary',
+        'fees',
+        'gross_tip',
+        'income_tax',
+        'refund',
+        'compensation',
+        'pension',
+        'annuities',
+        'tax_deduction',
+        'cp38_deduction',
+        'zakat_deduction',
+        'zakat',
+        'child_relief',
+        'amount',
+        'socso',
+
+    ];
+
     public function employee()
     {
         return $this->belongsTo(EmployeeRecord::class, 'user_id');
@@ -20,4 +49,5 @@ class EAFormRecord extends Model
     {
         return $this->employee->belongsTo(PositionRecord::class, 'position_id');
     }
+
 }
