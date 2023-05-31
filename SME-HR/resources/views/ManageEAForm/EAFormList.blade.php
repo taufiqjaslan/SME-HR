@@ -44,7 +44,7 @@
                                         <td>{{$EAList->employee->name}}</td>
                                         <td>{{$EAList->year}}</td>
                                         <td>
-                                            <a href="" class="mr-2"><i class="fas fa-eye font-16"></i></a>
+                                            <a href="{{route('viewEAForm', ['id' => $EAList->id])}}" class="mr-2"><i class="fas fa-eye font-16"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach
