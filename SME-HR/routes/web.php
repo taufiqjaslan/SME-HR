@@ -59,9 +59,11 @@ Route::controller(App\Http\Controllers\LeaveController::class)->group(function (
 });
 
 Route::controller(App\Http\Controllers\EAFormController::class)->group(function () {
-    Route::get('/EAForm', 'EAForm')->name('EAForm');//link to view list of employee 
+    Route::get('/EAForm', 'EAFormHome')->name('EAFormHome');//link to view list of employee 
     Route::get('viewEAForm/{id}', 'ListEAForm')->name('ListEAForm');//link to go to view ea form
     Route::get('Add_EAForm/{id}', 'addEAForm')->name('addEAForm');//link to go to add ea form
+    Route::post('/storeEAForm/{id}', 'storeEAForm')->name('storeEAForm');//link to store the data to the database
+    Route::get('EAFormDetail/{id}', 'viewEAForm')->name('viewEAForm');//link to go to view ea form
 });
 
 Route::controller(App\Http\Controllers\PositionController::class)->group(function () {
