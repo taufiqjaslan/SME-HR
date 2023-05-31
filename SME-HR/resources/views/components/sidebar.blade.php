@@ -44,7 +44,7 @@ $links = [
                 "section_text" => "Claim",
                 "section_list" => [
                     ["href" => "ApplyClaim", "text" => "Apply Claim"],
-                    ["href" => "ListClaim", "text" => "View Claim"],
+                    ["href" => "ListClaim", "text" => "List Claim"],
                     ["href" => "ListClaimType", "text" => "Claim Setting"]
                 ]
             ]

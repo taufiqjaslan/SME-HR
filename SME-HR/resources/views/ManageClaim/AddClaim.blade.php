@@ -82,7 +82,7 @@
                                                 </div>
                                                 <div class="col-md-6" id="attachment" hidden>
                                                     <div class="form-group row">
-                                                        <label class="col-md-3 label-control">Attachement File</label>
+                                                        <label class="col-md-3 label-control">Attachment File</label>
                                                         <div class="col-md-9 mx-auto">
                                                             <input type="file" id="attachment_file" name="attachment">
                                                         </div>

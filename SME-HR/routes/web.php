@@ -49,6 +49,9 @@ Route::controller(App\Http\Controllers\ClaimController::class)->group(function (
     Route::get('/List_Claim', 'ListClaim')->name('ListClaim');//link to go to claim list page
     Route::post('/storeClaim', 'StoreClaim')->name('StoreClaim');//link to store the data to the database
     Route::get('viewClaim/{id}', 'viewClaim')->name('viewClaim');//link to go to view page
+    Route::get('editClaim/{id}', 'editClaim')->name('editClaim');//link to go to edit page
+    Route::put('updateClaim/{id}', 'updateClaim')->name('updateClaim');//link to update the data in the database
+    Route::delete('deleteClaim/{id}', 'deleteClaim')->name('deleteClaim');//link to delete the data from the database
 });
 
 Route::controller(App\Http\Controllers\LeaveController::class)->group(function () {

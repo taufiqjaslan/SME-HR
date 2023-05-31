@@ -9,6 +9,7 @@ use App\Models\EmployeeRecord;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
 
 class ClaimController extends Controller
 {
@@ -31,7 +32,7 @@ class ClaimController extends Controller
     public function StoreClaim(Request $request)
     {
         $filename = null; // Initialize with a default value of null
-    
+
         // Check if file is uploaded
         if ($request->hasFile('attachment')) {
             $file = $request->file('attachment');
@@ -39,7 +40,7 @@ class ClaimController extends Controller
             $filename = time() . '.' . $extension;
             $file->move('uploads/attachment/', $filename);
         }
-    
+
         // Store a new claim record
         $newClaim = ClaimRecord::create([
             'user_id' => $request->user_id,
@@ -54,10 +55,10 @@ class ClaimController extends Controller
             'end_date' => $request->end_date,
             'status' => 1,
         ]);
-    
+
         return redirect()->route('ListClaim');
     }
-    
+
 
     public function listClaim()
     {
@@ -75,49 +76,79 @@ class ClaimController extends Controller
     public function viewClaim(string $id)
     {
         $claimInfo = ClaimRecord::find($id);
+        $employeeInfo = EmployeeRecord::all(); // Fetch employee from the database
+        $claimTypeInfo = ClaimTypeRecord::all(); // Fetch claimtype from the database
 
-        return view('ManageClaim.ViewClaim', [
-            'claimInfo' => $claimInfo,
-        ]); //returns the employee information
+        return view('ManageClaim.ViewClaim', compact('claimInfo', 'employeeInfo', 'claimTypeInfo'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+
+    //go to edit claim page
+    public function editClaim(string $id)
     {
-        //
+        $claimInfo = ClaimRecord::find($id);
+        $employeeInfo = EmployeeRecord::all(); // Fetch employee from the database
+        $claimTypeInfo = ClaimTypeRecord::all(); // Fetch claimtype from the database
+
+        return view('ManageClaim.EditClaim', compact('claimInfo', 'employeeInfo', 'claimTypeInfo'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    //update function
+    public function updateClaim(Request $request, $id)
     {
-        //
-    }
+        // Update employee info from the database
+        $updateInfo = ClaimRecord::findOrFail($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        $validatedData = $request->validate([
+            'user_id' => 'required',
+            'date' => 'required',
+            'claim_type_id' => 'required',
+            'detail' => 'required',
+            'amount' => 'nullable',
+            'start_time' => 'nullable',
+            'end_time' => 'nullable',
+            'start_date' => 'nullable',
+            'end_date' => 'nullable',
+        ]);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+        if ($request->hasFile('attachment')) {
+            $file = $request->file('attachment');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $file->move('uploads/attachment/', $filename);
+
+            // Update the attachment field in the database
+            $validatedData['attachment'] = $filename;
+
+            // Delete the previous attachment file if it exists
+            if (!empty($updateInfo->attachment)) {
+                $previousFile = 'uploads/attachment/' . $updateInfo->attachment;
+                if (File::exists($previousFile)) {
+                    File::delete($previousFile);
+                }
+            }
+        }
+
+        $updateInfo->update($validatedData);
+        return redirect()->route('ListClaim')->with('success', 'Claim Info updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function deleteClaim($id)
     {
-        //
+        $claimRecord = ClaimRecord::find($id);
+
+        if (!$claimRecord) {
+            return redirect()->back()->with('error', 'Claim record not found.');
+        }
+
+        // delete record
+        $claimRecord->delete();
+        session()->flash('success', 'Claim record deleted successfully.');
+
+        // redirect to previous page
+        return redirect()->back();
     }
 }
