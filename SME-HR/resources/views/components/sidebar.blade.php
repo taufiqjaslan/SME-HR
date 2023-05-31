@@ -59,7 +59,7 @@ $links = [
             [
                 "section_text" => "EA Form",
                 "section_list" => [
-                    ["href" => "EAForm", "text" => "EA Form List"],
+                    ["href" => "EAFormHome", "text" => "EA Form List"],
                 ]
             ]
         ],
@@ -77,7 +77,8 @@ $links = [
                     ["href" => "ApplyLeave", "text" => "Apply Leave"],
                     ["href" => "RegisterEmployee", "text" => "Leave List"],
                     ["href" => "RegisterEmployee", "text" => "Holidays"],
-                    ["href" => "RegisterEmployee", "text" => "Report"]
+                    ["href" => "RegisterEmployee", "text" => "Report"],
+                    ["href" => "RegisterEmployee", "text" => "Leave Setting"]
                 ]
             ]
         ],
