@@ -77,13 +77,6 @@ class EmployeeController extends Controller
         return view('ManageEmployee.ViewEmployee', compact('employeeInfo', 'positions'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
