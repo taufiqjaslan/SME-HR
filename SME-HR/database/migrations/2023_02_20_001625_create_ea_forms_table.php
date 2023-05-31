@@ -14,14 +14,30 @@ return new class extends Migration
         Schema::create('ea_forms', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id'); //foreign key
-            $table->string('lhdn_branch');
-            $table->string('employer_name');
-            $table->string('tax_num');
-            $table->integer('year');
-            $table->decimal('gross_salary');
-            $table->string('income_type');
-            $table->decimal('zakat')->nullable();
+            $table->date('date')->nullable();
+            $table->string('year')->nullable();
+            $table->string('tax_num')->nullable();
+            $table->string('payroll_num')->nullable();
+            $table->string('epf_num')->nullable();
+            $table->string('kwsp_num')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->integer('children_num')->nullable();
+            $table->decimal('gross_salary')->nullable();
+            $table->decimal('fees')->nullable();
+            $table->decimal('gross_tip')->nullable();
+            $table->decimal('income_tax')->nullable();
+            $table->decimal('refund')->nullable();
+            $table->decimal('compensation')->nullable();
             $table->decimal('pension')->nullable();
+            $table->decimal('annuities')->nullable();
+            $table->decimal('tax_deduction')->nullable();
+            $table->decimal('cp38_deduction')->nullable();
+            $table->decimal('zakat_deduction')->nullable();
+            $table->decimal('zakat')->nullable();
+            $table->decimal('child_relief')->nullable();
+            $table->decimal('amount')->nullable();
+            $table->decimal('socso')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');//foreign key
         });
