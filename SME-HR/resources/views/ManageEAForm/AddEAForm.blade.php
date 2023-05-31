@@ -15,14 +15,13 @@
                 <div class="card">
                     <div class="card-body">
                         <!--begin::Tab-->
-                        <!-- <div class="tab-pane show active px-7" id="kt_user_edit_tab_1" role="tabpanel"> -->
                         <!--begin::Row-->
                         <div class="card-header">
                             <h1 class="card-title"><i class="fas fa-user">&nbsp;&nbsp;&nbsp;</i>EA Form Information</h1>
                         </div>
                         <div class="card-content collpase show">
                             <div class="card-body">
-                                <form method="POST" class="form form-horizontal" action="{{route('RegisterEmployee')}}">
+                                <form method="POST" class="form form-horizontal" action="{{route('storeEAForm' , ['id' => $eaFormData->id])}}">
                                     @csrf
                                     <div class="form-body">
                                         <h4 class="form-section"><i class="fas fa-file-alt">&nbsp;&nbsp;&nbsp;</i>Company Details</h4>
@@ -34,7 +33,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">Serial Number</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <input type="text" class="form-control border-primary" id="serial_number" name="serial_number">
+                                                        <input type="text" class="form-control border-primary" id="serial_number" name="serial_number" value="123" disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -42,7 +41,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">LHDN Branch</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <input type="text" class="form-control border-primary name="branch" id="branch">
+                                                        <input type="text" class="form-control border-primary name=" branch" id="branch" value="test" disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -52,7 +51,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">Employer Name</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <input type="text" class="form-control border-primary" name="emp_name" id="emp_name">
+                                                        <input type="text" class="form-control border-primary" name="emp_name" id="emp_name" value="test" disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -60,7 +59,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">Position</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <input type="text" class="form-control border-primary" name="position" id="position" value="{{$eaFormData->first()->employee->position->position_name}}">
+                                                        <input type="text" class="form-control border-primary" name="position" id="position" value="test" disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -103,7 +102,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Full Name</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" id="name" name="name" value="{{$eaFormData->first()->employee->name}}">
+                                                    <input type="text" class="form-control border-primary" id="name" name="name" value="{{$eaFormData->name}}" disabled>
                                                 </div>
                                             </div>
                                         </div>
@@ -111,7 +110,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Position</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" name="position" id="position" value="{{$eaFormData->first()->employee->position->position_name}}">
+                                                    <input type="text" class="form-control border-primary" name="position" id="position" value="{{$eaFormData->position->position_name}}" disabled>
                                                 </div>
                                             </div>
                                         </div>
@@ -121,7 +120,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">New IC Number</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" class="form-control border-primary" name="ic" id="ic" value="{{$eaFormData->first()->employee->ic}}">
+                                                    <input type="text" class="form-control border-primary" name="ic" id="ic" value="{{$eaFormData->ic}}" disabled>
                                                 </div>
                                             </div>
                                         </div>
