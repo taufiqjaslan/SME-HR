@@ -18,7 +18,6 @@ class ClaimController extends Controller
      */
     public function ApplyClaim()
     {
-
         // Retrieve all usertype and position records and include the associated employee data
         $employee = EmployeeRecord::with('userType')->get();
         $claimType = ClaimTypeRecord::all();
