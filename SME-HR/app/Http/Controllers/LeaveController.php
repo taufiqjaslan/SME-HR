@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\EmployeeRecord;
+use App\Models\LeaveTypeRecord;
 
 class LeaveController extends Controller
 {
@@ -14,7 +16,15 @@ class LeaveController extends Controller
      */
     public function applyLeave()
     {
-        return view('ManageLeave.AddLeave'); //link to go to addLeave page
+
+        // Retrieve all usertype and position records and include the associated employee data
+        $employee = EmployeeRecord::with('userType')->get();
+        $leaveType = LeaveTypeRecord::all();
+        $lists = [
+            'employee' => $employee,
+            'leaveType' => $leaveType,
+        ];
+        return view('ManageLeave.AddLeave', ["listData" => $lists]); //link to go to addleave page
     }
 
     /**
