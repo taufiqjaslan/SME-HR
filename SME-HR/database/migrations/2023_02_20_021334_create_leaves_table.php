@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('leave_type_id'); //foreign key
             $table->date('start_date');
             $table->date('end_date');
-            $table->integer('detail');
+            $table->string('detail');
             $table->string('attachment')->nullable();
             $table->integer('status');
             $table->timestamps();

@@ -22,7 +22,7 @@
                             </div>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form method="POST" class="form form-horizontal" action="">
+                                    <form method="POST" class="form form-horizontal" action="{{route('StoreLeave')}}" enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-body">
                                             <div class="row">
@@ -30,7 +30,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Staff Name</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <select name="name" class="form-control border-primary" id="name">
+                                                            <select name="user_id" class="form-control border-primary" id="user_id">
                                                                 <option disabled value="" selected hidden>Select</option>
                                                                 @foreach($listData['employee'] as $employees)
                                                                 <option value="{{ $employees->id }}">{{ $employees->name }}</option>
@@ -82,7 +82,7 @@
                                                 </div>
                                                 <div class="col-md-6" id="attachment" hidden>
                                                     <div class="form-group row">
-                                                        <label class="col-md-3 label-control">Attachement File</label>
+                                                        <label class="col-md-3 label-control">Attachment File</label>
                                                         <div class="col-md-9 mx-auto">
                                                             <input type="file" id="attachment" name="attachment" />
                                                         </div>

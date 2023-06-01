@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\EmployeeRecord;
 use App\Models\LeaveTypeRecord;
+use App\Models\LeaveRecord;
 
 class LeaveController extends Controller
 {
@@ -30,9 +31,30 @@ class LeaveController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function StoreLeave(Request $request)
     {
-        //
+        $filename = null; // Initialize with a default value of null
+
+        // Check if file is uploaded
+        if ($request->hasFile('attachment')) {
+            $file = $request->file('attachment');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $file->move('uploads/attachment/', $filename);
+        }
+
+        // Store a new claim record
+        $newleave = LeaveRecord::create([
+            'user_id' => $request->user_id,
+            'leave_type_id' => $request->leave_type_id,
+            'detail' => $request->detail,
+            'attachment' => $filename,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'status' => 1,
+        ]);
+
+        return redirect()->route('ApplyLeave');
     }
 
     /**
