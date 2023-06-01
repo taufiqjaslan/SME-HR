@@ -72,10 +72,6 @@ Route::controller(App\Http\Controllers\PositionController::class)->group(functio
     Route::post('/Store_Position', 'StorePosition')->name('StorePosition');//link to go to store the postion data into db
 });
 
-Route::controller(App\Http\Controllers\SalaryTypeController::class)->group(function () {
-
-});
-
 Route::controller(App\Http\Controllers\ClaimTypeController::class)->group(function () {
     Route::get('/ListClaimType', 'ListClaimType')->name('ListClaimType');//link to list of claim typepage
     Route::get('AddClaimType', 'addClaimType')->name('addClaimType');//link to go to add claim type page
