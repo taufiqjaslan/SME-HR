@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id'); //foreign key
             $table->unsignedBigInteger('leave_type_id'); //foreign key
-            $table->date('leave_start');
-            $table->date('leave_end');
-            $table->integer('leave_taken');
-            $table->string('attachment');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->integer('detail');
+            $table->string('attachment')->nullable();
             $table->integer('status');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users'); //foreign key
