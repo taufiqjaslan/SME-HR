@@ -57,7 +57,11 @@ Route::controller(App\Http\Controllers\ClaimController::class)->group(function (
 Route::controller(App\Http\Controllers\LeaveController::class)->group(function () {
     Route::get('/Apply_Leave', 'ApplyLeave')->name('ApplyLeave');//link to go to apply leave page
     Route::post('/storeLeave', 'StoreLeave')->name('StoreLeave');//link to store the data to the database
-
+    Route::get('/ListLeave', 'ListLeave')->name('ListLeave');//link to view list of leave
+    Route::get('viewLeave/{id}', 'viewLeave')->name('viewLeave');//link to go to view page
+    Route::get('editLeave/{id}', 'editLeave')->name('editLeave');//link to go to edit page
+    Route::put('updateLeave/{id}', 'updateLeave')->name('updateLeave');//link to update the data in the database
+    Route::delete('deleteLeave/{id}', 'deleteLeave')->name('deleteLeave');//link to delete the data from the database
 });
 
 Route::controller(App\Http\Controllers\EAFormController::class)->group(function () {
