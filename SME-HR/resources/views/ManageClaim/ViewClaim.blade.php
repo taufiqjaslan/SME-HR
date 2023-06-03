@@ -31,7 +31,7 @@
                             </div>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form method="POST" class="form form-horizontal" action="{{route('StoreClaim')}}" enctype="multipart/form-data">
+                                    <form method="POST" class="form form-horizontal" action="" enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-body">
                                             <div class="row">
@@ -104,7 +104,6 @@
                                                                 <img src="{{ asset('uploads/attachment/'.$claimInfo->attachment) }}" width="500px" height="500px" alt="" class="img-fluid">
                                                                 @endif
                                                             </a>
-
                                                         </div>
                                                     </div>
                                                 </div>
