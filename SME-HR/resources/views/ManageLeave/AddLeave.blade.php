@@ -9,101 +9,97 @@
         </div>
     </x-slot>
 
-    <div>
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <!--begin::Tab-->
-                        <div class="tab-pane show active px-7" id="kt_user_edit_tab_1" role="tabpanel">
-                            <!--begin::Row-->
-                            <div class="card-header">
-                                <h1 class="card-title"><i class="fas fa-hospital">&nbsp;&nbsp;&nbsp;</i>Leave Information</h1>
-                            </div>
-                            <div class="card-content collpase show">
-                                <div class="card-body">
-                                    <form method="POST" class="form form-horizontal" action="{{route('StoreLeave')}}" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="form-body">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <label class="col-md-3 label-control">Staff Name</label>
-                                                        <div class="col-md-9 mx-auto">
-                                                            <select name="user_id" class="form-control border-primary" id="user_id">
-                                                                <option disabled value="" selected hidden>Select</option>
-                                                                @foreach($listData['employee'] as $employees)
-                                                                <option value="{{ $employees->id }}">{{ $employees->name }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <label class="col-md-3 label-control">Date</label>
-                                                        <div class="col-md-9 mx-auto">
-                                                            <input type="date" class="form-control border-primary" placeholder="" name="start_date" id="start_date">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <label class="col-md-3 label-control">To Date</label>
-                                                        <div class="col-md-9 mx-auto">
-                                                            <input type="date" class="form-control border-primary" placeholder="" name="end_date" id="end_date">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <label class="col-md-3 label-control">Leave Type</label>
-                                                        <div class="col-md-9 mx-auto">
-                                                            <select name="leave_type_id" class="form-control border-primary" id="leave_type">
-                                                                <option disabled value="" selected hidden>Select Leave Type</option>
-                                                                @foreach($listData['leaveType'] as $leaveTypes)
-                                                                <option value="{{ $leaveTypes->id }}">{{ $leaveTypes->leave_name }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <label class="col-md-3 label-control">Leave Details</label>
-                                                        <div class="col-md-9 mx-auto">
-                                                            <textarea rows="6" class="form-control border-primary" name="detail" placeholder="Leave Details" id="detail"></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6" id="attachment" hidden>
-                                                    <div class="form-group row">
-                                                        <label class="col-md-3 label-control">Attachment File</label>
-                                                        <div class="col-md-9 mx-auto">
-                                                            <input type="file" id="attachment" name="attachment" />
-                                                        </div>
-                                                    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <!--begin::Row-->
+                    <div class="card-header">
+                        <h1 class="card-title"><i class="fas fa-hospital">&nbsp;&nbsp;&nbsp;</i>Leave Information</h1>
+                    </div>
+                    <div class="card-content collpase show">
+                        <div class="card-body">
+                            <form method="POST" class="form form-horizontal" action="{{route('StoreLeave')}}" enctype="multipart/form-data">
+                                @csrf
+                                <div class="form-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-md-3 label-control">Staff Name</label>
+                                                <div class="col-md-9 mx-auto">
+                                                    <select name="user_id" class="form-control border-primary" id="user_id">
+                                                        <option disabled value="" selected hidden>Select</option>
+                                                        @foreach($listData['employee'] as $employees)
+                                                        <option value="{{ $employees->id }}">{{ $employees->name }}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
-                                        <hr>
-                                        <br>
-                                        <div class="form-actions text-center">
-                                            <button class="btn btn-primary float-md-right" id="">Apply</button>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-md-3 label-control">Date</label>
+                                                <div class="col-md-9 mx-auto">
+                                                    <input type="date" class="form-control border-primary" placeholder="" name="start_date" id="start_date">
+                                                </div>
+                                            </div>
                                         </div>
-                                    </form>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-md-3 label-control">To Date</label>
+                                                <div class="col-md-9 mx-auto">
+                                                    <input type="date" class="form-control border-primary" placeholder="" name="end_date" id="end_date">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-md-3 label-control">Leave Type</label>
+                                                <div class="col-md-9 mx-auto">
+                                                    <select name="leave_type_id" class="form-control border-primary" id="leave_type">
+                                                        <option disabled value="" selected hidden>Select Leave Type</option>
+                                                        @foreach($listData['leaveType'] as $leaveTypes)
+                                                        <option value="{{ $leaveTypes->id }}">{{ $leaveTypes->leave_name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-md-3 label-control">Leave Details</label>
+                                                <div class="col-md-9 mx-auto">
+                                                    <textarea rows="6" class="form-control border-primary" name="detail" placeholder="Leave Details" id="detail"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" id="attachment" hidden>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 label-control">Attachment File</label>
+                                                <div class="col-md-9 mx-auto">
+                                                    <input type="file" id="attachment" name="attachment" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                                <hr>
+                                <br>
+                                <div class="form-actions text-center">
+                                    <button class="btn btn-primary float-md-right" id="">Apply</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                </div><!--end card-body-->
-            </div><!--end card-->
-        </div> <!--end col-->
-    </div>
+                </div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
 
 </x-app-layout>
 
