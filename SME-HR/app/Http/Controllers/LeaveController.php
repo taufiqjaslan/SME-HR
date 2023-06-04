@@ -55,7 +55,7 @@ class LeaveController extends Controller
             'status' => 1,
         ]);
 
-        return redirect()->route('listLeave');
+        return redirect()->route('ListLeave');
     }
 
     //List leave function
