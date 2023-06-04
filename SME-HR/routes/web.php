@@ -6,6 +6,7 @@ use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\SalaryTypeController;
+use App\Http\Controllers\LeaveTypeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -82,4 +83,13 @@ Route::controller(App\Http\Controllers\ClaimTypeController::class)->group(functi
     Route::get('/ListClaimType', 'ListClaimType')->name('ListClaimType');//link to list of claim typepage
     Route::get('AddClaimType', 'addClaimType')->name('addClaimType');//link to go to add claim type page
     Route::post('/StoreClaimType', 'StoreClaimType')->name('StoreClaimType');//link to go to store the claim type data into db
+});
+
+Route::controller(App\Http\Controllers\LeaveTypeController::class)->group(function () {
+    Route::get('addLeaveType', 'addLeaveType')->name('addLeaveType');//link to go to add leave type page
+    Route::post('storeLeaveType', 'storeLeaveType')->name('storeLeaveType');//link to store the data to the database
+    Route::get('listLeaveType', 'listLeaveType')->name('listLeaveType');//link to view list of leave type
+    Route::get('editLeaveType/{id}', 'editLeaveType')->name('editLeaveType');//link to go to edit page
+    Route::put('updateLeaveType/{id}', 'updateLeaveType')->name('updateLeaveType');//link to update the data in the database
+    Route::delete('deleteLeaveType/{id}', 'deleteLeaveType')->name('deleteLeaveType');//link to delete the data from the database
 });
