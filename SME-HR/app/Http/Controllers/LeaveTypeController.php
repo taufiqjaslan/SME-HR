@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\LeaveTypeRecord;
+
 
 class LeaveTypeController extends Controller
 {
@@ -12,19 +14,9 @@ class LeaveTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function addLeaveType()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('ManageLeave.AddLeaveType');
     }
 
     /**
@@ -33,9 +25,14 @@ class LeaveTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeLeaveType(Request $request)
     {
-        //
+        $newLeaveType = LeaveTypeRecord::create([
+            'leave_name' => $request['leave_name'],
+            'leave_days' => $request['leave_days'],
+        ]);
+
+        return redirect()->route('listLeaveType');
     }
 
     /**
@@ -44,9 +41,10 @@ class LeaveTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function listLeaveType()
     {
-        //
+        $listLeaveType = LeaveTypeRecord::all();
+        return view('ManageLeave.LeaveTypeList', ["listLeaveType" => $listLeaveType]);
     }
 
     /**
@@ -55,9 +53,11 @@ class LeaveTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function editLeaveType(string $id)
     {
-        //
+        $leaveTypeInfo = LeaveTypeRecord::find($id);
+
+        return view('ManageLeave.EditLeaveType', compact('leaveTypeInfo'));
     }
 
     /**
@@ -67,9 +67,19 @@ class LeaveTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateLeaveType(Request $request, $id)
     {
-        //
+        // Update employee info from the database
+        $updateInfo = LeaveTypeRecord::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'leave_name' => 'required',
+            'leave_days' => 'required',
+        ]);
+
+
+        $updateInfo->update($validatedData);
+        return redirect()->route('listLeaveType')->with('success', 'Leave Type Info updated successfully!');
     }
 
     /**
@@ -78,8 +88,19 @@ class LeaveTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deleteLeaveType($id)
     {
-        //
+        $leaveTypeRecord = LeaveTypeRecord::find($id);
+
+        if (!$leaveTypeRecord) {
+            return redirect()->back()->with('error', 'Leave type record not found.');
+        }
+
+        // delete record
+        $leaveTypeRecord->delete();
+        session()->flash('success', 'Leave type record deleted successfully.');
+
+        // redirect to previous page
+        return redirect()->back();
     }
 }
