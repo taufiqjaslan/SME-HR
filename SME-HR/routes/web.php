@@ -7,6 +7,7 @@ use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\SalaryTypeController;
 use App\Http\Controllers\LeaveTypeController;
+use App\Http\Controllers\EntitlementController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -92,4 +93,12 @@ Route::controller(App\Http\Controllers\LeaveTypeController::class)->group(functi
     Route::get('editLeaveType/{id}', 'editLeaveType')->name('editLeaveType');//link to go to edit page
     Route::put('updateLeaveType/{id}', 'updateLeaveType')->name('updateLeaveType');//link to update the data in the database
     Route::delete('deleteLeaveType/{id}', 'deleteLeaveType')->name('deleteLeaveType');//link to delete the data from the database
+});
+
+Route::controller(App\Http\Controllers\EntitlementController::class)->group(function () {
+    Route::get('/listEntitlement', 'listEntitlement')->name('listEntitlement');//link to list of entitlement page
+    Route::post('/viewEntitlement', 'viewEntitlement')->name('viewEntitlement');//link to list of staff entitlement page
+    Route::get('addEntitlement', 'addEntitlement')->name('addEntitlement');//link to go to add entitlement page
+    Route::post('storeEntitlement', 'storeEntitlement')->name('storeEntitlement');//link to store the data to the database
+    Route::delete('deleteEntitlement/{id}', 'deleteEntitlement')->name('deleteEntitlement');//link to delete the data from the database
 });
