@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id'); //foreign key
             $table->unsignedBigInteger('leave_type_id'); //foreign key
-            $table->integer('leave_assign');
+            $table->date('valid_from')->nullable();
+            $table->date('valid_to')->nullable();
+            $table->integer('leave_assign')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');//foreign key
             $table->foreign('leave_type_id')->references('id')->on('leave_types');//foreign key
