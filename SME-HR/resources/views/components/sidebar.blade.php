@@ -73,9 +73,9 @@ $links = [
             [
                 "section_text" => "Leave",
                 "section_list" => [
-                    ["href" => "RegisterEmployee", "text" => "Entitlements"],
                     ["href" => "ApplyLeave", "text" => "Apply Leave"],
                     ["href" => "ListLeave", "text" => "Leave List"],
+                    ["href" => "listEntitlement", "text" => "Entitlements"],
                     ["href" => "RegisterEmployee", "text" => "Report"],
                     ["href" => "listLeaveType", "text" => "Leave Setting"]
                 ]
