@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->integer('gender')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
+            $table->decimal('basic_salary')->nullable();
             $table->unsignedBigInteger('position_id')->nullable(); //foreign key
             $table->unsignedBigInteger('user_type_id')->nullable(); //foreign key
             $table->integer('status')->default(0);

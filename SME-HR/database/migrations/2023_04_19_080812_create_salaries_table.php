@@ -14,15 +14,19 @@ return new class extends Migration
         Schema::create('salaries', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id'); //foreign key
-            $table->unsignedBigInteger('salary_type_id'); //foreign key
             $table->decimal('kwsp_staff'); 
+            $table->decimal('kwsp_company'); 
             $table->decimal('socso_staff');
-            $table->decimal('zakat');
-            $table->decimal('deduction');
-            $table->decimal('netpay');
+            $table->decimal('socso_company'); 
+            $table->decimal('eis_staff'); 
+            $table->decimal('eis_company'); 
+            $table->decimal('zakat')->nullable();
+            $table->decimal('allowance')->nullable();
+            $table->decimal('bonus')->nullable();
+            $table->decimal('deduction')->nullable();
+            $table->decimal('netpay')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');//foreign key
-            $table->foreign('salary_type_id')->references('id')->on('salary_types');//foreign key
         });
     }
 
