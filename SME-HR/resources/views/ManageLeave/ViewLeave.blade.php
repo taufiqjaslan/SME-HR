@@ -85,6 +85,14 @@
                                                 </div>
                                             </div>
                                             <div class="row">
+                                                <div class="col-md-6" id="">
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 label-control">Total Day</label>
+                                                        <div class="col-md-9 mx-auto">
+                                                            <input class="form-control border-primary" type="text" id="total_day" name="total_day" value="{{ old('total_day', $leaveInfo->total_day) }}" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Leave Details</label>
@@ -93,6 +101,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-md-6" id="attachment" @if ($leaveInfo->leave_type_id != 2) hidden @endif>
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Attachment File</label>
