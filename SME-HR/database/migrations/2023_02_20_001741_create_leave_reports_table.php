@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id'); //foreign key
             $table->unsignedBigInteger('leave_type_id'); //foreign key
-            $table->decimal('days_remaining');
-            $table->decimal('leave_balance');
-            $table->decimal('leave_taken');
+            $table->integer('days_remaining');
+            $table->integer('leave_pending');
+            $table->integer('leave_taken');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');//foreign key
             $table->foreign('leave_type_id')->references('id')->on('leave_types');//foreign key
