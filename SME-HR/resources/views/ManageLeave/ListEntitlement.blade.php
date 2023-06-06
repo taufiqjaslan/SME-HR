@@ -23,6 +23,9 @@
             <div class="card">
                 <div class="card-body">
                     <!--begin::Row-->
+                    <div class="card-header">
+                        <h1 class="card-title"><i class="fas fa-hospital">&nbsp;&nbsp;&nbsp;</i>Leave Entitlement</h1>
+                    </div>
                     <div class="card-content collpase show">
                         <div class="card-body">
                             <form method="GET" class="form form-horizontal" action="" enctype="multipart/form-data">
@@ -142,8 +145,8 @@
                                 '<td>' + (index + 1) + '</td>' +
                                 '<td>' + leave.leave_name + '</td>' +
                                 '<td>' + leave.leave_days + '</td>' +
-                                '<td>' + leave.validFrom + '</td>' +
-                                '<td>' + leave.validTo + '</td>' +
+                                '<td>' + formatDate(leave.validFrom) + '</td>' +
+                                '<td>' + formatDate(leave.validTo) + '</td>' +
                                 '<td>' +
                                 '<form class="delete-form">' +
                                 '@method("DELETE")' +
@@ -239,6 +242,16 @@
                     // Handle error case
                 }
             });
+        }
+
+        //format date
+        function formatDate(dateString) {
+            var dateObj = new Date(dateString);
+            var day = dateObj.getDate();
+            var month = dateObj.getMonth() + 1;
+            var year = dateObj.getFullYear();
+
+            return day + '/' + month + '/' + year;
         }
     });
 </script>
