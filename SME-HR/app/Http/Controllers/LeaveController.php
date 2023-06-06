@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use App\Models\EmployeeRecord;
 use App\Models\LeaveTypeRecord;
 use App\Models\LeaveRecord;
+use App\Models\ReportRecord;
 use Illuminate\Support\Facades\File;
 
 class LeaveController extends Controller
@@ -44,19 +45,47 @@ class LeaveController extends Controller
             $file->move('uploads/attachment/', $filename);
         }
 
-        // Store a new claim record
+        // Store a new leave record
         $newleave = LeaveRecord::create([
             'user_id' => $request->user_id,
             'leave_type_id' => $request->leave_type_id,
             'detail' => $request->detail,
+            'total_day' => $request->total_day,
             'attachment' => $filename,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'status' => 1,
         ]);
 
+        // Check if report record already exists
+        $reportRecord = ReportRecord::where('user_id', $request->user_id)
+            ->where('leave_type_id', $request->leave_type_id)
+            ->first();
+
+        if ($reportRecord) {
+            // Update existing report record
+            $reportRecord->days_remaining = $reportRecord->days_remaining - $request->total_day;
+            $reportRecord->leave_pending = $reportRecord->leave_pending + $request->total_day;
+            $reportRecord->save();
+        } else {
+            // Retrieve total_day from leave_types table
+            $leaveType = LeaveTypeRecord::find($request->leave_type_id);
+            $totalDayFromLeaveType = $leaveType->leave_days;
+
+            // Create a new report record
+            $newreport = ReportRecord::create([
+                'user_id' => $request->user_id,
+                'leave_type_id' => $request->leave_type_id,
+                'days_remaining' => $totalDayFromLeaveType - $request->total_day,
+                'leave_pending' => $request->total_day,
+                'leave_taken' => 0,
+            ]);
+        }
+
         return redirect()->route('ListLeave');
     }
+
+
 
     //List leave function
     public function listLeave()
@@ -107,6 +136,7 @@ class LeaveController extends Controller
             'user_id' => 'required',
             'leave_type_id' => 'required',
             'detail' => 'required',
+            'total_day' => 'required',
             'start_date' => 'nullable',
             'end_date' => 'nullable',
         ]);
