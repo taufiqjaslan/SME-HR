@@ -57,6 +57,24 @@ $links = [
     [
         "href" => [
             [
+                "section_text" => "Leave",
+                "section_list" => [
+                    ["href" => "ApplyLeave", "text" => "Apply Leave"],
+                    ["href" => "ListLeave", "text" => "Leave List"],
+                    ["href" => "listEntitlement", "text" => "Entitlements"],
+                    ["href" => "listReport", "text" => "Report"],
+                    ["href" => "listLeaveType", "text" => "Leave Setting"]
+                ]
+            ]
+        ],
+        "text" => "Leave",
+        "is_multi" => true,
+        "icon" => "fas fa-notes-medical",
+    ],
+
+    [
+        "href" => [
+            [
                 "section_text" => "EA Form",
                 "section_list" => [
                     ["href" => "EAFormHome", "text" => "EA Form List"],
@@ -68,23 +86,6 @@ $links = [
         "icon" => "fas fa-clipboard-list",
     ],
 
-    [
-        "href" => [
-            [
-                "section_text" => "Leave",
-                "section_list" => [
-                    ["href" => "ApplyLeave", "text" => "Apply Leave"],
-                    ["href" => "ListLeave", "text" => "Leave List"],
-                    ["href" => "listEntitlement", "text" => "Entitlements"],
-                    ["href" => "RegisterEmployee", "text" => "Report"],
-                    ["href" => "listLeaveType", "text" => "Leave Setting"]
-                ]
-            ]
-        ],
-        "text" => "Leave",
-        "is_multi" => true,
-        "icon" => "fas fa-notes-medical",
-    ],
 ];
 $navigation_links = array_to_object($links);
 @endphp
