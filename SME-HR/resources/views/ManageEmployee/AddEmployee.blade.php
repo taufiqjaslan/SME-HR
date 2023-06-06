@@ -164,6 +164,16 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 label-control">Basic Salary</label>
+                                                    <div class="col-md-9 mx-auto">
+                                                        <input type="text" class="form-control border-primary" placeholder="" name="basic_salary" id="basic_salary">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <hr>
                                         <br>
                                         <div class="form-actions text-center">
