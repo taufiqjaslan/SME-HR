@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\EntitlementRecord;
 use App\Models\EmployeeRecord;
 use App\Models\LeaveTypeRecord;
+use App\Models\ReportRecord;
 
 class EntitlementController extends Controller
 {
@@ -86,30 +87,49 @@ class EntitlementController extends Controller
         return response()->json(['leaveData' => $transformedLeaveData]);
     }
     
-
-
-
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function listReport()
     {
-        //
+        $reportInfo = ReportRecord::all();
+        $employeeInfo = EmployeeRecord::all(); // Fetch employee info from the database
+
+        return view('ManageLeave.ListReport', compact('reportInfo', 'employeeInfo'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * view the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function viewReport(Request $request)
     {
-        //
+        // Retrieve the staff ID from the request
+        $userId = $request->input('user_id');
+    
+        // Fetch the leave data from the database based on the staff ID,
+        // eager load the related leave type data
+        $reportData = ReportRecord::with('leaveType')->where('user_id', $userId)->get();
+    
+        // Transform the leave data to include additional fields if needed
+        $transformedReportData = $reportData->map(function ($report) {
+            return [
+                'leave_name' => $report->leaveType->leave_name, // Access the leave type data using the relationship
+                'leave_days' => $report->leaveType->leave_days,
+                'dayRemaining' => $report->days_remaining,
+                'leavePending' => $report->leave_pending,
+                'leaveTaken' => $report->leave_taken,
+            ];
+        });
+    
+        // Return the transformed leave data as a JSON response
+        return response()->json(['reportData' => $transformedReportData]);
     }
 
     /**
