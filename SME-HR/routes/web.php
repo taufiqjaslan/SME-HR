@@ -101,4 +101,7 @@ Route::controller(App\Http\Controllers\EntitlementController::class)->group(func
     Route::get('addEntitlement', 'addEntitlement')->name('addEntitlement');//link to go to add entitlement page
     Route::post('storeEntitlement', 'storeEntitlement')->name('storeEntitlement');//link to store the data to the database
     Route::delete('deleteEntitlement/{id}', 'deleteEntitlement')->name('deleteEntitlement');//link to delete the data from the database
+    Route::get('/listReport', 'listReport')->name('listReport');//link to list of report page
+    Route::post('/viewReport', 'viewReport')->name('viewReport');//link to list of staff report page
+
 });
