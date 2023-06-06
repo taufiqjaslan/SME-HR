@@ -117,7 +117,7 @@ class LeaveController extends Controller
      */
     public function editLeave(string $id)
     {
-        $leaveInfo = Leaverecord::find($id);
+        $leaveInfo = LeaveRecord::find($id);
         $employeeInfo = EmployeeRecord::all(); // Fetch employee from the database
         $leaveTypeInfo = LeaveTypeRecord::all(); // Fetch leavetype from the database
 
