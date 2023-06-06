@@ -11,15 +11,24 @@ class PayrollRecord extends Model
 
     protected $table = 'salaries';
 
+    protected $fillable = [
+        'user_id',
+        'kwsp_staff',
+        'kwsp_company',
+        'socso_staff',
+        'socso_company',
+        'eis_staff',
+        'eis_company',
+        'zakat',
+        'deduction',
+        'allowance',
+        'bonus',
+        'netpay',
+    ];
+
     public function employee()
     {
         return $this->belongsTo(EmployeeRecord::class, 'user_id');
     }
 
-    public function salaryType()
-    {
-        return $this->hasOne(PayrollRecord::class, 'id', 'salary_type_id')
-            ->leftjoin('salary_types', 'salary_types.id', '=', 'salaries.salary_type_id')
-            ->select('salary_types.amount');
-    }
 }

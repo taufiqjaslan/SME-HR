@@ -23,6 +23,7 @@ class EmployeeRecord extends Model
         'start_date',
         'end_date',
         'position_id',
+        'basic_salary',
         'user_type_id',
         'status',
     ];
