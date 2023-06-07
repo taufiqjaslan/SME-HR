@@ -89,6 +89,7 @@
     <script src="{{ asset('build/assets/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('build/assets/plugins/peity-chart/jquery.peity.min.js') }}"></script>
 
+
     <script src="{{ asset('build/assets/pages/jquery.ana_customers.inity.js') }}"></script>
 
     <!-- App js -->
