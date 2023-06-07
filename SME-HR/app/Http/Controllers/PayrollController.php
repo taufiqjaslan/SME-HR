@@ -46,14 +46,6 @@ class PayrollController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      */
     public function viewPayroll(string $id)
@@ -83,6 +75,7 @@ class PayrollController extends Controller
         // Retrieve the values from the request
         $bonus = $request->input('bonus');
         $allowance = $request->input('allowance');
+        $basic_salary = $request->input('basic_salary');
         $basicSalary = $request->input('basic_salary') + $bonus + $allowance;
 
         $kwspStaff = $basicSalary <= 5000 ? (11 / 100) * $basicSalary : (11 / 100) * $basicSalary;
@@ -162,6 +155,7 @@ class PayrollController extends Controller
         }
 
         // Update the corresponding data in the payroll record
+        $payroll->basic_salary = $basic_salary;
         $payroll->bonus = $bonus;
         $payroll->allowance = $allowance;
         $payroll->kwsp_staff = $kwspStaff;
@@ -173,7 +167,21 @@ class PayrollController extends Controller
         $payroll->netpay = $netPay;
         $payroll->save();
 
+        // Update the basic_salary in the associated employee record
+        $employee = $payroll->employee;
+        $employee->basic_salary = $basic_salary;
+        $employee->save();
+
         return redirect()->route('ListPayroll');
+    }
+
+    public function listPayslip()
+    {
+        // Retrieve all payroll records and include the associated employee data
+        $payslipInfo = PayrollRecord::all();
+        $employeeInfo = EmployeeRecord::all();
+
+        return view('ManagePayroll.GeneratePayroll', compact('payslipInfo', 'employeeInfo'));
     }
 
     /**
