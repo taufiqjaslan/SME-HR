@@ -42,7 +42,7 @@ Route::controller(App\Http\Controllers\EmployeeController::class)->group(functio
 
 Route::controller(App\Http\Controllers\PayrollController::class)->group(function () {
     Route::get('/List_Payroll', 'ListPayroll')->name('ListPayroll');//link to go to payroll list page
-    Route::get('/Generate_Payslip', 'GeneratePayslip')->name('GeneratePayslip');//link to go to generate payslip
+    Route::get('/ListPayslip', 'listPayslip')->name('listPayslip');//link to go to generate payslip
     Route::get('/View_Payslip', 'ViewPayslip')->name('ViewPayslip');//link to go to generate payslip
     Route::get('viewPayroll/{id}', 'viewPayroll')->name('viewPayroll');//link to go to view payroll page
     Route::get('editPayroll/{id}', 'editPayroll')->name('editPayroll');//link to go to edit page
