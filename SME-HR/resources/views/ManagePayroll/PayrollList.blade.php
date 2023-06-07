@@ -35,7 +35,7 @@
                                     <tr>
                                         <td>{{ $no++ }}</td>
                                         <td>{{ $payroll->employee->name }}</td>
-                                        <td>{{$payroll->employee->basic_salary}}</td>
+                                        <td>{{$payroll->basic_salary}}</td>
                                         <td>{{$payroll->kwsp_staff}}</td>
                                         <td>{{$payroll->socso_staff}}</td>
                                         <td>
