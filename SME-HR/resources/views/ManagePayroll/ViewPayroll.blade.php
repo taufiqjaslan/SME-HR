@@ -39,7 +39,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Basic Salary</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input type="text" class="form-control border-primary" placeholder="Basic Salary" name="basic_salary" id="basic_salary" value="{{ old('basic_salary', $employeeInfo->basic_salary) }}" readonly>
+                                                            <input type="text" class="form-control border-primary" placeholder="Basic Salary" name="basic_salary" id="basic_salary" value="{{ old('basic_salary', $payrollInfo->basic_salary) }}" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -47,7 +47,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Allowance</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input type="text" class="form-control border-primary" placeholder="Other Allowance" name="allowance" id="allowance" value="{{ old('allowance', $payrollInfo->allowance) }}" readonly>
+                                                            <input type="text" class="form-control border-primary" placeholder="Other Allowance" name="allowance" id="allowance" value="{{ old('allowance', $payrollInfo->allowance ?? 0) }}" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -57,7 +57,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Bonus</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input type="text" class="form-control border-primary" placeholder="Bonus" name="bonus" id="bonus" value="{{ old('bonus', $payrollInfo->bonus) }}" readonly>
+                                                            <input type="text" class="form-control border-primary" placeholder="Bonus" name="bonus" id="bonus" value="{{ old('bonus', $payrollInfo->bonus ?? 0) }}" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -98,7 +98,7 @@
                                                         <label class="col-md-3 label-control">Deduction
                                                             /Advance</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input type="text" class="form-control border-primary" placeholder="Deduction/Advance" name="deduction" id="deduction" value="{{ old('deduction', $payrollInfo->deduction) }}" readonly>
+                                                            <input type="text" class="form-control border-primary" placeholder="Deduction/Advance" name="deduction" id="deduction" value="{{ old('deduction', $payrollInfo->deduction ?? 0) }}" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
