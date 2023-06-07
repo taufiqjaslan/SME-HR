@@ -13,6 +13,7 @@ class PayrollRecord extends Model
 
     protected $fillable = [
         'user_id',
+        'basic_salary',
         'kwsp_staff',
         'kwsp_company',
         'socso_staff',

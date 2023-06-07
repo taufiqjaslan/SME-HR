@@ -202,6 +202,7 @@ class EmployeeController extends Controller
         // Insert basic salary into the "salaries" table
         $basicSalary = $request['basic_salary'];
 
+        // Calculate KWSP contributions for staff and company
         $kwspStaff = $basicSalary <= 5000 ? (11 / 100) * $basicSalary : (11 / 100) * $basicSalary;
         $kwspCompany = $basicSalary <= 5000 ? (13 / 100) * $basicSalary : (12 / 100) * $basicSalary;
 
@@ -270,16 +271,18 @@ class EmployeeController extends Controller
         // Add more elseif conditions for the remaining salary ranges
         $netPay = $basicSalary - ($kwspStaff + $kwspCompany + $socsoCompany + $socsoStaff + $eisCompany + $eisStaff);
 
-        PayrollRecord::create([
-            'user_id' => $id,
-            'basic_salary' => $basicSalary,
+        // Prepare the data for validation and update
+        $validatedData = $request->validate([
+            'user_id' => 'required',
             'kwsp_staff' => $kwspStaff,
             'kwsp_company' => $kwspCompany,
             'socso_staff' => $socsoStaff,
             'socso_company' => $socsoCompany,
             'eis_staff' => $eisStaff,
             'eis_company' => $eisCompany,
-            'netpay' => $netPay, // Set the initial value of netpay
+            'bonus' => 'required',
+            'allowance' => 'required',
+            'netpay' => $netPay,
         ]);
 
         $updateInfo->update($validatedData);

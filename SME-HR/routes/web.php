@@ -46,7 +46,7 @@ Route::controller(App\Http\Controllers\PayrollController::class)->group(function
     Route::get('/View_Payslip', 'ViewPayslip')->name('ViewPayslip');//link to go to generate payslip
     Route::get('viewPayroll/{id}', 'viewPayroll')->name('viewPayroll');//link to go to view payroll page
     Route::get('editPayroll/{id}', 'editPayroll')->name('editPayroll');//link to go to edit page
-    Route::put('updatePayroll/{id}', 'updatePayroll')->name('updatePayroll');//link to update the data in the database
+    Route::put('updatePayroll/{id}', 'App\Http\Controllers\PayrollController@updatePayroll')->name('updatePayroll');//link to update the data in the database
 
 });
 

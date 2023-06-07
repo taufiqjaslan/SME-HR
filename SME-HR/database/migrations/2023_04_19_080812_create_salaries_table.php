@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('salaries', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id'); //foreign key
+            $table->decimal('basic_salary'); 
             $table->decimal('kwsp_staff'); 
             $table->decimal('kwsp_company'); 
             $table->decimal('socso_staff');
