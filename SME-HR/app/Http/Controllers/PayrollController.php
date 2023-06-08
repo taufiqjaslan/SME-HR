@@ -184,11 +184,5 @@ class PayrollController extends Controller
         return view('ManagePayroll.GeneratePayroll', compact('payslipInfo', 'employeeInfo'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+
 }

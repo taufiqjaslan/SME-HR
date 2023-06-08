@@ -8,6 +8,7 @@ use App\Http\Controllers\PositionController;
 use App\Http\Controllers\SalaryTypeController;
 use App\Http\Controllers\LeaveTypeController;
 use App\Http\Controllers\EntitlementController;
+use App\Http\Controllers\GeneratePayslipController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,7 +48,7 @@ Route::controller(App\Http\Controllers\PayrollController::class)->group(function
     Route::get('viewPayroll/{id}', 'viewPayroll')->name('viewPayroll');//link to go to view payroll page
     Route::get('editPayroll/{id}', 'editPayroll')->name('editPayroll');//link to go to edit page
     Route::put('updatePayroll/{id}', 'App\Http\Controllers\PayrollController@updatePayroll')->name('updatePayroll');//link to update the data in the database
-
+    Route::get('/savePayslip', 'savePayslip')->name('savePayslip');//link to save the data into database
 });
 
 Route::controller(App\Http\Controllers\ClaimController::class)->group(function () {
@@ -107,5 +108,8 @@ Route::controller(App\Http\Controllers\EntitlementController::class)->group(func
     Route::delete('deleteEntitlement/{id}', 'deleteEntitlement')->name('deleteEntitlement');//link to delete the data from the database
     Route::get('/listReport', 'listReport')->name('listReport');//link to list of report page
     Route::post('/viewReport', 'viewReport')->name('viewReport');//link to list of staff report page
+});
 
+Route::controller(App\Http\Controllers\GeneratePayslipController::class)->group(function () {
+    Route::post('/savePayslip', 'savePayslip')->name('savePayslip');//link to save the data into database
 });

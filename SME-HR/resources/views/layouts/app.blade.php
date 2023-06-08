@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="{{ asset('build/assets/plugins/datatables/buttons.bootstrap4.min.css') }}">
     <!-- Responsive datatable examples -->
     <link rel="stylesheet" href="{{ asset('build/assets/plugins/datatables/responsive.bootstrap4.min.css') }}">
+    <link href="{{ asset('build/assets/plugins/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
     
 
     <livewire:styles />
@@ -91,6 +92,9 @@
 
 
     <script src="{{ asset('build/assets/pages/jquery.ana_customers.inity.js') }}"></script>
+
+    <script src="{{ asset('build/assets/plugins/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('build/assets/pages/jquery.forms-advanced.js') }}"></script>
 
     <!-- App js -->
     <script src="{{ asset('build/assets/js/app.js') }}"></script>

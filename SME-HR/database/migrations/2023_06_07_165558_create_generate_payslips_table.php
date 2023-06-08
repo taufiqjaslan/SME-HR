@@ -16,13 +16,13 @@ return new class extends Migration
         Schema::create('generate_payslips', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id'); //foreign key
-            $table->decimal('basic_salary'); 
-            $table->decimal('kwsp_staff'); 
-            $table->decimal('kwsp_company'); 
-            $table->decimal('socso_staff');
-            $table->decimal('socso_company'); 
-            $table->decimal('eis_staff'); 
-            $table->decimal('eis_company'); 
+            $table->decimal('basic_salary')->nullable(); 
+            $table->decimal('kwsp_staff')->nullable(); 
+            $table->decimal('kwsp_company')->nullable(); 
+            $table->decimal('socso_staff')->nullable();
+            $table->decimal('socso_company')->nullable(); 
+            $table->decimal('eis_staff')->nullable();
+            $table->decimal('eis_company')->nullable();
             $table->decimal('zakat')->nullable();
             $table->decimal('allowance')->nullable();
             $table->decimal('bonus')->nullable();
