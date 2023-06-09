@@ -83,7 +83,7 @@ a:not(.btn-social-icon):not(.btn-social):not(.page-link) .fab {
   background-color: #cdd3d8 !important; }
 
 .bg-success {
-  background-color: #47c363 !important; }
+  background-color: #63ed7a !important; }
 
 .bg-info {
   background-color: #3abaf4 !important; }
@@ -1094,7 +1094,7 @@ table tr:hover .table-links {
   .badge.badge-secondary {
     background-color: #cdd3d8; }
   .badge.badge-success {
-    background-color: #47c363; }
+    background-color: #63ed7a; }
   .badge.badge-info {
     background-color: #3abaf4; }
   .badge.badge-danger {
@@ -1943,11 +1943,11 @@ body, html {
   min-height: 100%; }
 
 body {
-  background-color: #f4f6f9;
+  background-color: ##fbf6f0;
   font-size: 14px;
   font-weight: 400;
   font-family: "Nunito", "Segoe UI", arial;
-  color: #6c757d; }
+  color: #000000; }
 
 a.bb {
   text-decoration: none;
