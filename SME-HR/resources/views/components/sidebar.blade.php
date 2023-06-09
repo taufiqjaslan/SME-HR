@@ -29,7 +29,7 @@ $links = [
                 "section_list" => [
                     ["href" => "ListPayroll", "text" => "List Payslip"],
                     ["href" => "listPayslip", "text" => "Generate Payslip"],
-                    ["href" => "ViewPayslip", "text" => "View Payslip"],
+                    ["href" => "listGenerated", "text" => "View Payslip"],
                 ]
             ]
         ],

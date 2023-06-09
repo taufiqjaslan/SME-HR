@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\GeneratePayslipRecord;
 use App\Models\PayrollRecord;
+use App\Models\EmployeeRecord;
 use Illuminate\Http\Request;
 
 class GeneratePayslipController extends Controller
@@ -80,7 +81,7 @@ class GeneratePayslipController extends Controller
 
         // Return a response indicating the success of the operation
         return back()->with('success', 'Payslips generated and saved successfully');
-    }      
+    }
 
 
     /**
@@ -89,20 +90,42 @@ class GeneratePayslipController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function listGenerated()
     {
-        //
+        // Retrieve all payroll records and include the associated employee data
+        $payslipInfo = GeneratePayslipRecord::all();
+        $employeeInfo = EmployeeRecord::all();
+
+        return view('ManagePayroll.ViewPayslip', compact('payslipInfo', 'employeeInfo'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    // Filter function
+    public function filterData(Request $request)
     {
-        //
+        // Retrieve the filter values from the request payload
+        $year = $request->input('year');
+        $month = $request->input('month');
+        $name = $request->input('user_id');
+
+        // Query the database to fetch the filtered data
+        $query = GeneratePayslipRecord::with('employee');
+
+        // Apply filters if provided
+        if ($year) {
+            $query->where('year', $year);
+        }
+        if ($month) {
+            $query->where('month', $month);
+        }
+        if ($name) {
+            $query->where('user_id', $name);
+        }
+
+        // Get the filtered data
+        $filteredData = $query->get();
+
+        // Return the filtered data as JSON response
+        return response()->json($filteredData);
     }
 
     /**

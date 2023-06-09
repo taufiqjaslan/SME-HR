@@ -36,15 +36,6 @@ class PayrollController extends Controller
         return view('ManagePayroll.GeneratePayroll', ["generatePayslip" => $generatePayslip]);
     }
 
-    public function viewPayslip()
-    {
-        // Retrieve all payroll records and include the associated employee data and salary_type data
-        $viewPayslip = PayrollRecord::with('employee')->get();
-
-        // Pass the data to the view
-        return view('ManagePayroll.ViewPayslip', ["viewPayslip" => $viewPayslip]);
-    }
-
     /**
      * Display the specified resource.
      */

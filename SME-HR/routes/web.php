@@ -44,7 +44,6 @@ Route::controller(App\Http\Controllers\EmployeeController::class)->group(functio
 Route::controller(App\Http\Controllers\PayrollController::class)->group(function () {
     Route::get('/List_Payroll', 'ListPayroll')->name('ListPayroll');//link to go to payroll list page
     Route::get('/ListPayslip', 'listPayslip')->name('listPayslip');//link to go to generate payslip
-    Route::get('/View_Payslip', 'ViewPayslip')->name('ViewPayslip');//link to go to generate payslip
     Route::get('viewPayroll/{id}', 'viewPayroll')->name('viewPayroll');//link to go to view payroll page
     Route::get('editPayroll/{id}', 'editPayroll')->name('editPayroll');//link to go to edit page
     Route::put('updatePayroll/{id}', 'App\Http\Controllers\PayrollController@updatePayroll')->name('updatePayroll');//link to update the data in the database
@@ -112,4 +111,6 @@ Route::controller(App\Http\Controllers\EntitlementController::class)->group(func
 
 Route::controller(App\Http\Controllers\GeneratePayslipController::class)->group(function () {
     Route::post('/savePayslip', 'savePayslip')->name('savePayslip');//link to save the data into database
+    Route::get('/listGeneratedPayslip', 'listGenerated')->name('listGenerated');//link to go to generate payslip
+    Route::post('/filterData', 'filterData')->name('filterData');
 });
