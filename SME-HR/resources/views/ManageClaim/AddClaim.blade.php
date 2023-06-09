@@ -150,7 +150,7 @@
         $('#claim_type').change(function() {
             var select_status = $('#claim_type').val();
 
-            if (select_status == "3") {
+            if (select_status == "2") {
                 $('#overtime').removeAttr('hidden');
                 $('#overtime input').attr('required', true);
                 document.getElementById("attachment").setAttribute("hidden", "");
