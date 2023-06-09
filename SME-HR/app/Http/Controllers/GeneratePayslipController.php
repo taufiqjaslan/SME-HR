@@ -15,9 +15,9 @@ class GeneratePayslipController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function payslipReceipt()
     {
-        //
+        return view('ManagePayroll.PayslipReceipt');
     }
 
     /**
