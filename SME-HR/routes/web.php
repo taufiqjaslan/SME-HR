@@ -113,4 +113,5 @@ Route::controller(App\Http\Controllers\GeneratePayslipController::class)->group(
     Route::post('/savePayslip', 'savePayslip')->name('savePayslip');//link to save the data into database
     Route::get('/listGeneratedPayslip', 'listGenerated')->name('listGenerated');//link to go to generate payslip
     Route::post('/filterData', 'filterData')->name('filterData');
+    Route::get('/payslipReceipt', 'payslipReceipt')->name('payslipReceipt');//link to save the data into database
 });
