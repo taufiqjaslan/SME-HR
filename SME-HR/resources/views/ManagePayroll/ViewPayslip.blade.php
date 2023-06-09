@@ -134,7 +134,7 @@
                                         {{ $monthRanges[$month] }}
                                     </td>
                                     <td>
-                                        <a href="" class="mr-2"><i class="fas fa-eye font-16"></i></a>
+                                        <a href="{{ route('payslipReceipt') }}" class="mr-2"><i class="fas fa-eye font-16"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
