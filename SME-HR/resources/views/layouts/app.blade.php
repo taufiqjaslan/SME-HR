@@ -33,9 +33,16 @@
     <!-- Responsive datatable examples -->
     <link rel="stylesheet" href="{{ asset('build/assets/plugins/datatables/responsive.bootstrap4.min.css') }}">
     <link href="{{ asset('build/assets/plugins/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{ asset('build/assets/js/waves.min.js') }}">
+
+    <link rel="shortcut icon" href="{{ asset('build') }}/assets/images/sme_logo.png">
+
 
     <livewire:styles />
+
+
 
     <!-- Scripts -->
     <script defer src="{{ asset('vendor/alpine.js') }}"></script>
@@ -67,12 +74,12 @@
     </div>
 
     @stack('modals')
-    
+
 
     <!-- Metrica template -->
 
+
     <!-- jQuery  -->
-    <script src="{{ asset('build/assets/js/jquery.min.js') }}"></script>
     <script>
         var $j = jQuery.noConflict();
     </script>
@@ -118,7 +125,7 @@
 
     <script src="{{ asset('stisla/js/stisla.js') }}"></script>
     <script src="{{ asset('stisla/js/scripts.js') }}"></script>
-    
+
     <!-- Page Specific JS File -->
     <script src="{{ asset('stisla/js/page/index.js') }}"></script>
     <script src="{{ asset('stisla/js/page/modules-datatables.js') }}"></script>

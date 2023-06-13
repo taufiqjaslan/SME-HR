@@ -13,6 +13,7 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="shortcut icon" href="{{ asset('build') }}/assets/images/sme_logo.png">
 
         <!-- Scripts -->
         <script defer src="{{ asset('vendor/alpine.js') }}"></script>
