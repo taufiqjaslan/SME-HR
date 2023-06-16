@@ -92,12 +92,20 @@ class GeneratePayslipController extends Controller
      */
     public function listGenerated()
     {
-        // Retrieve all payroll records and include the associated employee data
-        $payslipInfo = GeneratePayslipRecord::all();
-        $employeeInfo = EmployeeRecord::all();
+        if (auth()->user()->user_type_id == 1) {
+            $payslipInfo = GeneratePayslipRecord::with('employee')->get();
+            $employeeInfo = EmployeeRecord::all();
+        } else {
+            $payslipInfo = GeneratePayslipRecord::with('employee')
+                ->where('user_id', auth()->user()->id)
+                ->get();
+            $employeeInfo = EmployeeRecord::where('id', auth()->user()->id)->get();
+        }
 
         return view('ManagePayroll.ViewPayslip', compact('payslipInfo', 'employeeInfo'));
     }
+
+
 
     // Filter function
     public function filterData(Request $request)
