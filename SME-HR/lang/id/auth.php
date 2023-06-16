@@ -13,8 +13,8 @@ return [
     |
     */
 
-    'failed' => 'Kredensial ini tidak cocok dengan yang ada pada database.',
-    'password' => 'Kata sandi yang diberikan salah.',
-    'throttle' => 'Terlalu banyak upaya masuk. Silakan coba lagi dalam :seconds detik.',
+    'failed' => 'These credentials do not match our records.',
+    'password' => 'The provided password is incorrect.',
+    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
 ];
