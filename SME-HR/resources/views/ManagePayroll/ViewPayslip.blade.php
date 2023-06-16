@@ -17,6 +17,7 @@
                     <br>
                     <hr>
                     <br>
+                    @if(Auth::user()->user_type_id == 1)
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group row">
@@ -72,6 +73,51 @@
                             </div>
                         </div>
                     </div>
+                    @endif
+                    @if(Auth::user()->user_type_id != 1)
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-md-3 label-control">Year</label>
+                                <div class="col-md-9 mx-auto">
+                                    @php
+                                    $currentYear = date('Y');
+                                    $years = range($currentYear - 3, $currentYear);
+                                    $years = array_reverse($years);
+                                    @endphp
+                                    <select name="year" class="form-control filter border-primary" id="year_filter">
+                                        <option disabled value="" selected hidden>Select Year</option>
+                                        @foreach ($years as $year)
+                                        <option value="{{ $year }}">{{ $year }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-md-3 label-control">Month</label>
+                                <div class="col-md-9 mx-auto">
+                                    <select name="month" class="form-control filter border-primary" id="month_filter">
+                                        <option disabled value="" selected hidden>Select Month</option>
+                                        <option value="1 JAN - 31 JAN">1 JAN - 31 JAN</option>
+                                        <option value="1 FEB - 28 FEB">1 FEB - 28 FEB</option>
+                                        <option value="1 MAC - 31 MAC">1 MAC - 31 MAC</option>
+                                        <option value="1 APR - 30 APR">1 APR - 30 APR</option>
+                                        <option value="1 MAY - 31 MAY">1 MAY - 31 MAY</option>
+                                        <option value="1 JUNE - 30 JUNE">1 JUNE - 30 JUNE</option>
+                                        <option value="1 JULY - 31 JULY">1 JULY - 31 JULY</option>
+                                        <option value="1 AUG - 31 AUG">1 AUG - 31 AUG</option>
+                                        <option value="1 SEPT - 30 SEPT">1 SEPT - 30 SEPT</option>
+                                        <option value="1 OCT - 31 OCT">1 OCT - 31 OCT</option>
+                                        <option value="1 NOV - 30 NOV">1 NOV - 30 NOV</option>
+                                        <option value="1 DEC - 31 DEC">1 DEC - 31 DEC</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
                     <br>
                     <hr>
                     <br>
