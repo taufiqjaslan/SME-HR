@@ -9,6 +9,7 @@
         </div>
     </x-slot>
 
+    @if(Auth::user()->user_type_id == 1)
     <div class="row" id="viewLeaveForm">
         <div class="col-12">
             <div class="card">
@@ -91,6 +92,49 @@
 
                                     <tbody id="reportTableBody">
                                         {{-- Table body content will be dynamically generated --}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+    @endif
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <!--begin::Row-->
+                    <div class="card-content collpase show">
+                        <div class="card-body">
+                            <div class="table-responsive dash-social">
+                                <table id="datatable" class="table">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Leave Type</th>
+                                            <th>Total Days</th>
+                                            <th>Leave Balance</th>
+                                            <th>Leave Pending</th>
+                                            <th>Leave Taken</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach ($reportInfo as $index => $report)
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $report->leaveType->leave_name }}</td>
+                                            <td>{{ $report->leaveType->leave_days }}</td>
+                                            <td>{{ $report->days_remaining }}</td>
+                                            <td>{{ $report->leave_pending }}</td>
+                                            <td>{{ $report->leave_taken }}</td>
+                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
