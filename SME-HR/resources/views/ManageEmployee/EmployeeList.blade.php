@@ -31,7 +31,7 @@
                                     <?php
                                     $no = 1;
                                     ?>
-                                    @foreach($lists as $list)
+                                    @foreach($listEmployee as $list)
                                     <tr>
                                         <td>{{ $no++ }}</td>
                                         <td>{{$list->name}}</td>
@@ -50,12 +50,14 @@
                                         @endif
                                         <td><span class="{{ $labelcolor }}">{{ $labelstatus }}</span></td>
                                         <td>
-                                            <form action="{{ route('deleteEmployee', $list->id)  }}" method="POST">
+                                            <form action="{{ route('deleteEmployee', $list->id)  }}" method="POST" class="dltForm">
                                                 @method('DELETE')
                                                 @csrf
                                                 <a href="{{route('viewEmployee', ['id' => $list->id])}}" class="mr-2"><i class="fas fa-eye font-16"></i></a>
+                                                @if(Auth::user()->user_type_id == 1)
                                                 <a href="{{route('editEmployee', ['id' => $list->id])}}" class="mr-2"><i class="fas fa-edit text-primary font-16"></i></a>
-                                                <button type="submit" name="submit"><i class="fas fa-trash-alt text-danger font-16"></i></button>
+                                                <button type="submit" name="submit" class="dltData"><i class="fas fa-trash-alt text-danger font-16"></i></button>
+                                                @endif
                                             </form>
                                         </td>
                                     </tr>
@@ -69,3 +71,54 @@
         </div><!--end row-->
     </div>
 </x-app-layout>
+
+<script>
+    $(document).ready(function() {
+        $(document).on("click", ".dltData", function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            var form = $(this).closest('.dltForm'); // Find the closest form element
+
+            // Show SweetAlert dialog
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You want to delete this data!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#fc544b',
+                cancelButtonColor: '$secondary',
+                confirmButtonText: 'Yes, delete it!',
+                dangerMode: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Your data has been deleted.',
+                        icon: 'success',
+                        showConfirmButton: true // Show the "OK" button
+                    }).then(() => {
+                        // Submit the form using AJAX
+                        $.ajax({
+                            url: form.attr('action'),
+                            type: 'POST',
+                            data: form.serialize(),
+                            success: function(response) {
+                                // Handle the success response
+                                console.log(response);
+                                // You can perform additional actions here after the form is successfully submitted
+
+                                // Refresh the current page
+                                window.location.reload();
+                            },
+                            error: function(xhr) {
+                                // Handle the error response
+                                console.log(xhr.responseText);
+                                // You can display an error message or perform other error handling here
+                            }
+                        });
+                    });
+                }
+            });
+        });
+    });
+</script>
