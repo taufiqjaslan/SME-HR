@@ -17,6 +17,7 @@
         "vite": "^4.0.4"
     },
     "dependencies": {
-        "autoprefixer": "10.4.13"
+        "autoprefixer": "10.4.13",
+        "sweetalert2": "^11.7.12"
     }
 }
