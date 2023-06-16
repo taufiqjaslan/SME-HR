@@ -21,14 +21,24 @@ class EmployeeController extends Controller
      */
     public function ListEmployee()
     {
-        $lists = EmployeeRecord::with('position', 'userType')
-            ->join('positions', 'users.position_id', '=', 'positions.id')
-            ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
-            ->select('users.*', 'positions.position_name', 'user_types.user_type_name')
-            ->get();
+        if (auth()->user()->user_type_id == 1) {
+            $lists = EmployeeRecord::with('position', 'userType')
+                ->join('positions', 'users.position_id', '=', 'positions.id')
+                ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
+                ->select('users.*', 'positions.position_name', 'user_types.user_type_name')
+                ->get();
+        } else {
+            $lists = EmployeeRecord::with('position', 'userType')
+                ->join('positions', 'users.position_id', '=', 'positions.id')
+                ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
+                ->select('users.*', 'positions.position_name', 'user_types.user_type_name')
+                ->where('users.id', auth()->user()->id)
+                ->get();
+        }
 
-        return view('ManageEmployee.EmployeeList', ["lists" => $lists]);
+        return view('ManageEmployee.EmployeeList', ["listEmployee" => $lists]);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -150,6 +160,7 @@ class EmployeeController extends Controller
             'eis_company' => $eisCompany,
             'netpay' => $netPay, // Set the initial value of netpay
         ]);
+        
 
 
         return redirect()->route('ListEmployee');
@@ -170,10 +181,10 @@ class EmployeeController extends Controller
     public function editEmployee(string $id)
     {
         $employeeInfo = EmployeeRecord::find($id);
+        $positions = PositionRecord::all(); // Fetch positions from the database
+        $userType = UserTypeRecord::all(); // Fetch positions from the database
 
-        return view('ManageEmployee.EditEmployee', [
-            'employeeInfo' => $employeeInfo,
-        ]); //returns the edit view with the employee information
+        return view('ManageEmployee.EditEmployee', compact('employeeInfo', 'positions', 'userType')); //returns the edit view with the employee information
     }
 
     /**
@@ -199,8 +210,9 @@ class EmployeeController extends Controller
 
         ]);
 
-
+        $validatedData['password'] = Hash::make($request->password);
         $updateInfo->update($validatedData);
+        
         return redirect()->route('ListEmployee')->with('success', 'Employee Info updated successfully!');
     }
 
@@ -217,7 +229,6 @@ class EmployeeController extends Controller
 
         // delete record
         $employeeRecord->delete();
-        session()->flash('success', 'Employee record deleted successfully.');
 
         // redirect to previous page
         return redirect()->back();
