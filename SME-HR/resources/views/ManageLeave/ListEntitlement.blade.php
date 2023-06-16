@@ -9,6 +9,7 @@
         </div>
     </x-slot>
 
+    @if(Auth::user()->user_type_id == 1)
     <div class="row">
         <div class="col-md-12">
             <div class="text-md-right">
@@ -100,6 +101,46 @@
 
                                     <tbody id="leaveTableBody">
                                         {{-- Table body content will be dynamically generated --}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+    @endif
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <!--begin::Row-->
+                    <div class="card-content collpase show">
+                        <div class="card-body">
+                            <div class="table-responsive dash-social">
+                                <table id="datatable" class="table">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Leave Type</th>
+                                            <th>Total Days</th>
+                                            <th>Valid From</th>
+                                            <th>Valid To</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach($entitlementInfo as $index => $entitlement)
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $entitlement->leaveType->leave_name }}</td>
+                                            <td>{{ $entitlement->leaveType->leave_days }}</td>
+                                            <td>{{ date('d/m/Y', strtotime($entitlement->valid_from)) }}</td>
+                                            <td>{{ date('d/m/Y', strtotime($entitlement->valid_to)) }}</td>
+                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
