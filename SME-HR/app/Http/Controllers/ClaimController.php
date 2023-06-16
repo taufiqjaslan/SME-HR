@@ -40,9 +40,12 @@ class ClaimController extends Controller
             $file->move('uploads/attachment/', $filename);
         }
 
+        // Determine the user ID based on user_type_id
+        $userId = auth()->user()->user_type_id == 1 ? $request->user_id : auth()->user()->id;
+
         // Store a new claim record
         $newClaim = ClaimRecord::create([
-            'user_id' => $request->user_id,
+            'user_id' => $userId,
             'date' => $request->date,
             'claim_type_id' => $request->claim_type_id,
             'detail' => $request->detail,
@@ -61,16 +64,27 @@ class ClaimController extends Controller
 
     public function listClaim()
     {
-        // Retrieve all payroll records and include the associated employee data and salary_type data
-        $claimRecords = ClaimRecord::with('claimType')
-            ->join('claim_types', 'claims.claim_type_id', '=', 'claim_types.id')
-            ->select('claims.*', 'claim_types.name')
-            ->get();
+        $user = auth()->user();
+        $claimRecords = null;
 
+        if ($user->user_type_id == 1) {
+            // Retrieve all claim records and include the associated claim type data
+            $claimRecords = ClaimRecord::with('claimType')
+                ->join('claim_types', 'claims.claim_type_id', '=', 'claim_types.id')
+                ->select('claims.*', 'claim_types.name')
+                ->get();
+        } else {
+            // Retrieve only the claim records of the logged-in user and include the associated claim type data
+            $claimRecords = ClaimRecord::with('claimType')
+                ->join('claim_types', 'claims.claim_type_id', '=', 'claim_types.id')
+                ->select('claims.*', 'claim_types.name')
+                ->where('claims.user_id', $user->id)
+                ->get();
+        }
 
-        // Pass the data to the view
         return view('ManageClaim.ClaimList', ["claimRecords" => $claimRecords]);
     }
+
 
     public function viewClaim(string $id)
     {
