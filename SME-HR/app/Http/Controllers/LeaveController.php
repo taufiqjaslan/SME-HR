@@ -45,9 +45,11 @@ class LeaveController extends Controller
             $file->move('uploads/attachment/', $filename);
         }
 
+        $user = auth()->user();
+
         // Store a new leave record
-        $newleave = LeaveRecord::create([
-            'user_id' => $request->user_id,
+        $newLeave = LeaveRecord::create([
+            'user_id' => ($user->user_type_id == 1) ? $request->user_id : $user->id,
             'leave_type_id' => $request->leave_type_id,
             'detail' => $request->detail,
             'total_day' => $request->total_day,
@@ -57,29 +59,31 @@ class LeaveController extends Controller
             'status' => 1,
         ]);
 
-        // Check if report record already exists
-        $reportRecord = ReportRecord::where('user_id', $request->user_id)
-            ->where('leave_type_id', $request->leave_type_id)
-            ->first();
+        if ($user->user_type_id != 1) {
+            // Check if report record already exists for the logged-in user
+            $reportRecord = ReportRecord::where('user_id', $user->id)
+                ->where('leave_type_id', $request->leave_type_id)
+                ->first();
 
-        if ($reportRecord) {
-            // Update existing report record
-            $reportRecord->days_remaining = $reportRecord->days_remaining - $request->total_day;
-            $reportRecord->leave_pending = $reportRecord->leave_pending + $request->total_day;
-            $reportRecord->save();
-        } else {
-            // Retrieve total_day from leave_types table
-            $leaveType = LeaveTypeRecord::find($request->leave_type_id);
-            $totalDayFromLeaveType = $leaveType->leave_days;
+            if ($reportRecord) {
+                // Update existing report record
+                $reportRecord->days_remaining = $reportRecord->days_remaining - $request->total_day;
+                $reportRecord->leave_pending = $reportRecord->leave_pending + $request->total_day;
+                $reportRecord->save();
+            } else {
+                // Retrieve total_day from leave_types table
+                $leaveType = LeaveTypeRecord::find($request->leave_type_id);
+                $totalDayFromLeaveType = $leaveType->leave_days;
 
-            // Create a new report record
-            $newreport = ReportRecord::create([
-                'user_id' => $request->user_id,
-                'leave_type_id' => $request->leave_type_id,
-                'days_remaining' => $totalDayFromLeaveType - $request->total_day,
-                'leave_pending' => $request->total_day,
-                'leave_taken' => 0,
-            ]);
+                // Create a new report record
+                $newReport = ReportRecord::create([
+                    'user_id' => $user->id,
+                    'leave_type_id' => $request->leave_type_id,
+                    'days_remaining' => $totalDayFromLeaveType - $request->total_day,
+                    'leave_pending' => $request->total_day,
+                    'leave_taken' => 0,
+                ]);
+            }
         }
 
         return redirect()->route('ListLeave');
@@ -87,18 +91,28 @@ class LeaveController extends Controller
 
 
 
+
     //List leave function
     public function listLeave()
     {
-        // Retrieve all payroll records and include the associated employee data and salary_type data
+        $user = auth()->user();
+
+        // Retrieve all leave records and include the associated employee data and leave type data
         $leaveRecords = LeaveRecord::with('employee', 'leaveType')
-            ->join('users', 'leaves.user_id', '=', 'Users.id')
+            ->join('users', 'leaves.user_id', '=', 'users.id')
             ->join('leave_types', 'leaves.leave_type_id', '=', 'leave_types.id')
-            ->select('leaves.*', 'users.name', 'leave_types.leave_name')
-            ->get();
+            ->select('leaves.*', 'users.name', 'leave_types.leave_name');
+
+        if ($user->user_type_id != 1) {
+            // Filter leave records for the logged-in user
+            $leaveRecords = $leaveRecords->where('leaves.user_id', $user->id);
+        }
+
+        $leaveRecords = $leaveRecords->get();
 
         return view('ManageLeave.LeaveList', ["leaveRecords" => $leaveRecords]);
     }
+
 
     /**
      * Display the specified resource.
