@@ -26,6 +26,7 @@
                                         @csrf
                                         <div class="form-body">
                                             <div class="row">
+                                                @if(Auth::user()->user_type_id == 1)
                                                 <div class="col-md-6">
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Staff Name</label>
@@ -39,6 +40,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                @endif
                                                 <div class="col-md-6">
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Date</label>
@@ -47,8 +49,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Claim Type</label>
@@ -70,8 +70,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
                                                 <div class="col-md-6" id="amount" hidden>
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Amount</label>
