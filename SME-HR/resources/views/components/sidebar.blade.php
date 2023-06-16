@@ -1,4 +1,5 @@
 @php
+$user = auth()->user();
 $links = [
 [
 "href" => "dashboard",
@@ -87,7 +88,38 @@ $links = [
 ],
 
 ];
+
+// Remove the "Emplloyee" link if user_type_id is not 1
+if ($user->user_type_id != 1) {
+    $links[1]['href'][0]['section_list'] = array_filter($links[1]['href'][0]['section_list'], function ($item) {
+        return $item['text'] !== 'Job Setting' && $item['text'] !== 'Add Employee';
+    });
+}
+
+// Remove the "Payroll" link if user_type_id is not 1
+if ($user->user_type_id != 1) {
+    $links[2]['href'][0]['section_list'] = array_filter($links[2]['href'][0]['section_list'], function ($item) {
+        return $item['text'] !== 'Generate Payslip' && $item['text'] !== 'List Payslip';
+    });
+}
+
+// Remove the "Claim" link if user_type_id is not 1
+if ($user->user_type_id != 1) {
+    $links[3]['href'][0]['section_list'] = array_filter($links[3]['href'][0]['section_list'], function ($item) {
+        return $item['text'] !== 'Claim Setting';
+    });
+}
+
+// Remove the "Leave" link if user_type_id is not 1
+if ($user->user_type_id != 1) {
+    $links[4]['href'][0]['section_list'] = array_filter($links[4]['href'][0]['section_list'], function ($item) {
+        return $item['text'] !== 'Leave Setting';
+    });
+}
+
+
 $navigation_links = array_to_object($links);
+
 @endphp
 
 <div class="main-sidebar">
