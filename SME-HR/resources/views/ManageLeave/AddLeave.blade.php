@@ -24,6 +24,7 @@
                                 @csrf
                                 <div class="form-body">
                                     <div class="row">
+                                        @if(Auth::user()->user_type_id == 1)
                                         <div class="col-md-6">
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Staff Name</label>
@@ -37,6 +38,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @endif
                                         <div class="col-md-6">
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Leave Type</label>
@@ -50,8 +52,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Start Date</label>
@@ -68,8 +68,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-md-6" id="">
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Total Day</label>
@@ -86,8 +84,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-md-6" id="attachment" hidden>
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Attachment File</label>
