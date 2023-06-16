@@ -11,6 +11,7 @@ $user = auth()->user();
         <h1 class="font-weight-bold text-2xl text-white">{{ config('app.name', 'Laravel') }}</h1>
     </form>
     <ul class="navbar-nav navbar-right">
+        @if(Auth::user()->user_type_id == 2)
         <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
             <div class="dropdown-menu dropdown-list dropdown-menu-right">
                 <div class="dropdown-header">Notifications
@@ -43,6 +44,7 @@ $user = auth()->user();
                 </div>
             </div>
         </li>
+        @endif
 
 
         <!-- Settings Dropdown -->
@@ -50,13 +52,17 @@ $user = auth()->user();
             <div class="nav-link nav-link-lg nav-link-user" data-toggle="dropdown">
                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                 <button class="flex items-center text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                    <div class="d-flex flex-column text-right pr-3">
-                        <span class="ml-2 d-sm-none d-lg-inline-block" style="opacity: 0.5; ">{{ Auth::user()->username }}</span>
-                        <span class="ml-2 d-sm-none d-lg-inline-block">{{ Auth::user()->name }}</span>
-                    </div>
                     <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                    <div class="d-sm-none d-lg-inline-block ml-2"> @if(Auth::user()->user_type_id == 1)
+                        Administrator
+                        @elseif(Auth::user()->user_type_id == 2)
+                        Manager
+                        @elseif(Auth::user()->user_type_id == 3)
+                        Staff
+                        @endif
+                        | {{ Auth::user()->username }}
+                    </div>
                 </button>
-
                 @else
                 <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
                     {{ Auth::user()->name }}
