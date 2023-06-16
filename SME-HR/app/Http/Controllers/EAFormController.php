@@ -16,14 +16,26 @@ class EAFormController extends Controller
      */
     public function EAFormHome()
     {
-        // Retrieve all eaform records and include the associated employee and position data
-        $EAFormRecords = EmployeeRecord::with('position')
-            ->join('positions', 'users.position_id', '=', 'positions.id')
-            ->select('users.*', 'positions.position_name')
-            ->get();
+        if (auth()->user()->user_type_id == 1) {
+            // Retrieve all EAForm records and include the associated employee and position data
+            $EAFormRecords = EmployeeRecord::with('position')
+                ->join('positions', 'users.position_id', '=', 'positions.id')
+                ->select('users.*', 'positions.position_name')
+                ->get();
+        } else {
+            // Retrieve EAForm records based on the specific user ID in the session
+            $userId = auth()->user()->id;
+            $EAFormRecords = EmployeeRecord::with('position')
+                ->join('positions', 'users.position_id', '=', 'positions.id')
+                ->select('users.*', 'positions.position_name')
+                ->where('users.id', $userId)
+                ->get();
+        }
+
         // Pass the data to the view
         return view('ManageEAForm.EAFormHome', ["EAFormRecords" => $EAFormRecords]);
     }
+
 
     public function ListEAForm($id)
     {
@@ -43,7 +55,7 @@ class EAFormController extends Controller
     {
         // Retrieve the EAFormRecord with the associated employee and position
         $eaFormData = EmployeeRecord::with('position')->where('id', $id)->first();
-    
+
         return view('ManageEAForm.AddEAForm', [
             'eaFormData' => $eaFormData,
             'id' => $id,
@@ -100,7 +112,6 @@ class EAFormController extends Controller
         $employee = EmployeeRecord::all(); // Fetch employee from the database
 
         return view('ManageEAForm.ViewEAForm', compact('EAFormData', 'employee'));
-
     }
 
     /**
