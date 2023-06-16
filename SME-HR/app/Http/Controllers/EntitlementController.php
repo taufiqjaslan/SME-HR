@@ -16,13 +16,17 @@ class EntitlementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function listEntitlement()
+    public function listEntitlement(Request $request)
     {
-        $entitlementInfo = EntitlementRecord::all();
-        $employeeInfo = EmployeeRecord::all(); // Fetch employee info from the database
+        // Retrieve the staff ID from the request
+        $staffId = $request->user()->id;
 
-        return view('ManageLeave.ListEntitlement', compact('entitlementInfo', 'employeeInfo'));
+        // Fetch the entitlement data from the database based on the staff ID
+        $entitlementInfo = EntitlementRecord::where('user_id', $staffId)->get();
+
+        return view('ManageLeave.ListEntitlement', compact('entitlementInfo'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -67,11 +71,11 @@ class EntitlementController extends Controller
     {
         // Retrieve the staff ID from the request
         $staffId = $request->input('user_id');
-    
+
         // Fetch the leave data from the database based on the staff ID,
         // eager load the related leave type data
         $leaveData = EntitlementRecord::with('leaveType')->where('user_id', $staffId)->get();
-    
+
         // Transform the leave data to include additional fields if needed
         $transformedLeaveData = $leaveData->map(function ($leave) {
             return [
@@ -82,11 +86,11 @@ class EntitlementController extends Controller
                 'id' => $leave->id,
             ];
         });
-    
+
         // Return the transformed leave data as a JSON response
         return response()->json(['leaveData' => $transformedLeaveData]);
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -95,11 +99,16 @@ class EntitlementController extends Controller
      */
     public function listReport()
     {
-        $reportInfo = ReportRecord::all();
-        $employeeInfo = EmployeeRecord::all(); // Fetch employee info from the database
+        $userId = auth()->user()->id; // Get the ID of the current authenticated user
+        $reportInfo = ReportRecord::join('leave_types', 'leave_reports.leave_type_id', '=', 'leave_types.id')
+            ->select('leave_reports.*', 'leave_types.leave_name', 'leave_types.leave_days')
+            ->where('leave_reports.user_id', $userId)
+            ->get();
 
-        return view('ManageLeave.ListReport', compact('reportInfo', 'employeeInfo'));
+        return view('ManageLeave.ListReport', compact('reportInfo'));
     }
+
+
 
     /**
      * view the specified resource in storage.
@@ -112,11 +121,11 @@ class EntitlementController extends Controller
     {
         // Retrieve the staff ID from the request
         $userId = $request->input('user_id');
-    
+
         // Fetch the leave data from the database based on the staff ID,
         // eager load the related leave type data
         $reportData = ReportRecord::with('leaveType')->where('user_id', $userId)->get();
-    
+
         // Transform the leave data to include additional fields if needed
         $transformedReportData = $reportData->map(function ($report) {
             return [
@@ -127,7 +136,7 @@ class EntitlementController extends Controller
                 'leaveTaken' => $report->leave_taken,
             ];
         });
-    
+
         // Return the transformed leave data as a JSON response
         return response()->json(['reportData' => $transformedReportData]);
     }
