@@ -20,6 +20,7 @@
                             <div class="card-header">
                                 <h1 class="card-title"><i class="fas fa-user">&nbsp;&nbsp;&nbsp;</i>Employee Information</h1>
                             </div>
+                            <hr>
                             <div class="card-content collpase show">
                                 <div class="card-body">
                                     <form method="POST" class="form form-horizontal" action="{{route('updateEmployee' , ['id' => $employeeInfo->id])}}" id="updateForm">
@@ -166,12 +167,67 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <h4 class="form-section"><i class="fas fa-money-bill-alt">&nbsp;&nbsp;&nbsp;</i>Account Details</h4>
+                                        <br>
+                                        <hr>
+                                        <br>
                                         <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 label-control">Bank Name</label>
+                                                    <div class="col-md-9 mx-auto">
+                                                        <select name="bank_name" class="form-control border-primary" id="bank_name" required>
+                                                            <option disabled value="" selected hidden>Select</option>
+                                                            <option value="1" {{ old('bank_name', $employeeInfo->bank_name) == '1' ? 'selected' : '' }}>Affin Bank Berhad</option>
+                                                            <option value="2" {{ old('bank_name', $employeeInfo->bank_name) == '2' ? 'selected' : '' }}>Agrobank</option>
+                                                            <option value="3" {{ old('bank_name', $employeeInfo->bank_name) == '3' ? 'selected' : '' }}>Al Rajhi & Investment Corporation (Malaysia) Berhad</option>
+                                                            <option value="4" {{ old('bank_name', $employeeInfo->bank_name) == '4' ? 'selected' : '' }}>Alliance Bank Malaysia Berhad</option>
+                                                            <option value="5" {{ old('bank_name', $employeeInfo->bank_name) == '5' ? 'selected' : '' }}>AmBank Berhad</option>
+                                                            <option value="6" {{ old('bank_name', $employeeInfo->bank_name) == '6' ? 'selected' : '' }}>Bank Kerjasama Rakyat Malaysia Berhad</option>
+                                                            <option value="7" {{ old('bank_name', $employeeInfo->bank_name) == '7' ? 'selected' : '' }}>Bank Muamalat Malaysia Berhad</option>
+                                                            <option value="8" {{ old('bank_name', $employeeInfo->bank_name) == '8' ? 'selected' : '' }}>Bank of America (Malaysia) Berhad</option>
+                                                            <option value="9" {{ old('bank_name', $employeeInfo->bank_name) == '9' ? 'selected' : '' }}>Bank of China (Malaysia) Berhad</option>
+                                                            <option value="10" {{ old('bank_name', $employeeInfo->bank_name) == '10' ? 'selected' : '' }}>Bank Simpanan Nasional</option>
+                                                            <option value="11" {{ old('bank_name', $employeeInfo->bank_name) == '11' ? 'selected' : '' }}>BigPay</option>
+                                                            <option value="12" {{ old('bank_name', $employeeInfo->bank_name) == '12' ? 'selected' : '' }}>BNP Paribas Malaysia Berhad</option>
+                                                            <option value="13" {{ old('bank_name', $employeeInfo->bank_name) == '13' ? 'selected' : '' }}>China Construction Bank (Malaysia) Berhad</option>
+                                                            <option value="14" {{ old('bank_name', $employeeInfo->bank_name) == '14' ? 'selected' : '' }}>CIMB Bank Berhad</option>
+                                                            <option value="15" {{ old('bank_name', $employeeInfo->bank_name) == '15' ? 'selected' : '' }}>Citibank Berhad</option>
+                                                            <option value="16" {{ old('bank_name', $employeeInfo->bank_name) == '16' ? 'selected' : '' }}>Deutsche Bank (Malaysia) Berhad</option>
+                                                            <option value="17" {{ old('bank_name', $employeeInfo->bank_name) == '17' ? 'selected' : '' }}>Finexus Cards Sdn. Bhd.</option>
+                                                            <option value="18" {{ old('bank_name', $employeeInfo->bank_name) == '18' ? 'selected' : '' }}>Hong Leong Bank Berhad</option>
+                                                            <option value="19" {{ old('bank_name', $employeeInfo->bank_name) == '19' ? 'selected' : '' }}>HSBC Bank Malaysia Berhad</option>
+                                                            <option value="20" {{ old('bank_name', $employeeInfo->bank_name) == '20' ? 'selected' : '' }}>Industrial And Commercial Bank of China</option>
+                                                            <option value="21" {{ old('bank_name', $employeeInfo->bank_name) == '21' ? 'selected' : '' }}>JP Morgan Chase Bank Berhad</option>
+                                                            <option value="22" {{ old('bank_name', $employeeInfo->bank_name) == '22' ? 'selected' : '' }}>Kuwait Finance House (Malaysia) Berhad</option>
+                                                            <option value="23" {{ old('bank_name', $employeeInfo->bank_name) == '23' ? 'selected' : '' }}>Maybank Berhad</option>
+                                                            <option value="24" {{ old('bank_name', $employeeInfo->bank_name) == '24' ? 'selected' : '' }}>MBSB Bank Berhad</option>
+                                                            <option value="25" {{ old('bank_name', $employeeInfo->bank_name) == '25' ? 'selected' : '' }}>Mizuho Bank (Malaysia) Berhad</option>
+                                                            <option value="26" {{ old('bank_name', $employeeInfo->bank_name) == '26' ? 'selected' : '' }}>MUFG Bank (Malaysia) Berhad</option>
+                                                            <option value="27" {{ old('bank_name', $employeeInfo->bank_name) == '27' ? 'selected' : '' }}>OCBC Bank (Malaysia) Berhad</option>
+                                                            <option value="28" {{ old('bank_name', $employeeInfo->bank_name) == '28' ? 'selected' : '' }}>Public Bank Berhad</option>
+                                                            <option value="29" {{ old('bank_name', $employeeInfo->bank_name) == '29' ? 'selected' : '' }}>RHB Bank Berhad</option>
+                                                            <option value="30" {{ old('bank_name', $employeeInfo->bank_name) == '30' ? 'selected' : '' }}>Standard Chartered Bank Malaysia Berhad</option>
+                                                            <option value="31" {{ old('bank_name', $employeeInfo->bank_name) == '31' ? 'selected' : '' }}>Sumitomo Mitsui Banking Corporation</option>
+                                                            <option value="32" {{ old('bank_name', $employeeInfo->bank_name) == '32' ? 'selected' : '' }}>Touch n Go eWallet</option>
+                                                            <option value="33" {{ old('bank_name', $employeeInfo->bank_name) == '33' ? 'selected' : '' }}>United Overseas Bank Berhad</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 label-control">Account Number</label>
+                                                    <div class="col-md-9 mx-auto">
+                                                        <input type="text" class="form-control border-primary" placeholder="Account Number" name="account_number" id="account_number" value="{{ old('account_number', $employeeInfo->account_number) }}" required>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="col-md-6">
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">Basic Salary</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <input type="text" class="form-control border-primary" placeholder="" name="basic_salary" id="basic_salary" value="{{ old('basic_salary', $employeeInfo->basic_salary) }}" required>
+                                                        <input type="text" class="form-control border-primary" placeholder="Basic Salary" name="basic_salary" id="basic_salary" value="{{ old('basic_salary', $employeeInfo->basic_salary) }}" required disabled>
                                                     </div>
                                                 </div>
                                             </div>
