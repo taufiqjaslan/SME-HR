@@ -41,7 +41,7 @@
                                     <tr>
                                         <td>
                                             <div class="custom-checkbox custom-control">
-                                                <input name="check[]" type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-{{ $no }}" value="{{$listPayslip->id}}">
+                                                <input name="check[]" type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-{{ $no }}" value="{{$listPayslip->id}}" required>
                                                 <label for="checkbox-{{ $no }}" class="custom-control-label">&nbsp;</label>
                                             </div>
                                         </td>
@@ -78,7 +78,7 @@
                                         $years = range($currentYear - 2, $currentYear);
                                         $years = array_reverse($years);
                                         @endphp
-                                        <select name="year" class="form-control border-primary" id="year">
+                                        <select name="year" class="form-control border-primary" id="year" required>
                                             <option disabled value="" selected hidden>Select Year</option>
                                             @foreach ($years as $year)
                                             <option value="{{ $year }}">{{ $year }}</option>
@@ -91,7 +91,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 label-control">Month</label>
                                     <div class="col-md-9 mx-auto">
-                                        <select name="month" class="form-control border-primary" id="month">
+                                        <select name="month" class="form-control border-primary" id="month" required>
                                             <option disabled value="" selected hidden>Select Month</option>
                                             <option value="1">1 JAN - 31 JAN</option>
                                             <option value="2">1 FEB - 28 FEB</option>
@@ -123,41 +123,101 @@
     </form>
 </x-app-layout>
 
-@push('scripts')
+
 <script>
     $(document).ready(function() {
-        // Handle form submission event
-        $('#generate_button').on('click', function(e) {
-            e.preventDefault();
+        $("#generate_button").click(function(event) {
+            event.preventDefault(); // Prevent the default form submission
 
-            // Gather the selected salaries and other form data
-            var selectedSalaries = [];
-            $("input:checkbox[name=check]:checked").each(function() {
-                selectedSalaries.push($(this).val());
-            });
-            var year = $('#year').val();
-            var month = $('#month').val();
+            // Manually trigger form validation
+            if ($("#myForm")[0].checkValidity()) {
+                // Make Ajax request to check if payroll has been generated
+                $.ajax({
+                    url: "{{ route('checkPayroll') }}",
+                    type: "POST",
+                    data: $("#myForm").serialize(),
+                    success: function(response) {
+                        if (response.generated) {
+                            // Payroll already generated
+                            Swal.fire({
+                                title: 'Payroll Already Generated',
+                                text: 'The payroll for the selected month and year has already been generated.',
+                                icon: 'error',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#6777ef',
+                            });
+                        } else {
+                            // Show confirmation dialog
+                            Swal.fire({
+                                title: 'Are you sure?',
+                                text: 'You want to generate this payroll!',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#6777ef',
+                                cancelButtonColor: '#999999',
+                                confirmButtonText: 'Yes, generate it!',
+                                dangerMode: true,
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Proceed with form submission
+                                    Swal.fire({
+                                        title: 'Success!',
+                                        text: 'Your payroll has been generated.',
+                                        icon: 'success',
+                                        showConfirmButton: true // Show the "OK" button
+                                    }).then(() => {
+                                        // Gather the selected salaries and other form data
+                                        var selectedSalaries = [];
+                                        $("input:checkbox[name=check]:checked").each(function() {
+                                            selectedSalaries.push($(this).val());
+                                        });
+                                        var year = $('#year').val();
+                                        var month = $('#month').val();
 
-            // Create hidden input fields and populate them with the selected data
-            $('<input>').attr({
-                type: 'hidden',
-                name: 'selected_salaries',
-                value: JSON.stringify(selectedSalaries)
-            }).appendTo('#myForm');
-            $('<input>').attr({
-                type: 'hidden',
-                name: 'year',
-                value: year
-            }).appendTo('#myForm');
-            $('<input>').attr({
-                type: 'hidden',
-                name: 'month',
-                value: month
-            }).appendTo('#myForm');
+                                        // Create hidden input fields and populate them with the selected data
+                                        $('<input>').attr({
+                                            type: 'hidden',
+                                            name: 'selected_salaries',
+                                            value: JSON.stringify(selectedSalaries)
+                                        }).appendTo('#myForm');
+                                        $('<input>').attr({
+                                            type: 'hidden',
+                                            name: 'year',
+                                            value: year
+                                        }).appendTo('#myForm');
+                                        $('<input>').attr({
+                                            type: 'hidden',
+                                            name: 'month',
+                                            value: month
+                                        }).appendTo('#myForm');
 
-            // Submit the form
-            $('#myForm').submit();
+                                        // Submit the form
+                                        $('#myForm').submit();
+
+                                    });
+                                }
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error case
+                        console.log(error);
+                    }
+                });
+            } else {
+                // Handle invalid form
+                Swal.fire({
+                    title: 'Invalid Form',
+                    text: 'Please fill in all the required fields.',
+                    icon: 'error',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#6777ef',
+                });
+            }
         });
+
+        // ... Remaining code ...
+
+
     });
 </script>
-@endpush
