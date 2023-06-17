@@ -26,6 +26,8 @@ class CreateUsersTable extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->decimal('basic_salary')->nullable();
+            $table->integer('bank_name')->nullable();
+            $table->string('account_number')->nullable();
             $table->unsignedBigInteger('position_id')->nullable(); //foreign key
             $table->unsignedBigInteger('user_type_id')->nullable(); //foreign key
             $table->integer('status')->default(0);
