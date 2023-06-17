@@ -23,8 +23,9 @@ class EntitlementController extends Controller
 
         // Fetch the entitlement data from the database based on the staff ID
         $entitlementInfo = EntitlementRecord::where('user_id', $staffId)->get();
+        $employeeInfo = EmployeeRecord::all(); // Fetch employee info from the database
 
-        return view('ManageLeave.ListEntitlement', compact('entitlementInfo'));
+        return view('ManageLeave.ListEntitlement', compact('entitlementInfo', 'employeeInfo'));
     }
 
 
@@ -105,7 +106,9 @@ class EntitlementController extends Controller
             ->where('leave_reports.user_id', $userId)
             ->get();
 
-        return view('ManageLeave.ListReport', compact('reportInfo'));
+        $employeeInfo = EmployeeRecord::all(); // Fetch employee info from the database
+
+        return view('ManageLeave.ListReport', compact('reportInfo', 'employeeInfo'));
     }
 
 
