@@ -104,6 +104,7 @@
     @endif
 
 
+    @if(Auth::user()->user_type_id != 1)
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -144,6 +145,7 @@
             </div><!--end card-body-->
         </div><!--end card-->
     </div> <!--end col-->
+    @endif
 
 </x-app-layout>
 
