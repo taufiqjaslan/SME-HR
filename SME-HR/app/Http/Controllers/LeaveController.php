@@ -90,8 +90,6 @@ class LeaveController extends Controller
     }
 
 
-
-
     //List leave function
     public function listLeave()
     {
