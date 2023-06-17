@@ -24,6 +24,8 @@ class EmployeeRecord extends Model
         'end_date',
         'position_id',
         'basic_salary',
+        'bank_name',
+        'account_number',
         'user_type_id',
         'status',
     ];
