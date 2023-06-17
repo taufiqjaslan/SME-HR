@@ -27,7 +27,7 @@
                         <div class="tab-pane show active px-7" id="kt_user_edit_tab_1" role="tabpanel">
                             <!--begin::Row-->
                             <div class="card-header">
-                                <h1 class="card-title"><i class="fas fa-money-bill-trend-up">&nbsp;&nbsp;&nbsp;</i>Income</h1>
+                                <h1 class="card-title"><i class="fas fa-money-bill-alt">&nbsp;&nbsp;&nbsp;</i>Income</h1>
                             </div>
                             <div class="card-content collpase show">
                                 <div class="card-body">
@@ -62,7 +62,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <h4 class="form-section"><i class="fas fa-money-bill-trend-up">&nbsp;&nbsp;&nbsp;</i>Expenses</h4>
+                                            <h4 class="form-section"><i class="fas fa-money-check-alt">&nbsp;&nbsp;&nbsp;</i>Expenses</h4>
                                             <br>
                                             <hr>
                                             <br>
@@ -108,12 +108,12 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Zakat</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input type="text" class="form-control border-primary" placeholder="Zakat" name="zaakt" id="zakat" value="{{ old('zakat', $payrollInfo->zakat) }}" readonly>
+                                                            <input type="text" class="form-control border-primary" placeholder="Zakat" name="zakat" id="zakat" value="{{ old('zakat', $payrollInfo->zakat ?? 0) }}" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <h4 class="form-section"><i class="fas fa-money-bill-trend-up">&nbsp;&nbsp;&nbsp;</i>Contribution</h4>
+                                            <h4 class="form-section"><i class="fas fa-money-bill-wave-alt">&nbsp;&nbsp;&nbsp;</i>Contribution</h4>
                                             <br>
                                             <hr>
                                             <br>
