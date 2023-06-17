@@ -22,15 +22,15 @@
                             </div>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form method="POST" class="form form-horizontal" action="{{route('StoreClaimType')}}">
+                                    <form method="POST" class="form form-horizontal" action="{{route('StoreClaimType')}}" id="addType">
                                         @csrf
                                         <div class="form-body">
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-9">
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Type of Claim</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input class="form-control border-primary" type="text" placeholder="Claim Type Name" name="name" id="name">
+                                                            <input class="form-control border-primary" type="text" placeholder="Claim Type Name" name="name" id="name" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -39,7 +39,7 @@
                                         <hr>
                                         <br>
                                         <div class="form-actions text-center">
-                                            <button class="btn btn-primary float-md-right" id="">Save</button>
+                                            <button class="btn btn-primary float-md-right" id="saveBtn">Save</button>
                                         </div>
                                     </form>
                                 </div>
@@ -52,3 +52,48 @@
     </div>
 
 </x-app-layout>
+
+<script>
+    $(document).ready(function() {
+        $("#saveBtn").click(function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Manually trigger form validation
+            if ($("#addType")[0].checkValidity()) {
+                // Show SweetAlert dialog
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'You want to add this data!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#6777ef',
+                    cancelButtonColor: '$secondary',
+                    confirmButtonText: 'Yes, add it!',
+                    dangerMode: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Show success message
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Your data has been saved.',
+                            icon: 'success',
+                            showConfirmButton: true // Show the "OK" button
+                        }).then(() => {
+                            // Submit the form here
+                            $("#addType").submit();
+                        });
+                    }
+                });
+            } else {
+                // Handle invalid form
+                Swal.fire({
+                    title: 'Invalid Form',
+                    text: 'Please fill in all the required fields.',
+                    icon: 'error',
+                    showConfirmButton: true, // Show the "OK" button
+                    confirmButtonColor: '#6777ef',
+                });
+            }
+        });
+    });
+</script>
