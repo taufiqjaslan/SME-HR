@@ -22,7 +22,7 @@
                             </div>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form method="POST" class="form form-horizontal" action="{{route('StoreClaim')}}" enctype="multipart/form-data">
+                                    <form method="POST" class="form form-horizontal" action="{{route('StoreClaim')}}" enctype="multipart/form-data" id="applyClaim">
                                         @csrf
                                         <div class="form-body">
                                             <div class="row">
@@ -31,7 +31,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Staff Name</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <select name="user_id" class="form-control border-primary" id="user_id">
+                                                            <select name="user_id" class="form-control border-primary" id="user_id" required>
                                                                 <option disabled value="" selected hidden>Select</option>
                                                                 @foreach($listData['employee'] as $employees)
                                                                 <option value="{{ $employees->id }}">{{ $employees->name }}</option>
@@ -45,7 +45,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Date</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input type="date" class="form-control border-primary" placeholder="" name="date" id="date">
+                                                            <input type="date" class="form-control border-primary" placeholder="" name="date" id="date" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -53,7 +53,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Claim Type</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <select name="claim_type_id" class="form-control border-primary" id="claim_type">
+                                                            <select name="claim_type_id" class="form-control border-primary" id="claim_type" required>
                                                                 <option disabled value="" selected hidden>Select</option>
                                                                 @foreach($listData['claimType'] as $claimTypes)
                                                                 <option value="{{ $claimTypes->id }}">{{ $claimTypes->name }}</option>
@@ -66,7 +66,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Claim Details</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <textarea rows="6" class="form-control border-primary" name="detail" placeholder="Claim Details" id="detail"></textarea>
+                                                            <textarea rows="6" class="form-control border-primary" name="detail" placeholder="Claim Details" id="detail" required></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -95,7 +95,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Start Time</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input class="form-control border-primary" type="time" name="start_time" id="start_time">
+                                                            <input class="form-control border-primary" type="time" name="start_time" id="start_time" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -103,7 +103,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">End Time</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input class="form-control border-primary" type="time" name="end_time" id="end_time">
+                                                            <input class="form-control border-primary" type="time" name="end_time" id="end_time" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -111,7 +111,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">From Date</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input class="form-control border-primary" type="date" name="start_date" id="start_date">
+                                                            <input class="form-control border-primary" type="date" name="start_date" id="start_date" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -119,7 +119,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">To Date</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input class="form-control border-primary" type="date" name="end_date" id="end_date">
+                                                            <input class="form-control border-primary" type="date" name="end_date" id="end_date" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -128,7 +128,7 @@
                                         <hr>
                                         <br>
                                         <div class="form-actions text-center">
-                                            <button class="btn btn-primary float-md-right" id="generate_button">Apply</button>
+                                            <button class="btn btn-primary float-md-right" id="addbutton">Apply</button>
                                         </div>
                                     </form>
                                 </div>
@@ -160,5 +160,46 @@
                 document.getElementById("amount").removeAttribute("hidden");
             }
         })
+
+        $("#addbutton").click(function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Manually trigger form validation
+            if ($("#applyClaim")[0].checkValidity()) {
+                // Show SweetAlert dialog
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'You want to add this data!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#6777ef',
+                    cancelButtonColor: '$secondary',
+                    confirmButtonText: 'Yes, add it!',
+                    dangerMode: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Show success message
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Your data has been saved.',
+                            icon: 'success',
+                            showConfirmButton: true // Show the "OK" button
+                        }).then(() => {
+                            // Submit the form here
+                            $("#applyClaim").submit();
+                        });
+                    }
+                });
+            } else {
+                // Handle invalid form
+                Swal.fire({
+                    title: 'Invalid Form',
+                    text: 'Please fill in all the required fields.',
+                    icon: 'error',
+                    showConfirmButton: true, // Show the "OK" button
+                    confirmButtonColor: '#6777ef',
+                });
+            }
+        });
     })
 </script>
