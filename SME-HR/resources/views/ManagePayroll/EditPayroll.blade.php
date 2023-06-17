@@ -20,9 +20,10 @@
                             <div class="card-header">
                                 <h1 class="card-title"><i class="fas fa-money-bill-alt">&nbsp;&nbsp;&nbsp;</i>Income</h1>
                             </div>
+                            <hr>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form method="POST" class="form form-horizontal" action="{{route('updatePayroll' , ['id' => $payrollInfo->id])}}" enctype="multipart/form-data">
+                                    <form method="POST" class="form form-horizontal" action="{{route('updatePayroll' , ['id' => $payrollInfo->id])}}" enctype="multipart/form-data" id="updateForm">
                                         @csrf
                                         @method('PUT')
                                         <div class="form-body">
@@ -141,7 +142,7 @@
                                         <hr>
                                         <br>
                                         <div class="form-actions text-center">
-                                            <button class="btn btn-primary float-md-right" id="">Save</button>
+                                            <button class="btn btn-primary float-md-right" id="updateButton">Update</button>
                                         </div>
                                     </form>
                                 </div>
@@ -154,3 +155,48 @@
     </div>
 
 </x-app-layout>
+
+<script>
+    $(document).ready(function() {
+        $("#updateButton").click(function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Manually trigger form validation
+            if ($("#updateForm")[0].checkValidity()) {
+                // Show SweetAlert dialog
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'You want to update this data!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#6777ef',
+                    cancelButtonColor: '$secondary',
+                    confirmButtonText: 'Yes, update it!',
+                    dangerMode: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Show success message
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Your data has been updated.',
+                            icon: 'success',
+                            showConfirmButton: true // Show the "OK" button
+                        }).then(() => {
+                            // Submit the form here
+                            $("#updateForm").submit();
+                        });
+                    }
+                });
+            } else {
+                // Handle invalid form
+                Swal.fire({
+                    title: 'Invalid Form',
+                    text: 'Please fill in all the required fields.',
+                    icon: 'error',
+                    showConfirmButton: true, // Show the "OK" button
+                    confirmButtonColor: '#6777ef',
+                });
+            }
+        });
+    });
+</script>
