@@ -20,6 +20,7 @@
                             <div class="card-header">
                                 <h1 class="card-title"><i class="fas fa-user">&nbsp;&nbsp;&nbsp;</i>Employee Information</h1>
                             </div>
+                            <hr>
                             <div class="card-content collpase show">
                                 <div class="card-body">
                                     <form method="POST" class="form form-horizontal" action="{{route('RegisterEmployee')}}" id="registerEmployee">
@@ -164,12 +165,67 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <h4 class="form-section"><i class="fas fa-money-bill-alt">&nbsp;&nbsp;&nbsp;</i>Account Details</h4>
+                                        <br>
+                                        <hr>
+                                        <br>
                                         <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 label-control">Bank Name</label>
+                                                    <div class="col-md-9 mx-auto">
+                                                        <select name="bank_name" class="form-control border-primary" id="bank_name" required>
+                                                            <option disabled value="" selected hidden>Select</option>
+                                                            <option value="1">Affin Bank Berhad</option>
+                                                            <option value="2">Agrobank</option>
+                                                            <option value="3">Al Rajhi & Investment Corporation (Malaysia) Berhad</option>
+                                                            <option value="4">Alliance Bank Malaysia Berhad</option>
+                                                            <option value="5">AmBank Berhad</option>
+                                                            <option value="6">Bank Kerjasama Rakyat Malaysia Berhad</option>
+                                                            <option value="7">Bank Muamalat Malaysia Berhad</option>
+                                                            <option value="8">Bank of America (Malaysia) Berhad</option>
+                                                            <option value="9">Bank of China (Malaysia) Berhad</option>
+                                                            <option value="10">Bank Simpanan Nasional</option>
+                                                            <option value="11">BigPay</option>
+                                                            <option value="12">BNP Paribas Malaysia Berhad</option>
+                                                            <option value="13">China Construction Bank (Malaysia) Berhad</option>
+                                                            <option value="14">CIMB Bank Berhad</option>
+                                                            <option value="15">Citibank Berhad</option>
+                                                            <option value="16">Deutsche Bank (Malaysia) Berhad</option>
+                                                            <option value="17">Finexus Cards Sdn. Bhd.</option>
+                                                            <option value="18">Hong Leong Bank Berhad</option>
+                                                            <option value="19">HSBC Bank Malaysia Berhad</option>
+                                                            <option value="20">Industrial And Commercial Bank of China</option>
+                                                            <option value="21">JP Morgan Chase Bank Berhad</option>
+                                                            <option value="22">Kuwait Finance House (Malaysia) Berhad</option>
+                                                            <option value="23">Maybank Berhad</option>
+                                                            <option value="24">MBSB Bank Berhad</option>
+                                                            <option value="25">Mizuho Bank (Malaysia) Berhad</option>
+                                                            <option value="26">MUFG Bank (Malaysia) Berhad</option>
+                                                            <option value="27">OCBC Bank (Malaysia) Berhad</option>
+                                                            <option value="28">Public Bank Berhad</option>
+                                                            <option value="29">RHB Bank Berhad</option>
+                                                            <option value="30">Standard Chartered Bank Malaysia Berhad</option>
+                                                            <option value="31">Sumitomo Mitsui Banking Corporation</option>
+                                                            <option value="32">Touch n Go eWallet</option>
+                                                            <option value="33">United Overseas Bank Berhad</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 label-control">Account Number</label>
+                                                    <div class="col-md-9 mx-auto">
+                                                        <input type="text" class="form-control border-primary" placeholder="Account Number" name="account_number" id="account_number" required>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="col-md-6">
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">Basic Salary</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <input type="text" class="form-control border-primary" placeholder="" name="basic_salary" id="basic_salary" required>
+                                                        <input type="text" class="form-control border-primary" placeholder="Basic Salary" name="basic_salary" id="basic_salary" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -177,7 +233,7 @@
                                         <hr>
                                         <br>
                                         <div class="form-actions text-center">
-                                            <button class="btn btn-primary float-md-right" id="generate_button">Save</button>
+                                            <button class="btn btn-primary float-md-right" id="addbutton">Save</button>
                                         </div>
                                     </form>
                                 </div>
@@ -193,7 +249,7 @@
 
 <script>
     $(document).ready(function() {
-        $("#generate_button").click(function(event) {
+        $("#addbutton").click(function(event) {
             event.preventDefault(); // Prevent the default form submission
 
             // Manually trigger form validation
