@@ -15,19 +15,12 @@ class GeneratePayslipController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function payslipReceipt()
+    public function payslipReceipt(string $id)
     {
-        return view('ManagePayroll.PayslipReceipt');
-    }
+        $payslipInfo = GeneratePayslipRecord::find($id);
+        $employeeInfo = EmployeeRecord::with('position')->find($payslipInfo->user_id); // Retrieve the specific employee record // Fetch employee from the database
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('ManagePayroll.PayslipReceipt', compact('payslipInfo', 'employeeInfo'));
     }
 
     /**
@@ -105,8 +98,6 @@ class GeneratePayslipController extends Controller
         return view('ManagePayroll.ViewPayslip', compact('payslipInfo', 'employeeInfo'));
     }
 
-
-
     // Filter function
     public function filterData(Request $request)
     {
@@ -136,26 +127,29 @@ class GeneratePayslipController extends Controller
         return response()->json($filteredData);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    //check payroll (already generated or not)
+    public function checkPayroll(Request $request)
     {
-        //
-    }
+        // Retrieve the selected year, month, and user_id from the request
+        $year = $request->input('year');
+        $month = $request->input('month');
+        $user_id = auth()->user()->id; // Assuming you are using Laravel's authentication and getting the user ID from the authenticated user
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        // Query your data source to check if the payroll entry exists
+        $existingPayroll = GeneratePayslipRecord::where('user_id', $user_id)
+            ->where('year', $year)
+            ->where('month', $month)
+            ->first();
+
+        // Check if the existing payroll entry was found
+        $payrollExists = !is_null($existingPayroll);
+
+        // Prepare the response
+        $response = [
+            'generated' => $payrollExists,
+        ];
+
+        // Return the response as JSON
+        return response()->json($response);
     }
 }
