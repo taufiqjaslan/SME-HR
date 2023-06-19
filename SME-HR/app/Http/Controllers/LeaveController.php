@@ -9,7 +9,10 @@ use Illuminate\Http\Response;
 use App\Models\EmployeeRecord;
 use App\Models\LeaveTypeRecord;
 use App\Models\LeaveRecord;
+use App\Models\NotificationRecord;
 use App\Models\ReportRecord;
+use Dotenv\Exception\ValidationException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 class LeaveController extends Controller
@@ -58,6 +61,39 @@ class LeaveController extends Controller
             'end_date' => $request->end_date,
             'status' => 1,
         ]);
+
+        NotificationRecord::create([
+            'user_id' => ($user->user_type_id == 1) ? $request->user_id : $user->id,
+            'noti_type' => 2,
+            'noti_text' => "has apply a new leave",
+        ]);
+
+        if ($user->user_type_id == 1) {
+            // Check if report record already exists for the logged-in user
+            $reportRecord = ReportRecord::where('user_id', $request->user_id)
+                ->where('leave_type_id', $request->leave_type_id)
+                ->first();
+
+            if ($reportRecord) {
+                // Update existing report record
+                $reportRecord->days_remaining = $reportRecord->days_remaining - $request->total_day;
+                $reportRecord->leave_pending = $reportRecord->leave_pending + $request->total_day;
+                $reportRecord->save();
+            } else {
+                // Retrieve total_day from leave_types table
+                $leaveType = LeaveTypeRecord::find($request->leave_type_id);
+                $totalDayFromLeaveType = $leaveType->leave_days;
+
+                // Create a new report record
+                $newReport = ReportRecord::create([
+                    'user_id' => $request->user_id,
+                    'leave_type_id' => $request->leave_type_id,
+                    'days_remaining' => $totalDayFromLeaveType - $request->total_day,
+                    'leave_pending' => $request->total_day,
+                    'leave_taken' => 0,
+                ]);
+            }
+        }
 
         if ($user->user_type_id != 1) {
             // Check if report record already exists for the logged-in user
@@ -141,8 +177,8 @@ class LeaveController extends Controller
      */
     public function updateLeave(Request $request, $id)
     {
-        // Update employee info from the database
-        $updateInfo = LeaveRecord::findOrFail($id);
+        // Update leave record from the database
+        $leaveRecord = LeaveRecord::findOrFail($id);
 
         $validatedData = $request->validate([
             'user_id' => 'required',
@@ -163,16 +199,68 @@ class LeaveController extends Controller
             $validatedData['attachment'] = $filename;
 
             // Delete the previous attachment file if it exists
-            if (!empty($updateInfo->attachment)) {
-                $previousFile = 'uploads/attachment/' . $updateInfo->attachment;
+            if (!empty($leaveRecord->attachment)) {
+                $previousFile = 'uploads/attachment/' . $leaveRecord->attachment;
                 if (File::exists($previousFile)) {
                     File::delete($previousFile);
                 }
             }
         }
 
-        $updateInfo->update($validatedData);
+        // Retrieve the user's leave report
+        $leaveReport = ReportRecord::where('user_id', $leaveRecord->user_id)
+            ->where('leave_type_id', $leaveRecord->leave_type_id)
+            ->first();
+
+        if ($leaveReport) {
+            // Retrieve the total total_day for the same leave_type_id and user_id
+            $totalDays = LeaveRecord::where('leave_type_id', $leaveRecord->leave_type_id)
+                ->where('user_id', $leaveRecord->user_id)
+                ->where('id', '!=', $leaveRecord->id) // Exclude the current leave record being updated
+                ->sum('total_day');
+
+            // Add the total_day of the current leave record being updated
+            $totalDays += intval($validatedData['total_day']);
+
+            // Update the days_remaining and leave_pending values
+            $leaveReport->days_remaining = $totalDays;
+            $leaveReport->leave_pending = $totalDays;
+
+            // Save the updated leave report
+            $leaveReport->save();
+        }
+
+        $leaveRecord->update($validatedData);
         return redirect()->route('ListLeave')->with('success', 'Leave Info updated successfully!');
+    }
+
+
+
+    //check total leave
+    public function checkLeave(Request $request)
+    {
+        $leaveTypeId = $request->input('leave_type_id');
+        $totalDays = intval($request->input('total_day'));
+        $userId = Auth::id();
+
+        $existingLeave = LeaveRecord::where('leave_type_id', $leaveTypeId)
+            ->where('user_id', $userId)
+            ->first();
+
+        if ($existingLeave) {
+            $daysRemaining = ReportRecord::where('leave_type_id', $leaveTypeId)
+                ->where('user_id', $userId)
+                ->value('days_remaining');
+        } else {
+            $daysRemaining = LeaveTypeRecord::where('id', $leaveTypeId)
+                ->value('leave_days');
+        }
+
+        if ($totalDays > $daysRemaining) {
+            return response()->json(['sufficient' => false]);
+        }
+
+        return response()->json(['sufficient' => true]);
     }
 
     /**
@@ -186,11 +274,129 @@ class LeaveController extends Controller
             return redirect()->back()->with('error', 'Leave record not found.');
         }
 
-        // delete record
+        // Retrieve the total_day value
+        $totalDay = $leaveRecord->total_day;
+
+        // Retrieve the user's leave report
+        $leaveReport = ReportRecord::where('user_id', $leaveRecord->user_id)->first();
+
+        if ($leaveReport) {
+            // Update the days_remaining and leave_pending values
+            $leaveReport->days_remaining -= $totalDay;
+            $leaveReport->leave_pending -= $totalDay;
+
+            // Save the updated leave report
+            $leaveReport->save();
+        }
+
+        // Delete the leave record
         $leaveRecord->delete();
+
         session()->flash('success', 'Leave record deleted successfully.');
 
-        // redirect to previous page
+        // Redirect to the previous page
         return redirect()->back();
+    }
+
+    // Update status to approve
+    public function updateStatus(Request $request, $id)
+    {
+        // Find the leave record by ID
+        $leave = LeaveRecord::find($id);
+
+        if (!$leave) {
+            // Leave not found
+            return response()->json(['message' => 'Leave not found'], 404);
+        }
+
+        // Retrieve the total_day from the leave record
+        $totalDay = $leave->total_day;
+
+        // Update the leave_pending and leave_taken values
+        $leaveReport = ReportRecord::where('user_id', $leave->user_id)->first();
+
+        if ($leaveReport) {
+            $leaveReport->leave_pending -= $totalDay;
+            $leaveReport->leave_taken += $totalDay;
+            $leaveReport->save();
+        }
+
+        // Update the status
+        $leave->status = 2;
+        $leave->save();
+
+        // Return a response indicating the successful update
+        return response()->json(['message' => 'Status updated successfully']);
+    }
+
+    // Update status to reject
+    public function updateStatusReject(Request $request, $id)
+    {
+        // Find the claim by ID
+        $leave = LeaveRecord::find($id);
+
+        if (!$leave) {
+            // Claim not found
+            return response()->json(['message' => 'Leave not found'], 404);
+        }
+
+        // Retrieve the total_day from the leave record
+        $totalDay = $leave->total_day;
+
+        // Update the leave_pending and leave_taken values
+        $leaveReport = ReportRecord::where('user_id', $leave->user_id)->first();
+
+        if ($leaveReport) {
+            $leaveReport->leave_pending -= $totalDay;
+            $leaveReport->days_remaining -= $totalDay;
+            $leaveReport->save();
+        }
+
+        // Update the status
+        $leave->status = 0; // 
+        $leave->save();
+
+        // Return a response indicating the successful update
+        return response()->json(['message' => 'Status updated successfully']);
+    }
+
+    public function getEvents(Request $request)
+    {
+        $leaves = LeaveRecord::with('employee')
+            ->join('users', 'leaves.user_id', '=', 'users.id')
+            ->select('leaves.*', 'users.*')->where('status', 1)->get();
+        $events = [];
+
+        foreach ($leaves as $leave) {
+            $name = $leave->employee->name;
+            $leaveType = $leave->leave_type_id;
+            $startDate = $leave->start_date;
+            $endDate = $leave->end_date;
+
+            $event = [
+                'title' => $name,
+                'start' => $startDate,
+                'end' => $endDate,
+                'backgroundColor' => "#2596be",
+                'borderColor' => "#2596be",
+                'textColor' => '#000'
+            ];
+
+            $events[] = $event;
+        }
+        dd($events); // Add this line
+
+        return response()->json($events);
+    }
+
+    public function showChart()
+    {
+        $leaveTypes = LeaveTypeRecord::pluck('leave_name', 'leave_days')->toArray();
+        $chartData = [
+            'Leave Types' => array_keys($leaveTypes),
+            'Leave Days' => array_values($leaveTypes),
+        ];
+    
+        return response()->json($chartData);
     }
 }

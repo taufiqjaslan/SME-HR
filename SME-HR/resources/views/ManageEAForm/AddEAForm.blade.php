@@ -21,7 +21,7 @@
                         </div>
                         <div class="card-content collpase show">
                             <div class="card-body">
-                                <form method="POST" class="form form-horizontal" action="{{route('storeEAForm' , ['id' => $eaFormData->id])}}">
+                                <form method="POST" class="form form-horizontal" action="{{route('storeEAForm' , ['id' => $eaFormData->id])}}" id="addForm">
                                     @csrf
                                     <div class="form-body">
                                         <h4 class="form-section"><i class="fas fa-file-alt">&nbsp;&nbsp;&nbsp;</i>Company Details</h4>
@@ -33,7 +33,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">Serial Number</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <input type="text" class="form-control border-primary" id="serial_number" name="serial_number" value="123" disabled>
+                                                        <input type="text" class="form-control border-primary" id="serial_number" name="serial_number" value="ABD-1435" disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -41,7 +41,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">LHDN Branch</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <input type="text" class="form-control border-primary name=" branch" id="branch" value="test" disabled>
+                                                        <input type="text" class="form-control border-primary name=" branch" id="branch" value="Seri Manjung" disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -51,7 +51,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">Employer Name</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <input type="text" class="form-control border-primary" name="emp_name" id="emp_name" value="test" disabled>
+                                                        <input type="text" class="form-control border-primary" name="emp_name" id="emp_name" value="Muhammad Taqwim Bin Mohd Jaslan" disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -59,7 +59,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">Position</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <input type="text" class="form-control border-primary" name="position" id="position" value="test" disabled>
+                                                        <input type="text" class="form-control border-primary" name="position" id="position" value="Director" disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -69,7 +69,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-md-3 label-control">Date</label>
                                                     <div class="col-md-9 mx-auto">
-                                                        <input class="form-control border-primary" type="date" name="date" id="date">
+                                                        <input class="form-control border-primary" type="date" name="date" id="date" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -82,7 +82,7 @@
                                                         $years = range($currentYear - 2, $currentYear);
                                                         $years = array_reverse($years);
                                                         @endphp
-                                                        <select name="year" class="form-control border-primary" id="year">
+                                                        <select name="year" class="form-control border-primary" id="year" required>
                                                             <option disabled value="" selected hidden>Select Year</option>
                                                             @foreach ($years as $year)
                                                             <option value="{{ $year }}">{{ $year }}</option>
@@ -335,7 +335,7 @@
                                     <hr>
                                     <br>
                                     <div class="form-actions text-center">
-                                        <button class="btn btn-primary float-md-right" id="">Save</button>
+                                        <button class="btn btn-primary float-md-right" id="addbutton">Save</button>
                                     </div>
                                 </form>
                             </div>
@@ -348,3 +348,48 @@
     </div>
 
 </x-app-layout>
+
+<script>
+    $(document).ready(function() {
+        $("#addbutton").click(function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Manually trigger form validation
+            if ($("#addForm")[0].checkValidity()) {
+                // Show SweetAlert dialog
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'You want to add this data!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#6777ef',
+                    cancelButtonColor: '$secondary',
+                    confirmButtonText: 'Yes, add it!',
+                    dangerMode: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Show success message
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Your data has been saved.',
+                            icon: 'success',
+                            showConfirmButton: true // Show the "OK" button
+                        }).then(() => {
+                            // Submit the form here
+                            $("#addForm").submit();
+                        });
+                    }
+                });
+            } else {
+                // Handle invalid form
+                Swal.fire({
+                    title: 'Invalid Form',
+                    text: 'Please fill in all the required fields.',
+                    icon: 'error',
+                    showConfirmButton: true, // Show the "OK" button
+                    confirmButtonColor: '#6777ef',
+                });
+            }
+        });
+    });
+</script>

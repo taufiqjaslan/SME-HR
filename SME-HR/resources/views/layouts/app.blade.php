@@ -19,12 +19,17 @@
     <!-- Styles -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@400;600;700&family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap.min.css') }}">
+
     {{-- <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('stisla/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('stisla/css/components.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/notyf/notyf.min.css') }}">
     {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
     @vite(['resources/js/app.js'])
+
+    <!-- App css -->
+    <link rel="stylesheet" href="{{ asset('build/assets/css/icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/css/metisMenu.min.css') }}">
 
     <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-shims.min.css" media="all">
     <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-font-face.min.css" media="all">
@@ -36,6 +41,13 @@
     <!-- Responsive datatable examples -->
     <link rel="stylesheet" href="{{ asset('build/assets/plugins/datatables/responsive.bootstrap4.min.css') }}">
     <link href="{{ asset('build/assets/plugins/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+
+    <!-- calendar css -->
+    <link rel="stylesheet" href="{{ asset('build/assets/plugins/fullcalendar/packages/core/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/plugins/fullcalendar/packages/daygrid/main.css') }}" />
+    <link rel="stylesheet" href="{{ asset('build/assets/plugins/fullcalendar/packages/bootstrap/main.css') }}" />
+    <link rel="stylesheet" href="{{ asset('build/assets/plugins/fullcalendar/packages/timegrid/main.css') }}" />
+    <link rel="stylesheet" href="{{ asset('build/assets/plugins/fullcalendar/packages/list/main.css') }}" />
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('build/assets/js/waves.min.js') }}">
@@ -64,7 +76,12 @@
                         @isset($header_content)
                         {{ $header_content }}
                         @else
-                        {{ __('Page') }}
+                        <h1>{{ __('Update Profile') }}</h1>
+                        <div class="section-header-breadcrumb">
+                            <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
+                            <div class="breadcrumb-item"><a href="#">Profile</a></div>
+                            <div class="breadcrumb-item"><a href="">Update Profile</a></div>
+                        </div>
                         @endisset
                     </div>
 
@@ -93,6 +110,8 @@
     <script src="{{ asset('build/assets/js/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('build/assets/plugins/apexcharts/apexcharts.min.js') }}"></script>
     <script src="{{ asset('build/assets/pages/jquery.analytics_dashboard.init.js') }}"></script>
+    <!-- JS Libraies -->
+    <script src="{{ asset('build/assets/modules/chart.min.js') }}"></script>
 
 
     <!-- Required datatable js -->
@@ -108,6 +127,18 @@
 
     <!-- App js -->
     <script src="{{ asset('build/assets/js/app.js') }}"></script>
+
+
+    <!-- calendar js -->
+    <script src="{{ asset('build/assets/plugins/fullcalendar/packages/core/main.js') }}"></script>
+    <script src="{{ asset('build/assets/plugins/fullcalendar/packages/daygrid/main.js') }}"></script>
+    <script src="{{ asset('build/assets/plugins/fullcalendar/packages/timegrid/main.js') }}"></script>
+    <script src="{{ asset('build/assets/plugins/fullcalendar/packages/interaction/main.js') }}"></script>
+    <script src="{{ asset('build/assets/plugins/fullcalendar/packages/list/main.js') }}"></script>
+    <script src="{{ asset('build/assets/pages/jquery.calendar.js') }}"></script>
+
+    <script src="{{ asset('build/assets/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('build/assets/plugins/moment/moment.js') }}"></script>
 
 
 
@@ -132,6 +163,7 @@
     <!-- Page Specific JS File -->
     <script src="{{ asset('stisla/js/page/index.js') }}"></script>
     <script src="{{ asset('stisla/js/page/modules-datatables.js') }}"></script>
+
 
     <!-- JS Libraies -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>

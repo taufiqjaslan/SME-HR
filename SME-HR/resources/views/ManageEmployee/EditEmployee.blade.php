@@ -84,14 +84,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <label class="col-md-3 label-control">Confirmation Password</label>
-                                                        <div class="col-md-9 mx-auto">
-                                                            <input class="form-control border-primary" type="password" placeholder="Confirm Password" name="confirm_password" id="password" value="{{ old('password', $employeeInfo->password) }}" required>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                         <h4 class="form-section"><i class="fas fa-calendar-alt">&nbsp;&nbsp;&nbsp;</i>Employement Details</h4>

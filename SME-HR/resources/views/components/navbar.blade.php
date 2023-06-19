@@ -20,28 +20,22 @@ $user = auth()->user();
                     </div>
                 </div>
                 <div class="dropdown-list-content dropdown-list-icons">
-                    <a href="#" class="dropdown-item dropdown-item-unread">
+                    @foreach($notifications as $notification)
+                    @php
+                    $redirectUrl = ($notification->noti_type == 1) ? route('ListClaim') : route('ListLeave');
+                    @endphp
+                    <a href="{{$redirectUrl}}" class="dropdown-item{{ $notification->unread ? ' dropdown-item-unread' : '' }}">
                         <div class="dropdown-item-icon bg-primary text-white">
-                            <i class="fas fa-code"></i>
+                            <i class="fas fa-bell"></i>
                         </div>
                         <div class="dropdown-item-desc">
-                            Template update is available now!
-                            <div class="time text-primary">2 Min Ago</div>
+                            {{ $notification->employee->username }} {{ $notification->noti_text }}
+                            <div class="time text-primary">{{ $notification->employee->name }}</div>
                         </div>
                     </a>
-                    <a href="#" class="dropdown-item">
-                        <div class="dropdown-item-icon bg-info text-white">
-                            <i class="far fa-user"></i>
-                        </div>
-                        <div class="dropdown-item-desc">
-                            <b>You</b> and <b>Dedik Sugiharto</b> are now friends
-                            <div class="time">10 Hours Ago</div>
-                        </div>
-                    </a>
+                    @endforeach
                 </div>
-                <div class="dropdown-footer text-center">
-                    <a href="#">View All <i class="fas fa-chevron-right"></i></a>
-                </div>
+
             </div>
         </li>
         @endif

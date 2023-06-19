@@ -31,7 +31,7 @@
                             </div>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form method="POST" class="form form-horizontal" action="{{route('updateLeave' , ['id' => $leaveInfo->id])}}" enctype="multipart/form-data">
+                                    <form method="POST" class="form form-horizontal" action="{{route('updateLeave' , ['id' => $leaveInfo->id])}}" enctype="multipart/form-data" id="editForm">
                                         @csrf
                                         @method('PUT')
                                         <div class="form-body">
@@ -139,7 +139,7 @@
                                         <hr>
                                         <br>
                                         <div class="form-actions text-center">
-                                            <button class="btn btn-primary float-md-right" id="">Save</button>
+                                            <button class="btn btn-primary float-md-right" id="editbutton">Save</button>
                                         </div>
                                     </form>
                                 </div>
@@ -154,6 +154,106 @@
 </x-app-layout>
 
 <script>
+    //utk show date dgn time
+    $(document).ready(function() {
+        $('#leave_type').change(function() {
+            var select_status = $('#leave_type').val();
+
+            if (select_status == "2") {
+                $('#attachment').removeAttr('hidden');
+                $('#attachment input').attr('required', true);
+            } else {
+                $('#attachment').attr('hidden', true);
+                $('#attachment input').removeAttr('required');
+            }
+        });
+
+        $("#editbutton").click(function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Manually trigger form validation
+            if ($("#editForm")[0].checkValidity()) {
+                // Show SweetAlert dialog
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'You want to update this data!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#6777ef',
+                    cancelButtonColor: '$secondary',
+                    confirmButtonText: 'Yes, update it!',
+                    dangerMode: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Get the total days
+                        var totalDays = parseInt($('#total_day').val());
+
+                        // Validate leave balance
+                        validateLeaveBalance(totalDays);
+                    }
+                });
+            } else {
+                // Handle invalid form
+                Swal.fire({
+                    title: 'Invalid Form',
+                    text: 'Please fill in all the required fields.',
+                    icon: 'error',
+                    showConfirmButton: true, // Show the "OK" button
+                    confirmButtonColor: '#6777ef',
+                });
+            }
+        });
+    });
+
+    function validateLeaveBalance(totalDays) {
+        // Send an AJAX request to your server with the totalDays value
+        $.ajax({
+            url: "{{ route('checkLeave') }}",
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                leave_type_id: $('#leave_type').val(),
+                total_day: totalDays
+            },
+            success: function(response) {
+                if (response.sufficient) {
+                    // Proceed with leave application
+
+                    // Show success message after form submission
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Your leave application has been submitted.',
+                        icon: 'success',
+                        showConfirmButton: true,
+                        confirmButtonColor: '#6777ef',
+                    }).then(() => {
+                            // Submit the form here
+                            $("#editForm").submit();
+                        });
+                } else {
+                    // Show error message indicating insufficient leave balance
+                    Swal.fire({
+                        title: 'Insufficient Leave Balance',
+                        text: 'You do not have enough leave balance for this application.',
+                        icon: 'error',
+                        showConfirmButton: true,
+                        confirmButtonColor: '#6777ef',
+                    });
+                }
+            },
+            error: function() {
+                // Show error message for failed AJAX request
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Failed to validate leave balance.',
+                    icon: 'error',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#6777ef',
+                });
+            }
+        });
+    }
+
     // Get the start date and end date input fields
     var startDateInput = document.getElementById('start_date');
     var endDateInput = document.getElementById('end_date');

@@ -31,7 +31,7 @@
                             </div>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form method="POST" class="form form-horizontal" action="{{route('updateClaim' , ['id' => $claimInfo->id])}}" enctype="multipart/form-data">
+                                    <form method="POST" class="form form-horizontal" action="{{route('updateClaim' , ['id' => $claimInfo->id])}}" enctype="multipart/form-data" id="updateForm">
                                         @csrf
                                         @method('PUT')
                                         <div class="form-body">
@@ -40,7 +40,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Staff Name</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <select name="user_id" class="form-control border-primary" id="user_id">
+                                                            <select name="user_id" class="form-control border-primary" id="user_id" required>
                                                                 <option disabled value="" selected hidden>Select</option>
                                                                 @foreach ($employeeInfo as $employeeInfos)
                                                                 <option value="{{ $employeeInfos->id }}" {{ old('user_id', $claimInfo->user_id) == $employeeInfos->id ? 'selected' : '' }}>
@@ -55,7 +55,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Date</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input type="date" class="form-control border-primary" name="date" id="date" value="{{ old('date', $claimInfo->date) }}">
+                                                            <input type="date" class="form-control border-primary" name="date" id="date" value="{{ old('date', $claimInfo->date) }}" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -65,7 +65,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Claim Type</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <select name="claim_type_id" class="form-control border-primary" id="claim_type">
+                                                            <select name="claim_type_id" class="form-control border-primary" id="claim_type" required>
                                                                 <option disabled value="" selected hidden>Select</option>
                                                                 @foreach ($claimTypeInfo as $claimType)
                                                                 <option value="{{ $claimType->id }}" {{ old('claim_type_id', $claimInfo->claim_type_id) == $claimType->id ? 'selected' : '' }}>
@@ -80,7 +80,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Claim Details</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <textarea rows="6" class="form-control border-primary" name="detail" placeholder="Claim Details" id="detail">{{ old('detail', $claimInfo->detail) }}</textarea>
+                                                            <textarea rows="6" class="form-control border-primary" name="detail" placeholder="Claim Details" id="detail" required>{{ old('detail', $claimInfo->detail) }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -118,7 +118,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Start Time</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input class="form-control border-primary" type="time" name="start_time" id="start_time" value="{{ old('start_time', $claimInfo->start_time) }}">
+                                                            <input class="form-control border-primary" type="time" name="start_time" id="start_time" value="{{ old('start_time', $claimInfo->start_time) }}" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -126,7 +126,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">End Time</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input class="form-control border-primary" type="time" name="end_time" id="end_time" value="{{ old('end_time', $claimInfo->end_time) }}">
+                                                            <input class="form-control border-primary" type="time" name="end_time" id="end_time" value="{{ old('end_time', $claimInfo->end_time) }}" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -134,7 +134,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">From Date</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input class="form-control border-primary" type="date" name="start_date" id="start_date" value="{{ old('start_date', $claimInfo->start_date) }}">
+                                                            <input class="form-control border-primary" type="date" name="start_date" id="start_date" value="{{ old('start_date', $claimInfo->start_date) }}" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -142,7 +142,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">To Date</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input class="form-control border-primary" type="date" name="end_date" id="end_date" value="{{ old('end_date', $claimInfo->end_date) }}">
+                                                            <input class="form-control border-primary" type="date" name="end_date" id="end_date" value="{{ old('end_date', $claimInfo->end_date) }}" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -151,7 +151,7 @@
                                         <hr>
                                         <br>
                                         <div class="form-actions text-center">
-                                            <button class="btn btn-primary float-md-right" id="">Save</button>
+                                            <button class="btn btn-primary float-md-right" id="updateButton">Update</button>
                                         </div>
                                     </form>
                                 </div>
@@ -164,3 +164,48 @@
     </div>
 
 </x-app-layout>
+
+<script>
+    $(document).ready(function() {
+        $("#updateButton").click(function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Manually trigger form validation
+            if ($("#updateForm")[0].checkValidity()) {
+                // Show SweetAlert dialog
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'You want to update this data!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#6777ef',
+                    cancelButtonColor: '$secondary',
+                    confirmButtonText: 'Yes, update it!',
+                    dangerMode: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Show success message
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Your data has been updated.',
+                            icon: 'success',
+                            showConfirmButton: true // Show the "OK" button
+                        }).then(() => {
+                            // Submit the form here
+                            $("#updateForm").submit();
+                        });
+                    }
+                });
+            } else {
+                // Handle invalid form
+                Swal.fire({
+                    title: 'Invalid Form',
+                    text: 'Please fill in all the required fields.',
+                    icon: 'error',
+                    showConfirmButton: true, // Show the "OK" button
+                    confirmButtonColor: '#6777ef',
+                });
+            }
+        });
+    });
+</script>

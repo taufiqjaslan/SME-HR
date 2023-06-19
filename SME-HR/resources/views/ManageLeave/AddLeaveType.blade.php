@@ -20,9 +20,10 @@
                             <div class="card-header">
                                 <h1 class="card-title"><i class="fas fa-hospital">&nbsp;&nbsp;&nbsp;</i>Leave Type Information</h1>
                             </div>
+                            <hr>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form method="POST" class="form form-horizontal" action="{{route('storeLeaveType')}}" enctype="multipart/form-data">
+                                    <form method="POST" class="form form-horizontal" action="{{route('storeLeaveType')}}" enctype="multipart/form-data" id="addForm">
                                         @csrf
                                         <div class="form-body">
                                             <div class="row">
@@ -30,7 +31,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Leave Type Name</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input type="text" class="form-control border-primary" placeholder="Leave Type Name" name="leave_name" id="leave_name">
+                                                            <input type="text" class="form-control border-primary" placeholder="Leave Type Name" name="leave_name" id="leave_name" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -38,7 +39,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Total Days</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input type="number" class="form-control border-primary" placeholder="Total Days" name="leave_days" id="leave_days">
+                                                            <input type="number" class="form-control border-primary" placeholder="Total Days" name="leave_days" id="leave_days" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -47,7 +48,7 @@
                                         <hr>
                                         <br>
                                         <div class="form-actions text-center">
-                                            <button class="btn btn-primary float-md-right" id="">Save</button>
+                                            <button class="btn btn-primary float-md-right" id="addbutton">Save</button>
                                         </div>
                                     </form>
                                 </div>
@@ -60,3 +61,59 @@
     </div>
 
 </x-app-layout>
+
+<script>
+    $(document).ready(function() {
+        $("#addbutton").click(function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Manually trigger form validation
+            if ($("#addForm")[0].checkValidity()) {
+                // Show SweetAlert dialog
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'You want to add this data!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#6777ef',
+                    cancelButtonColor: '$secondary',
+                    confirmButtonText: 'Yes, add it!',
+                    dangerMode: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Show success message
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Your data has been saved.',
+                            icon: 'success',
+                            showConfirmButton: true // Show the "OK" button
+                        }).then(() => {
+                            // Submit the form here
+                            $("#addForm").submit();
+                        });
+                    }
+                });
+            } else {
+                // Handle invalid form
+                Swal.fire({
+                    title: 'Invalid Form',
+                    text: 'Please fill in all the required fields.',
+                    icon: 'error',
+                    showConfirmButton: true, // Show the "OK" button
+                    confirmButtonColor: '#6777ef',
+                });
+            }
+        });
+        // Listen for changes in the input field
+        $('#leave_days').on('input', function() {
+            // Get the entered value
+            var leaveDays = $(this).val();
+
+            // Check if the value is less than 0
+            if (leaveDays < 0) {
+                // Set the input value to 0
+                $(this).val(0);
+            }
+        });
+    });
+</script>

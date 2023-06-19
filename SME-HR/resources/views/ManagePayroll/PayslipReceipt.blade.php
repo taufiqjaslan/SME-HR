@@ -294,5 +294,8 @@
 
         // Restore the original body content
         document.body.innerHTML = originalContents;
+
+        // Refresh the page
+        location.reload();
     }
 </script>

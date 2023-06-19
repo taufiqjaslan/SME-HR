@@ -218,21 +218,47 @@
 
         // Function to handle delete action through AJAX
         function deleteEntitlement(id) {
-            $.ajax({
-                url: '{{ route("deleteEntitlement", ":id") }}'.replace(':id', id),
-                type: 'POST',
-                data: {
-                    _method: 'DELETE',
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    // Handle success case
-                    console.log(response);
-                    // Refresh the table or update it accordingly
-                    refreshTable();
-                },
-                error: function() {
-                    // Handle error case
+            // Show SweetAlert dialog
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You want to delete this data!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#fc544b',
+                cancelButtonColor: '$secondary',
+                confirmButtonText: 'Yes, delete it!',
+                dangerMode: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '{{ route("deleteEntitlement", ":id") }}'.replace(':id', id),
+                        type: 'POST',
+                        data: {
+                            _method: 'DELETE',
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            // Handle success case
+                            Swal.fire({
+                                title: 'Success!',
+                                text: 'Your data has been deleted.',
+                                icon: 'success',
+                                showConfirmButton: true // Show the "OK" button
+                            }).then(() => {
+                                // Refresh the table or update it accordingly
+                                refreshTable();
+                            });
+                        },
+                        error: function(xhr) {
+                            // Handle error case
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'An error occurred while deleting the data.',
+                                icon: 'error',
+                                showConfirmButton: true // Show the "OK" button
+                            });
+                        }
+                    });
                 }
             });
         }

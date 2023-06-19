@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\ClaimRecord;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\EmployeeRecord;
+use App\Models\LeaveRecord;
 use App\Models\PayrollRecord;
 use App\Models\UserTypeRecord;
 use App\Models\PositionRecord;
@@ -455,5 +457,40 @@ class EmployeeController extends Controller
 
         // redirect to previous page
         return redirect()->back();
+    }
+
+    // Execute the query to count the total number of users
+    public function count()
+    {
+        // Check if the user is an admin (user_type_id == 1)
+        if (auth()->user()->user_type_id == 1) {
+            // Retrieve the total number of employees from the database
+            $totalEmployees = EmployeeRecord::count();
+
+            // Retrieve the total number of claims with status 0
+            $totalClaim = ClaimRecord::where('status', 0)->count();
+
+            // Retrieve the total number of leaves with status 1
+            $totalLeave = LeaveRecord::where('status', 1)->count();
+        } else {
+
+            $totalEmployees = EmployeeRecord::count();
+            // Retrieve the total number of claims with status 0 for the current user
+            $totalClaim = ClaimRecord::where('status', 0)
+                ->where('user_id', auth()->user()->id)
+                ->count();
+
+            // Retrieve the total number of leaves with status 1 for the current user
+            $totalLeave = LeaveRecord::where('status', 1)
+                ->where('user_id', auth()->user()->id)
+                ->count();
+        }
+
+        // Return the counts as JSON response
+        return response()->json([
+            'totalEmployees' => $totalEmployees ?? null,
+            'totalClaim' => $totalClaim,
+            'totalLeave' => $totalLeave
+        ]);
     }
 }

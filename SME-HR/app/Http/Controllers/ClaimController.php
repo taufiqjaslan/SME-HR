@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ClaimRecord;
 use App\Models\ClaimTypeRecord;
 use App\Models\EmployeeRecord;
+use App\Models\NotificationRecord;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -55,7 +56,13 @@ class ClaimController extends Controller
             'end_time' => $request->end_time,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
-            'status' => 1,
+            'status' => 0,
+        ]);
+
+        NotificationRecord::create([
+            'user_id' => $userId,
+            'noti_type' => 1,
+            'noti_text' => "has apply a new claim",
         ]);
 
         return redirect()->route('ListClaim');
@@ -67,7 +74,7 @@ class ClaimController extends Controller
         $user = auth()->user();
         $claimRecords = null;
 
-        if ($user->user_type_id == 1) {
+        if ($user->user_type_id != 3) {
             // Retrieve all claim records and include the associated claim type data
             $claimRecords = ClaimRecord::with('claimType')
                 ->join('claim_types', 'claims.claim_type_id', '=', 'claim_types.id')
@@ -163,5 +170,43 @@ class ClaimController extends Controller
 
         // redirect to previous page
         return redirect()->back();
+    }
+
+    // Update status to approve
+    public function updateStatus(Request $request, $id)
+    {
+        // Find the claim by ID
+        $claim = ClaimRecord::find($id);
+
+        if (!$claim) {
+            // Claim not found
+            return response()->json(['message' => 'Claim not found'], 404);
+        }
+
+        // Update the status
+        $claim->status = 1; // 
+        $claim->save();
+
+        // Return a response indicating the successful update
+        return response()->json(['message' => 'Status updated successfully']);
+    }
+
+    // Update status to reject
+    public function updateStatusReject(Request $request, $id)
+    {
+        // Find the claim by ID
+        $claim = ClaimRecord::find($id);
+
+        if (!$claim) {
+            // Claim not found
+            return response()->json(['message' => 'Claim not found'], 404);
+        }
+
+        // Update the status
+        $claim->status = 2; // 
+        $claim->save();
+
+        // Return a response indicating the successful update
+        return response()->json(['message' => 'Status updated successfully']);
     }
 }

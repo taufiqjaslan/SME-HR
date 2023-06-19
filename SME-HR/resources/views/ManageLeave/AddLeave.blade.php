@@ -20,7 +20,7 @@
                     </div>
                     <div class="card-content collpase show">
                         <div class="card-body">
-                            <form method="POST" class="form form-horizontal" action="{{route('StoreLeave')}}" enctype="multipart/form-data">
+                            <form method="POST" class="form form-horizontal" action="{{route('StoreLeave')}}" enctype="multipart/form-data" id="applyForm">
                                 @csrf
                                 <div class="form-body">
                                     <div class="row">
@@ -29,7 +29,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Staff Name</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <select name="user_id" class="form-control border-primary" id="user_id">
+                                                    <select name="user_id" class="form-control border-primary" id="user_id" required>
                                                         <option disabled value="" selected hidden>Select</option>
                                                         @foreach($listData['employee'] as $employees)
                                                         <option value="{{ $employees->id }}">{{ $employees->name }}</option>
@@ -43,7 +43,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Leave Type</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <select name="leave_type_id" class="form-control border-primary" id="leave_type">
+                                                    <select name="leave_type_id" class="form-control border-primary" id="leave_type" required>
                                                         <option disabled value="" selected hidden>Select Leave Type</option>
                                                         @foreach($listData['leaveType'] as $leaveTypes)
                                                         <option value="{{ $leaveTypes->id }}">{{ $leaveTypes->leave_name }}</option>
@@ -56,7 +56,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Start Date</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="date" class="form-control border-primary" placeholder="" name="start_date" id="start_date">
+                                                    <input type="date" class="form-control border-primary" placeholder="" name="start_date" id="start_date" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -64,7 +64,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">To Date</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="date" class="form-control border-primary" placeholder="" name="end_date" id="end_date">
+                                                    <input type="date" class="form-control border-primary" placeholder="" name="end_date" id="end_date" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -80,7 +80,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control">Leave Details</label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <textarea rows="6" class="form-control border-primary" name="detail" placeholder="Leave Details" id="detail"></textarea>
+                                                    <textarea rows="6" class="form-control border-primary" name="detail" placeholder="Leave Details" id="detail" required></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -97,7 +97,7 @@
                                 <hr>
                                 <br>
                                 <div class="form-actions text-center">
-                                    <button class="btn btn-primary float-md-right" id="">Apply</button>
+                                    <button class="btn btn-primary float-md-right" id="applybutton">Apply</button>
                                 </div>
                             </form>
                         </div>
@@ -112,20 +112,104 @@
 
 <script>
     //utk show date dgn time
-    $('document').ready(function() {
+    $(document).ready(function() {
         $('#leave_type').change(function() {
             var select_status = $('#leave_type').val();
 
-            if (select_status == "2") {
+            if (select_status != "3") {
                 $('#attachment').removeAttr('hidden');
                 $('#attachment input').attr('required', true);
-
             } else {
                 $('#attachment').attr('hidden', true);
                 $('#attachment input').removeAttr('required');
             }
-        })
-    })
+        });
+
+        $("#applybutton").click(function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Manually trigger form validation
+            if ($("#applyForm")[0].checkValidity()) {
+                // Show SweetAlert dialog
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'You want to add this data!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#6777ef',
+                    cancelButtonColor: '$secondary',
+                    confirmButtonText: 'Yes, add it!',
+                    dangerMode: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Get the total days
+                        var totalDays = parseInt($('#total_day').val());
+
+                        // Validate leave balance
+                        validateLeaveBalance(totalDays);
+                    }
+                });
+            } else {
+                // Handle invalid form
+                Swal.fire({
+                    title: 'Invalid Form',
+                    text: 'Please fill in all the required fields.',
+                    icon: 'error',
+                    showConfirmButton: true, // Show the "OK" button
+                    confirmButtonColor: '#6777ef',
+                });
+            }
+        });
+    });
+
+    function validateLeaveBalance(totalDays) {
+        // Send an AJAX request to your server with the totalDays value
+        $.ajax({
+            url: "{{ route('checkLeave') }}",
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                leave_type_id: $('#leave_type').val(),
+                total_day: totalDays
+            },
+            success: function(response) {
+                if (response.sufficient) {
+                    // Proceed with leave application
+
+                    // Show success message after form submission
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Your leave application has been submitted.',
+                        icon: 'success',
+                        showConfirmButton: true,
+                        confirmButtonColor: '#6777ef',
+                    }).then(() => {
+                            // Submit the form here
+                            $("#applyForm").submit();
+                        });
+                } else {
+                    // Show error message indicating insufficient leave balance
+                    Swal.fire({
+                        title: 'Insufficient Leave Balance',
+                        text: 'You do not have enough leave balance for this application.',
+                        icon: 'error',
+                        showConfirmButton: true,
+                        confirmButtonColor: '#6777ef',
+                    });
+                }
+            },
+            error: function() {
+                // Show error message for failed AJAX request
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Failed to validate leave balance.',
+                    icon: 'error',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#6777ef',
+                });
+            }
+        });
+    }
 
     // Get the start date and end date input fields
     var startDateInput = document.getElementById('start_date');

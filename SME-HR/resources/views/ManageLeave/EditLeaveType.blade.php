@@ -22,7 +22,7 @@
                             </div>
                             <div class="card-content collpase show">
                                 <div class="card-body">
-                                    <form method="POST" class="form form-horizontal" action="{{route('updateLeaveType' , ['id' => $leaveTypeInfo->id])}}" enctype="multipart/form-data">
+                                    <form method="POST" class="form form-horizontal" action="{{route('updateLeaveType' , ['id' => $leaveTypeInfo->id])}}" enctype="multipart/form-data" id="updateForm">
                                         @csrf
                                         @method('PUT')
                                         <div class="form-body">
@@ -31,7 +31,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Leave Type Name</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input type="text" class="form-control border-primary" placeholder="Leave Type Name" name="leave_name" id="leave_name" value="{{ old('leave_name', $leaveTypeInfo->leave_name) }}">
+                                                            <input type="text" class="form-control border-primary" placeholder="Leave Type Name" name="leave_name" id="leave_name" value="{{ old('leave_name', $leaveTypeInfo->leave_name) }}" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -39,7 +39,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-md-3 label-control">Total Days</label>
                                                         <div class="col-md-9 mx-auto">
-                                                            <input type="number" class="form-control border-primary" placeholder="Total Days" name="leave_days" id="leave_days" value="{{ old('leave_days', $leaveTypeInfo->leave_days) }}"> 
+                                                            <input type="number" class="form-control border-primary" placeholder="Total Days" name="leave_days" id="leave_days" value="{{ old('leave_days', $leaveTypeInfo->leave_days) }}" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -48,7 +48,7 @@
                                         <hr>
                                         <br>
                                         <div class="form-actions text-center">
-                                            <button class="btn btn-primary float-md-right" id="">Save</button>
+                                            <button class="btn btn-primary float-md-right" id="updateButton">Save</button>
                                         </div>
                                     </form>
                                 </div>
@@ -61,3 +61,48 @@
     </div>
 
 </x-app-layout>
+
+<script>
+    $(document).ready(function() {
+        $("#updateButton").click(function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Manually trigger form validation
+            if ($("#updateForm")[0].checkValidity()) {
+                // Show SweetAlert dialog
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'You want to update this data!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#6777ef',
+                    cancelButtonColor: '$secondary',
+                    confirmButtonText: 'Yes, update it!',
+                    dangerMode: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Show success message
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Your data has been updated.',
+                            icon: 'success',
+                            showConfirmButton: true // Show the "OK" button
+                        }).then(() => {
+                            // Submit the form here
+                            $("#updateForm").submit();
+                        });
+                    }
+                });
+            } else {
+                // Handle invalid form
+                Swal.fire({
+                    title: 'Invalid Form',
+                    text: 'Please fill in all the required fields.',
+                    icon: 'error',
+                    showConfirmButton: true, // Show the "OK" button
+                    confirmButtonColor: '#6777ef',
+                });
+            }
+        });
+    });
+</script>
