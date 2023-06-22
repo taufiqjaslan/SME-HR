@@ -41,7 +41,7 @@
                                     <tr>
                                         <td>
                                             <div class="custom-checkbox custom-control">
-                                                <input name="check[]" type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-{{ $no }}" value="{{$listPayslip->id}}" required>
+                                                <input name="check[]" type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-{{ $no }}" value="{{$listPayslip->id}}">
                                                 <label for="checkbox-{{ $no }}" class="custom-control-label">&nbsp;</label>
                                             </div>
                                         </td>

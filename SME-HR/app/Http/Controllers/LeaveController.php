@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\EmployeeRecord;
+use App\Models\EntitlementRecord;
 use App\Models\LeaveTypeRecord;
 use App\Models\LeaveRecord;
 use App\Models\NotificationRecord;
@@ -22,16 +23,26 @@ class LeaveController extends Controller
      */
     public function applyLeave()
     {
-
-        // Retrieve all usertype and position records and include the associated employee data
-        $employee = EmployeeRecord::with('userType')->get();
-        $leaveType = LeaveTypeRecord::all();
+        $user = Auth::user(); // Assuming you are using Laravel's authentication
+    
+        if ($user->user_type_id == 1) {
+            $employee = EmployeeRecord::with('userType')->get();
+            $leaveType = LeaveTypeRecord::all();
+        } else {
+            $userId = $user->id;
+    
+            $employee = EmployeeRecord::with('userType')->where('id', $userId)->get();
+            $leaveType = EntitlementRecord::where('user_id', $userId)->with('leaveType')->get();
+        }
+    
         $lists = [
             'employee' => $employee,
             'leaveType' => $leaveType,
         ];
-        return view('ManageLeave.AddLeave', ["listData" => $lists]); //link to go to addleave page
+    
+        return view('ManageLeave.AddLeave', ["listData" => $lists]);
     }
+    
 
     /**
      * Show the form for creating a new resource.

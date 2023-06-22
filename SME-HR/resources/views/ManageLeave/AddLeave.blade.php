@@ -45,9 +45,15 @@
                                                 <div class="col-md-9 mx-auto">
                                                     <select name="leave_type_id" class="form-control border-primary" id="leave_type" required>
                                                         <option disabled value="" selected hidden>Select Leave Type</option>
-                                                        @foreach($listData['leaveType'] as $leaveTypes)
-                                                        <option value="{{ $leaveTypes->id }}">{{ $leaveTypes->leave_name }}</option>
+                                                        @if(Auth::user()->user_type_id == 1)
+                                                        @foreach($listData['leaveType'] as $leaveType)
+                                                        <option value="{{ $leaveType->id }}">{{ $leaveType->leave_name }}</option>
                                                         @endforeach
+                                                        @else
+                                                        @foreach($listData['leaveType'] as $leaveType)
+                                                        <option value="{{ $leaveType->leaveType->id }}">{{ $leaveType->leaveType->leave_name }}</option>
+                                                        @endforeach
+                                                        @endif
                                                     </select>
                                                 </div>
                                             </div>
@@ -184,9 +190,9 @@
                         showConfirmButton: true,
                         confirmButtonColor: '#6777ef',
                     }).then(() => {
-                            // Submit the form here
-                            $("#applyForm").submit();
-                        });
+                        // Submit the form here
+                        $("#applyForm").submit();
+                    });
                 } else {
                     // Show error message indicating insufficient leave balance
                     Swal.fire({
@@ -244,6 +250,24 @@
 
         // Subtract the weekends from the total days
         var weekdays = totalDays - weekends;
+
+        // Check if the calculated weekdays is negative
+        if (weekdays < 0) {
+            // Display an alert message using SweetAlert
+            Swal.fire({
+                title: 'Invalid Date Range',
+                text: 'End date should be after the start date.',
+                icon: 'error',
+                confirmButtonColor: '#6777ef',
+            });
+
+            // Set the total days to 0
+            weekdays = 0;
+
+            // Reset the start and end date inputs
+            startDateInput.value = '';
+            endDateInput.value = '';
+        }
 
         // Set the calculated weekdays value to the "Total Day" input field
         var totalDayInput = document.getElementById('total_day');
